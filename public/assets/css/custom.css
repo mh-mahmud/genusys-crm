@@ -1,0 +1,697 @@
+.aside-dark .menu .menu-item .menu-link .menu-icon .svg-icon svg [fill]:not(.permanent):not(g) {
+    transition: fill 0.3s ease;
+    /*fill: #494b74;*/
+    fill: #FFF;
+}
+
+.form-control.form-control-solid {
+    background-color: #FFF;
+    border-color: #bbb;
+}
+
+
+.card .card-header-dashboard {
+    background-color: #5cb8af;
+    min-height: 40px;
+}
+
+.text-gray-901 {
+    color: #FFF;
+}
+
+.text-gray-501 {
+    color: #eee !important;
+}
+
+.table.table-row-gray-100 tr {
+    border-bottom-color: #ddd;
+}
+
+.th-data {
+    font-weight: bold !important;
+    color: #000 !important;
+}
+
+.bd-cyan-color {
+    background-color: #cff4fc !important;
+}
+
+.text-dark {
+    color: #333 !important;
+    font-size: 12.5px !important;
+}
+
+.text-end-new {
+    text-align: right !important;
+    padding-right: 20px !important;
+}
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #000;
+    /*background-color: rgb(37 99 235);*/
+    background-color: #ccc;
+    border-color: transparent;
+    border: none;
+}
+
+.page-item .page-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.0rem !important;
+    height: 2.5rem;
+    min-width: 2.5rem;
+    font-weight: 500;
+    font-size: 1.075rem;
+}
+
+.page-item {
+    border: 1px solid #aaa;
+}
+
+.aside-dark .menu .menu-item .menu-link .menu-title {
+    color: #fff;
+}
+
+.aside-dark .menu .menu-item .menu-section {
+    color: #FFF !important;
+}
+
+.aside-menu {
+    background-color: #1e293b;
+}
+
+/*============================
+         For File Upload
+  ============================*/
+.uploader {
+    display: block;
+    clear: both;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 600px;
+}
+
+.uploader label {
+    float: left;
+    clear: both;
+    width: 100%;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    background: #fff;
+    border-radius: 7px;
+    border: 3px solid #eee;
+    transition: all 0.2s ease;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.uploader label:hover {
+    border-color: #009EF7;
+}
+
+.uploader label.hover {
+    border: 3px solid #009EF7;
+    box-shadow: inset 0 0 0 6px #eee;
+}
+
+.uploader label.hover #start i.fa {
+    transform: scale(0.8);
+    opacity: 0.3;
+}
+
+.uploader #start {
+    float: left;
+    clear: both;
+    width: 100%;
+}
+
+.uploader #start.hidden {
+    display: none;
+}
+
+.uploader #start i.fa {
+    font-size: 50px;
+    margin-bottom: 1rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.uploader #response {
+    float: left;
+    clear: both;
+    width: 100%;
+}
+
+.uploader #response.hidden {
+    display: none;
+}
+
+.uploader #response #messages {
+    margin-bottom: 0.5rem;
+}
+
+.uploader #file-image {
+    display: inline;
+    margin: 0 auto 0.5rem auto;
+    width: auto;
+    height: auto;
+    max-width: 180px;
+}
+
+.uploader #file-image.hidden {
+    display: none;
+}
+
+.uploader #notimage {
+    display: block;
+    float: left;
+    clear: both;
+    width: 100%;
+}
+
+.uploader #notimage.hidden {
+    display: none;
+}
+
+.uploader progress,
+.uploader .progress {
+    display: inline;
+    clear: both;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 180px;
+    height: 8px;
+    border: 0;
+    border-radius: 4px;
+    background-color: #eee;
+    overflow: hidden;
+}
+
+.uploader .progress[value]::-webkit-progress-bar {
+    border-radius: 4px;
+    background-color: #eee;
+}
+
+.uploader .progress[value]::-webkit-progress-value {
+    background: linear-gradient(to right, #009EF7 0%, #009EF7 50%);
+    border-radius: 4px;
+}
+
+.uploader .progress[value]::-moz-progress-bar {
+    background: linear-gradient(to right, #009EF7 0%, #009EF7 50%);
+    border-radius: 4px;
+}
+
+.uploader input[type=file] {
+    display: none;
+}
+
+.uploader div {
+    margin: 0 0 0.5rem 0;
+    color: #5f6982;
+}
+
+.uploader .btn {
+    display: inline-block;
+    margin: 0.5rem 0.5rem 1rem 0.5rem;
+    clear: both;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    text-transform: initial;
+    border: none;
+    border-radius: 0.2rem;
+    outline: none;
+    padding: 0 1rem;
+    color: #fff;
+    transition: all 0.2s ease-in-out;
+    box-sizing: border-box;
+    background: #009EF7;
+    border-color: #009EF7;
+    cursor: pointer;
+}
+
+/*End File Upload*/
+
+/*Login Page*/
+.g-login-page-area {
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+}
+
+.g-login-main {
+    display: flex;
+}
+
+@media all and (max-width: 991px) {
+    .g-login-main {
+        display: flex;
+        flex-direction: column-reverse;
+        width: 100%;
+        padding: 0 1rem;
+    }
+}
+
+.g-login-left {
+    flex: 1;
+    padding: 3rem;
+}
+
+@media all and (max-width: 991px) {
+    .g-login-left {
+        flex: 1;
+        padding: 1rem;
+    }
+}
+
+.g-login-left-header {
+    font-size: 2.5rem;
+}
+
+.g-login-right {
+    flex: 1;
+    flex-shrink: 0;
+    background-image: linear-gradient(-60deg, #16a085 0%, #f4d03f 100%);
+    color: #ffffff;
+    display: grid;
+    place-items: center;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 10px;
+}
+
+@media all and (max-width: 991px) {
+    .g-login-right {
+        display: none;
+    }
+}
+
+.g-login-btn-gradient {
+    background-image: linear-gradient(-60deg, #16a085 0%, #f4d03f 100%);
+}
+
+.g-login-right h2 {
+    color: #fff;
+    font-size: 2.5rem;
+}
+
+/*End Login Page*/
+
+/*For Global Alerts*/
+body.swal2-height-auto {
+    height: 100% !important;
+}
+
+/*For All Table td style*/
+.table.gy-3 td {
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+}
+
+/*For Leads (Show Blade PHP) */
+.g-lead-details-area {
+    columns: 1;
+    break-inside: avoid;
+}
+
+
+.g-p-feature-details-area {
+    columns: 2;
+    break-inside: avoid;
+}
+
+@media all and (min-width: 1601px) {
+    .g-lead-details-area {
+        columns: 4;
+        break-inside: avoid;
+    }
+
+    .g-p-feature-details-area {
+        columns: 2;
+        break-inside: avoid;
+    }
+}
+
+@media all and (1024px <= width <= 1600px) {
+    .g-lead-details-area {
+        columns: 3;
+        break-inside: avoid;
+    }
+
+    .g-p-feature-details-area {
+        columns: 2;
+        break-inside: avoid;
+    }
+}
+
+
+/*End For Leads (Show Blade PHP) */
+
+/*Overwrite CSS*/
+.form-check.form-check-custom.form-check-sm .form-check-input {
+    height: 1.2rem;
+    width: 1.2rem;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=checkbox] {
+    background-size: 50% 50%;
+}
+
+.form-check-input[type=checkbox] {
+    border-radius: 0.2em;
+}
+
+/*End Overwrite CSS*/
+
+.g-user-select > .select2-container--bootstrap5 .select2-selection--multiple:not(.form-select-sm):not(.form-select-lg) {
+    padding-block: 2px;
+}
+
+
+/* start meeting module calender design CSS*/
+.calendar-block {
+    text-align: center;
+    border: 1px solid #916188;
+    width: 150px;
+    background-color: #ffffff; /* Light purple */
+}
+
+.calendar-header {
+    background-color: #916188; /* Darker purple for header */
+    color: #ffffff;
+    padding: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.calendar-date {
+    font-size: 48px;
+    color: #333;
+    margin: 10px 0;
+    background-color: #ffffff; /* White background for the date */
+    padding: 10px 0;
+}
+
+.calendar-footer {
+    /*padding: 10px 0;*/
+    background-color: #916188; /* Purple background for footer */
+}
+
+.calendar-month-year {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.calendar-time-block {
+    background-color: #ffffff; /* White background for time section */
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.calendar-time {
+    font-size: 12px;
+    color: #333;
+}
+
+.calendar-timezone {
+    font-size: 10px;
+    color: #555;
+}
+
+
+/* end meeting module calender design CSS*/
+
+
+/* Event details section - Positioned behind the calendar */
+.event-details-block {
+    /* top: 0; */
+    left: 160px; /* Adjust this value based on spacing */
+    z-index: 1; /* Ensure it is behind the calendar */
+    opacity: 0.9; /* Optional: Make it slightly transparent */
+}
+
+.event-details {
+    /* background-color: #fff; */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.event-details h3 {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.event-details ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.event-details ul li {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.event-details ul li strong {
+    font-weight: bold;
+}
+
+.event-details ul li a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.event-details ul li a:hover {
+    text-decoration: underline;
+}
+
+/* start meeting module rating design CSS*/
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    font-size: 16px;
+}
+
+.call-to-action-text {
+    margin: 1rem 0;
+    text-align: left;
+}
+
+.star-wrap {
+    width: max-content;
+    /* margin: 0 auto; */
+    margin: 0;
+    position: relative;
+}
+
+.star-label.hidden {
+    display: none;
+}
+
+.star-label {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 4rem;
+}
+
+/* @media (min-width: 840px) {
+  .star-label {
+    width: 6rem;
+    height: 6rem;
+  }
+} */
+
+@media (min-width: 840px) {
+    .star-label {
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
+.star-shape {
+    background-color: gold;
+    width: 80%;
+    height: 80%;
+    /*star shaped cutout, works  best if it is applied to a square*/
+    /* from Clippy @ https://bennettfeely.com/clippy/ */
+    clip-path: polygon(
+        50% 0%,
+        61% 35%,
+        98% 35%,
+        68% 57%,
+        79% 91%,
+        50% 70%,
+        21% 91%,
+        32% 57%,
+        2% 35%,
+        39% 35%
+    );
+}
+
+/* make stars *after* the checked radio gray*/
+.star:checked + .star-label ~ .star-label .star-shape {
+    background-color: lightgray;
+}
+
+/*hide away the actual radio inputs*/
+.star {
+    position: fixed;
+    opacity: 0;
+    /*top: -90000px;*/
+    left: -90000px;
+}
+
+.star:focus + .star-label {
+    outline: 2px dotted black;
+}
+
+.skip-button {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 1rem;
+    position: absolute;
+    top: -2rem;
+    right: -1rem;
+    /*transform: translateY(-50%);*/
+    text-align: center;
+    line-height: 2rem;
+    font-size: 2rem;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.skip-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+#skip-star:checked ~ .skip-button {
+    display: none;
+}
+
+#result {
+    text-align: center;
+    padding: 1rem 2rem;
+}
+
+.exp-link {
+    text-align: center;
+    padding: 1rem 2rem;
+}
+
+.exp-link a {
+    color: lightgray;
+    text-decoration: underline;
+}
+
+
+/* end meeting module rating design CSS*/
+
+/* error message Invoice module rating design CSS*/
+
+.is-invalid {
+    border-color: #dc3545; /* Red border for invalid fields */
+}
+
+.error-message {
+    font-size: 0.875rem; /* Smaller text for error message */
+    color: #dc3545; /* Red color for error message */
+}
+
+.h-18px {
+    height: 18px;
+}
+
+.loader {
+    animation: rotate 1s linear infinite;
+}
+
+.loader-circle {
+    stroke: #4caf50;
+    stroke-dasharray: 150;
+    stroke-dashoffset: 0;
+    animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 150;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -35;
+    }
+    100% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -125;
+    }
+}
+
+/*changed in Dec 29*/
+.card .card-body {
+    padding: 2rem 2.25rem;
+    border: 1px solid #c7c5bf;
+}
+
+.bd-cyan {
+    color: #111 !important;
+    /* background-color: #cff4fc !important; */
+    background-color: #E8F5E9 !important;
+    border: 1px solid #ddd;
+}
+
+.card .card-header {
+    /*    background-color: #54B4D3;*/
+    min-height: 50px !important;
+    /*    padding: 10px;*/
+}
+
+.card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-wrap: wrap;
+    min-height: 70px;
+    padding: 0 2.25rem;
+    background-color: transparent;
+    border-bottom: 1px solid #EFF2F5;
+    border-radius: 0px;
+}
+
+.form-control.form-control-solid {
+    background-color: #FFF;
+    border-color: #bbb;
+    border-radius: 0px;
+}
+
+.bd-cyan-2 {
+    color: #111 !important;
+    background-color: #E8F5E9 !important;
+    border: 1px solid #ddd;
+}
+
+.post {
+    min-height: 81.5vh;
+}
+
+.single-line-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+

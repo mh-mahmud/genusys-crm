@@ -1,0 +1,131 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use App\Models\User;
+use App\Models\Lead;
+use App\Models\LeadsForm;
+use App\Models\Agent;
+use App\Models\Product;
+use App\Models\Campaign;
+use App\Models\Task;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use App\Models\ProductSpecification;
+use App\Models\Customer;
+use App\Models\Notification;
+
+class DashboardController extends Controller
+{
+
+    public function __construct()
+    {
+        // $this->middleware(['auth']);
+    }
+
+    public function dashboard()
+    {
+
+        $data = [];
+        $user_id = Auth::user()->id;
+        if (Auth()->user()->user_type == 'admin') {
+            $data['lead_list'] = Lead::where('lead_status', 1)->orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'email', 'phone', 'gender', 'age', 'lead_source']);
+        } else {
+            $data['lead_list'] = Lead::where('lead_status', 1)->where('created_by', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'email', 'phone', 'gender', 'age', 'lead_source']);
+        }
+        //$data['camp_list'] = Campaign::where('status', 1)->orderBy('id', 'desc')->limit(5)->get(['id', 'campaign_title', 'start_date', 'end_date', 'campaign_type', 'campaign_limit']);
+        if (Auth()->user()->user_type == 'admin') {
+            $data['camp_list'] = Campaign::where('status', 1)->orderBy('id', 'desc')->limit(5)->get(['id', 'campaign_title', 'start_date', 'end_date', 'campaign_type', 'campaign_limit']);
+        } else {
+            $data['camp_list'] = Campaign::where('status', 1)->where('created_by', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get(['id', 'campaign_title', 'start_date', 'end_date', 'campaign_type', 'campaign_limit']);
+        }
+
+        if (Auth()->user()->user_type == 'admin') {
+            $data['totalWorkOrderNumber'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id')
+            ->whereNotNull('product_specification.work_order_number')
+            ->where('product_specification.work_order_number', '<>', '')
+            //->where('leads.created_by', Auth::id()) 
+            //->distinct('product_specification.work_order_number')
+            ->count('product_specification.work_order_number');
+
+            $data['totalWorkOrderValue'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id') 
+            //->where('leads.created_by', Auth::id()) 
+            ->sum('product_specification.work_order_value');
+
+            $data['totalAmcEffectiveAmount'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id')
+            //->where('leads.created_by', Auth::id())
+            ->sum('product_specification.amc_effective_amount');
+
+            $data['totalAmcRate'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id')
+            //->where('leads.created_by', Auth::id())
+            ->avg('product_specification.amc_rate');
+
+        } else {
+            $data['totalWorkOrderNumber'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id') 
+            ->whereNotNull('product_specification.work_order_number')
+            ->where('product_specification.work_order_number', '<>', '')
+            //->where('leads.created_by', Auth::id()) 
+            //->distinct('product_specification.work_order_number')
+            ->count('product_specification.work_order_number');
+
+            $data['totalWorkOrderValue'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id') 
+            //->where('leads.created_by', Auth::id()) 
+            ->sum('product_specification.work_order_value');
+
+            $data['totalAmcEffectiveAmount'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id')
+            //->where('leads.created_by', Auth::id())
+            ->sum('product_specification.amc_effective_amount');
+
+            $data['totalAmcRate'] = ProductSpecification::join('customers', 'product_specification.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id')
+            //->where('leads.created_by', Auth::id())
+            ->avg('product_specification.amc_rate');
+        }
+        $data['agent_list'] = Agent::with('user')->where('status', 1)->orderBy('agent_id', 'desc')->limit(5)->get();
+        $data['todo_list'] = (Auth()->user()->user_type == 'admin') ? Task::where('status', '!=', 9)->limit(6)->get(['task_name', 'description', 'due_date', 'status']) : Task::where('created_by', $user_id)->orWhere('assigned_to', $user_id)->limit(6)->get(['task_name', 'description', 'due_date', 'status']);
+        $data['notifications'] = Notification::leftJoin('leads', 'notifications.lead_id', '=', 'leads.id')
+        ->leftJoin('users', 'notifications.notify_by', '=', 'users.id')
+        ->select(
+            'notifications.*',
+            'leads.first_name as lead_first_name',
+            'leads.last_name as lead_last_name',
+            'leads.email as lead_email',
+            'users.first_name as user_first_name',
+            'users.last_name as user_last_name',
+            'users.email as user_email'
+        )
+        ->where('notifications.notify_by', '=', auth()->id())
+        ->orderBy('notify_datetime', 'desc')
+        ->limit(5)
+        ->get();
+
+        $data['formName'] = $formName = LeadsForm::whereNull('parent_id')->pluck('form_name', 'form_id');
+
+        //$data['count_lead'] = Lead::where('lead_status', 1)->count();
+        $data['count_lead'] = Lead::where('lead_status', 1)
+        ->whereNotIn('id', Customer::select('lead_id')->distinct())
+        ->count();
+        $data['total_customers'] = Customer::count();
+        $data['active_agents'] = Agent::where('status', 1)->count();
+        $data['active_products'] = Product::where('status', 1)->count();
+        $data['const_task'] = config('constants.TASK_STATUS');
+        // dd($data);
+        return view('dashboard', $data);
+    }
+
+    function profile()
+    {
+        return view('single_form');
+    }
+}
