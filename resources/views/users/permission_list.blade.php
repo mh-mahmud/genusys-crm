@@ -116,7 +116,7 @@ use Carbon\Carbon;
                                     <th class="min-w-140px">Parent Id</th>
                                     <th class="min-w-150px">Permission name</th>
                                     <th class="min-w-140px">Slug</th>
-                                    <!-- <th class="min-w-120px">Details</th> -->
+                                    <th class="min-w-120px">Status</th>
                                     <th class="min-w-120px">Show in Menu</th>
                                     <th class="min-w-100px text-end-new">Actions</th>
                                 </tr>
@@ -131,7 +131,13 @@ use Carbon\Carbon;
                                     <td class="text-dark fs-6">{{$user->parent_id}}</td>
                                     <td class="text-dark fs-6">{{$user->name}}</td>
                                     <td class="text-dark fs-6">{{$user->sub_name }}</td>
-                                    <!-- <td class="text-dark fs-6">{{$user->details}}</td> -->
+                                    <td class="text-dark fs-6">
+                                        @if ($user->status == 1)
+                                        <span class="badge badge-light-primary">Active</span>
+                                        @else
+                                        <span class="badge badge-light-danger">Inactive</span>
+                                        @endif
+                                    </td>
 
                                     <td>
                                         @if ($user->show_in_menu == 1)
@@ -153,6 +159,7 @@ use Carbon\Carbon;
                                                 </span>
                                                 <!--end::Svg Icon-->
                                             </a>
+                                            {{--
                                             <form action="{{ route('permission.destroy', $user->id) }}" method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('DELETE')
@@ -168,6 +175,7 @@ use Carbon\Carbon;
                                                     <!--end::Svg Icon-->
                                                 </button>
                                             </form>
+                                            --}}
                                         </div>
                                     </td>
                                 </tr>

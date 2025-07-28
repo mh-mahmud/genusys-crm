@@ -87,6 +87,7 @@ class UserService {
             'name' => $request->name,
             'sub_name' => $request->slug,
             'show_in_menu' => $request->show_in_menu,
+            'status' => $request->status,
             'parent_id' => !empty($request->parent_id) ? $request->parent_id : null
         ]);
         $data->save();
@@ -99,6 +100,7 @@ class UserService {
         $user->name = $request->name;
         $user->sub_name = $request->slug;
         $user->show_in_menu = $request->show_in_menu;
+        $user->status = $request->status;
         $user->parent_id = !empty($request->parent_id) ? $request->parent_id : null;
         if($user->save()) {
             return true;
@@ -132,10 +134,11 @@ class UserService {
 
     public function menu_list() {
         $data = [];
-        $menus = Menu::where('parent_id', '=', null)->get(['id', 'name', 'show_in_menu', 'status']);
+        $menus = Menu::where('parent_id', '=', null)->where('status', 1)->get(['id', 'name', 'show_in_menu', 'status']);
+        // dd($menus);
         foreach($menus as $key=>$val) {
             $name = str_replace(" ", "_", $val->name);
-            $data[$name] = Menu::where('parent_id', $val->id)->get(['id', 'parent_id', 'name', 'sub_name', 'show_in_menu', 'status']);
+            $data[$name] = Menu::where('parent_id', $val->id)->where('status', 1)->get(['id', 'parent_id', 'name', 'sub_name', 'show_in_menu', 'status']);
         }
         return $data;
     }

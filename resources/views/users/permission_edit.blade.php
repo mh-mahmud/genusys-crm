@@ -108,6 +108,18 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Status</label>
+                                                    <select class=" form-control form-control-sm form-control-solid" name="status"
+                                                            aria-label="Default select example">
+                                                            <option value="">Select option</option>
+                                                            <option @if($data->status=='1') selected  @endif value="1">Active</option>
+                                                            <option @if($data->status=='0') selected  @endif value="0">Inactive</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
                                             <!-- /// -->
 
 
@@ -115,8 +127,7 @@
                                         <!--End Row-->
 
                                     <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                        <a href="{{ route('create-user') }}" class="btn btn-light btn-active-light-primary me-2">Reset</a>
-                                        <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Submit</button>
+                                        <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Update</button>
                                     </div>
 
                                     </form>

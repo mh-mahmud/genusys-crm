@@ -106,6 +106,17 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-5">
+                                                    <label class="form-label fw-bolder text-dark">Status</label>
+                                                    <select class=" form-control form-control-sm form-control-solid" name="status" aria-label="Default select example" required>
+                                                            <option value="">Select option</option>
+                                                            <option selected value="1">Active</option>
+                                                            <option value="0">Inactive</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
                                             <!-- <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label fw-bolder text-dark" for="textarea">Details</label>
