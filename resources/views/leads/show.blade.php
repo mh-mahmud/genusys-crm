@@ -345,6 +345,7 @@
                                    aria-selected="true">Dashboard</a>
                             </li>
 
+                            @if(in_array("email_module", $menu_access))
                             <li class="nav-item">
                                 <a class="nav-link {{ session('active_tab') === 'g_lead_email_tab' ? 'active' : '' }}"
                                    data-bs-toggle="tab" href="#g_lead_email" data-tab="g_lead_email"
@@ -352,12 +353,18 @@
                                    data-bs-target="#g_lead_email" role="tab" aria-controls="g_lead_email"
                                    aria-selected="true">Email</a>
                             </li>
+                            @endif
+
+                            @if(in_array("sms_module", $menu_access))
                             <li class="nav-item">
                                 <a class="nav-link {{ session('active_tab') === 'g_lead_sms_tab' ? 'active' : '' }}"
                                    data-bs-toggle="tab" href="#g_lead_sms" data-tab="g_lead_sms" id="g_lead_sms_tab"
                                    data-bs-target="#g_lead_sms" role="tab" aria-controls="g_lead_sms"
                                    aria-selected="true">SMS</a>
                             </li>
+                            @endif
+
+                            @if(in_array("meeting", $menu_access))
                             <li class="nav-item">
                                 <a class="nav-link {{ session('active_tab') === 'g_lead_meeting_tab' ? 'active' : '' }}"
                                    data-bs-toggle="tab" href="#g_lead_meeting" data-tab="g_lead_meeting"
@@ -365,6 +372,9 @@
                                    data-bs-target="#g_lead_meeting" role="tab" aria-controls="g_lead_meeting"
                                    aria-selected="true">Meetings</a>
                             </li>
+                            @endif
+
+                            @if(in_array("proposal", $menu_access))
                             <li class="nav-item">
                                 <a class="nav-link {{ session('active_tab') === 'g_lead_proposals_tab' ? 'active' : '' }}"
                                    data-bs-toggle="tab" href="#g_lead_proposals" data-tab="g_lead_proposals"
@@ -372,6 +382,8 @@
                                    data-bs-target="#g_lead_proposals" role="tab" aria-controls="g_lead_proposals"
                                    aria-selected="true">Proposals</a>
                             </li>
+                            @endif
+
                             <li class="nav-item">
                                 <a class="nav-link {{ session('active_tab') === 'g_lead_products_tab' ? 'active' : '' }}"
                                    data-bs-toggle="tab" href="#g_lead_products" data-tab="g_lead_products"
@@ -386,6 +398,8 @@
                                    data-bs-target="#g_lead_invoice" role="tab" aria-controls="g_lead_invoice"
                                    aria-selected="true">Invoice</a>
                             </li>
+
+                            @if(in_array("tickets", $menu_access))
                             <li class="nav-item">
                                 <a class="nav-link {{ session('active_tab') === 'g_lead_tickets_tab' ? 'active' : '' }}"
                                    data-bs-toggle="tab" href="#g_lead_tickets" data-tab="g_lead_tickets"
@@ -393,6 +407,8 @@
                                    data-bs-target="#g_lead_tickets" role="tab" aria-controls="g_lead_tickets"
                                    aria-selected="true">Tickets</a>
                             </li>
+                            @endif
+                            
                             <li class="nav-item">
                                 <a class="nav-link {{ session('active_tab') === 'g_lead_activity_log_tab' ? 'active' : '' }}"
                                    data-bs-toggle="tab" href="#g_lead_activity_log" data-tab="g_lead_activity_log"
@@ -947,7 +963,8 @@
                                         </a>
                                     </div>
                                     <div class="table-responsive">
-                                        @if($emails->isNotEmpty())
+                                        
+                                        @if(count($emails) > 0)
                                             <table
                                                 class="table table-sm table-condensed table-bordered table-row-gray-100 align-middle gs-0 gy-3">
                                                 <thead>
@@ -1010,7 +1027,7 @@
 
 
                                 <div class="table-responsive">
-                                    @if($sms->isNotEmpty())
+                                    @if(count($sms) > 0)
                                         <!--begin::Table-->
                                         <table
                                             class="table table-sm table-condensed table-row-gray-100 align-middle gs-0 gy-3 table-row-bordered">
@@ -1080,7 +1097,7 @@
                                 </div>
 
                                 <div class="table-responsive">
-                                    @if($meetings->isNotEmpty())
+                                    @if(count($meetings) > 0)
                                         <!--begin::Table-->
                                         <table
                                             class="table table-sm table-condensed table-row-gray-100 align-middle gs-0 gy-3 table-row-bordered">
@@ -1841,7 +1858,7 @@
                                 </div>
 
                                 <div class="table-responsive">
-                                    @if ($proposals->isNotEmpty())
+                                    @if(count($proposals) > 0)
                                         <!--begin::Table-->
 
                                         <table

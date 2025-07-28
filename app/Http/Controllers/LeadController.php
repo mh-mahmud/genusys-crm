@@ -24,6 +24,7 @@ use App\Models\Logs;
 use App\Models\Invoice;
 use App\Models\ProductSpecification;
 use App\Services\LeadService;
+use App\Services\UserService;
 use App\Services\EmailService;
 use App\Services\SmsService;
 use Illuminate\Support\Facades\Schema;
@@ -36,10 +37,12 @@ class LeadController  extends Controller
     protected $leadService;
     protected $emailService;
     protected $smsService;
+    protected $user_service;
 
-    public function __construct(LeadService  $leadService, EmailService $emailService, SmsService $smsService)
+    public function __construct(LeadService  $leadService, EmailService $emailService, SmsService $smsService, UserService $user_service)
     {
         $this->leadService = $leadService;
+        $this->user_service = $user_service;
         $this->emailService = $emailService;
         $this->smsService = $smsService;
     }
@@ -213,6 +216,14 @@ class LeadController  extends Controller
 
     public function show($id)
     {
+
+        $menus = $this->user_service->menu_list();
+        $menu_access = [];
+        foreach($menus as $key=>$val) {
+            $menu_access[] = strtolower($key);
+        }
+        // dd($menu_access);
+
         $lead = $this->leadService->getLeadById($id);
         $lead_data_id = $id;
         $is_customer = Customer::where('lead_id', $id)->first();
@@ -229,10 +240,29 @@ class LeadController  extends Controller
             $tableData[$tableName] = DB::table($tableName)->where('lead_id', $lead->id)->orderBy('id', 'desc')->get();
         }
 
-        $emails = EmailLog::where('lead_id', $id)->get();
-        $sms = SmsQueue::where('lead_id', $id)->get();
-        $meetings = Meeting::where('lead_id', $id)->get();
-        $proposals = Proposal::where('lead_id', $id)->get();
+        $emails = [];
+        if(in_array("email_module", $menu_access)) {
+            $emails = EmailLog::where('lead_id', $id)->get();
+        }
+
+        $sms = [];
+        if(in_array("sms_module", $menu_access)) {
+            $sms = SmsQueue::where('lead_id', $id)->get();
+        }
+
+        $meetings = [];
+        if(in_array("meeting", $menu_access)) {
+            $meetings = Meeting::where('lead_id', $id)->get();
+        }
+
+        $proposals = [];
+        if(in_array("proposal", $menu_access)) {
+            $proposals = Proposal::where('lead_id', $id)->get();
+        }
+        
+        
+        
+        
         //$logs = Logs::where('lead_id', $id)->get();
         //$logs = Logs::where('lead_id', $id)->orderBy('created_at', 'desc')->get();
         $logs = Logs::join('users', 'logs.user_id', '=', 'users.id')
@@ -286,8 +316,10 @@ class LeadController  extends Controller
         ->orderBy('invoices.created_at', 'desc')
         ->get()
         ->groupBy('ps_id');
+
         $templates = $this->emailService->getEmailTemplates();
         $sms_templates = $this->smsService->getSmsTemplates();
+        
         $products = Product::where('status', 1)->get();
         $customers = Customer::where('customers.lead_id', '=', $id)->join('leads', 'customers.lead_id', '=', 'leads.id')
         ->select('customers.*', 'leads.first_name', 'leads.last_name')
@@ -296,7 +328,7 @@ class LeadController  extends Controller
         ->select('customers.*', 'leads.first_name', 'leads.last_name')
         ->first();
         $latestMeeting = Meeting::where('lead_id', $id)->orderBy('created_at', 'desc')->first();
-        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates', 'products', 'customers','lead_data_id','lead_customer','latestMeeting'));
+        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates', 'products', 'customers','lead_data_id','lead_customer','latestMeeting', 'menu_access'));
     }
 
 
