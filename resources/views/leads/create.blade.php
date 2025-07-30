@@ -196,8 +196,13 @@
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Lead Status</label>
                                     <select class="form-control form-control-sm form-control-solid" name="lead_status">
-                                        <option value="1" {{ old('lead_status', '1') == '1' ? 'selected' : '' }}>Active</option>
-                                        <option value="0" {{ old('lead_status', '1') == '0' ? 'selected' : '' }}>Inactive</option>
+                                        <option value="">-- Select Status --</option>
+                                        <option value="New">New</option>
+                                        <option value="Qualified">Qualified</option>
+                                        <option value="Proposition">Proposition</option>
+                                        <option value="Ongoing">Ongoing</option>
+                                        <option value="Won">Won</option>
+                                        <option value="Lost">Lost</option>
                                     </select>
                                     @if ($errors->has('lead_status'))
                                     <span class="text-danger">{{ $errors->first('lead_status') }}</span>

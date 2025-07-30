@@ -267,10 +267,18 @@ use Carbon\Carbon;
                                     <td class="text-dark fs-6">{{ $lead->lead_source }}</td>
 
 									<td>
-										@if ($lead->lead_status == 1)
-										<span class="badge badge-light-success">Active</span>
-										@elseif ($lead->lead_status == 0)
-										<span class="badge badge-light-danger">Inactive</span>
+										@if ($lead->lead_status == "New")
+										<span class="badge badge-light-primary">New</span>
+										@elseif ($lead->lead_status == "Qualified")
+										<span class="badge badge-light-primary">Qualified</span>
+										@elseif ($lead->lead_status == "Proposition")
+										<span class="badge badge-light-warning">Proposition</span>
+										@elseif ($lead->lead_status == "Ongoing")
+										<span class="badge badge-light-warning">Ongoing</span>
+										@elseif ($lead->lead_status == "Won")
+										<span class="badge badge-light-success">Won</span>
+										@elseif ($lead->lead_status == "Lost")
+										<span class="badge badge-light-danger">Lost</span>
 										@endif
 									</td>
 									<td class="text-end">

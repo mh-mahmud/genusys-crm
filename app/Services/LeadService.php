@@ -19,17 +19,13 @@ class LeadService
 
         if (Auth::user()->user_type !== 'admin') {
             return Lead::with('leadsForm:form_id,form_name')->where('created_by', Auth::user()->id)->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
-            
         } else {
-            return Lead::with('leadsForm:form_id,form_name')->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
-          
+            return Lead::with('leadsForm:form_id,form_name')->where('lead_rating', '!=', 10)->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
         }
     }
 	
-	 public function getAllLeads()
-    {
-
-         return Lead::with('leadsForm:form_id,form_name')->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
+	public function getAllLeads() {
+         return Lead::with('leadsForm:form_id,form_name')->where('lead_rating', '=', null)->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
     }
 
     public function getTotalLeads()

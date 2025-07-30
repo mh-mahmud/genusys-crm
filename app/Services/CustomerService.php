@@ -21,15 +21,18 @@ class CustomerService
 
     public function createCustomer($request) {
 
+        $lead = Lead::findOrFail($request->lead_id);
+        $lead->lead_rating = 10;
+        $lead->save();
+
+
         $data = new Customer();
-        // dd($request->lead_id);
         $data->lead_id = $request->lead_id;
         $data->customer_id = $request->customer_id;
         $data->first_name = $request->first_name;
         $data->last_name = $request->last_name;
         $data->phone = $request->phone;
         $data->email = $request->email;
-        //$data->product_id = $request->product_id;
         if ($request->has('product_id') && is_array($request->input('product_id'))) {
             $data->product_id = implode(',', $request->input('product_id'));
         } else {
