@@ -153,7 +153,6 @@ return [
     ],
 
     'max_leads' => 100,
-
     'route_options' => [
         'create-user' => 'Create User',
         'user.edit' => 'Update User',
