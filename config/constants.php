@@ -153,4 +153,28 @@ return [
     ],
 
     'max_leads' => 100,
+
+    'route_options' => [
+        'create-user' => 'Create User',
+        'user.edit' => 'Update User',
+        'lead-create' => 'Add Lead',
+        'lead-edit' => 'Update Lead',
+        'leadsform-create' => 'Lead Form Create',
+        'leadsform-edit' => 'Lead Form Update',
+        'dynamictable-create' => 'Dynamic Table Create',
+        'dynamictable-edit' => 'Dynamic Table Edit',
+        'invoice-create' => 'Invoice Create',
+        'invoice-edit' => 'Invoice Update',
+        'invoice-custom-create' => 'Custom Invoice Create',
+        'invoice-custom-edit' => 'Custom Invoice Edit',
+        'add-task' => 'Add Task',
+        'add-product' => 'Add Product',
+        'product-edit' => 'Edit Product',
+        'product-specification-create' => 'Product Specification Create',
+        'product-specification-edit' => 'Product Specification Edit',
+        'role-create' => 'Add Role',
+        'role-edit' => 'Update Role',
+        'create-permission' => 'Add Permission',
+        'permission.update' => 'Update Permission',
+    ]
 ];
