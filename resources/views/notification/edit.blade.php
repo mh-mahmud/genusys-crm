@@ -62,7 +62,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
-                                    <label class="form-label fw-bolder text-dark">Select Lead</label>
+                                    <label class="form-label fw-bolder text-dark">Select Lead/Customer <span style="color:red">(optional)</span></label>
                                     <select class="form-select form-select-sm rounded-end-0 border-end" data-control="select2" name="lead_id">
                                         <option value="" {{ old('lead_id', $notification->lead_id) == '' ? 'selected' : '' }}>Nothing Selected</option>
                                         @foreach($leads as $lead)
@@ -91,7 +91,7 @@
 
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
-                                    <label class="form-label fw-bolder text-dark">Notify By</label>
+                                    <label class="form-label fw-bolder text-dark">Notify To:</label>
                                     <select class="form-select form-select-sm rounded-end-0 border-end" data-control="select2" name="notify_by">
                                         <option value="" {{ old('notify_by', $notification->notify_by) == '' ? 'selected' : '' }}>Nothing Selected</option>
                                         @foreach($users as $user)
@@ -106,6 +106,7 @@
                                 </div>
                             </div>
 
+                            {{--
                             <div class="col-md-6">
                                 <div class="form-check form-check-custom form-check-sm mt-10">
                                     <input type="hidden" name="send_sms" value="0">
@@ -115,6 +116,7 @@
                                     </label>
                                 </div>
                             </div>
+                            --}}
 
                             <div class="col-md-6">
                                 <div class="form-group">

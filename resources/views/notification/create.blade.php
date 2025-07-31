@@ -65,7 +65,7 @@
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">Select Lead</label>
+                                    <label class="form-label fw-bolder text-dark">Select Lead/Customer <span style="color:red">(optional)</span></label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <select class="form-select form-select-sm rounded-end-0 border-end" data-control="select2"
@@ -107,7 +107,7 @@
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">Notify By</label>
+                                    <label class="form-label fw-bolder text-dark">Notify To:</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <select class="form-select form-select-sm rounded-end-0 border-end" data-control="select2"
@@ -125,6 +125,7 @@
                                 </div>
                             </div>
 
+                            {{--
                             <div class="col-md-6">
                                 <div class="fv-row mt-10 form-check form-check-custom form-check-sm">
                                     <input class="form-check-input" type="checkbox" name="send_sms" id="sendSMS" value="1" {{ old('send_sms') ? 'checked' : '' }}>
@@ -133,6 +134,7 @@
                                     </label>
                                 </div>
                             </div>
+                            --}}
 
 
 
