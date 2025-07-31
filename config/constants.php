@@ -19,8 +19,10 @@ return [
         3 => 'Not Started',
         4 => 'Awaiting Feedback',
         5 => 'Completed',
-        6 => 'Done Before'
+        6 => 'Done Before',
+        7 => 'Closed'
     ],
+    'TASK_STATUS_CLOSED_ID' => 7,
     'customer_group' => [
         'VIP',
         'EXISTING',
@@ -153,6 +155,7 @@ return [
     ],
 
     'max_leads' => 100,
+    
     'route_options' => [
         'create-user' => 'Create User',
         'user.edit' => 'Update User',
