@@ -11,12 +11,13 @@ class TaskService
 {
     public function getTaskList()
     {
-        $sql = Task::query();
-        if(Auth::user()->user_type != 'admin') {
-            $sql->where('assigned_to', Auth::id());
+        $sql = Task::where('tasks.status', '!=', config('constants.TASK_STATUS_CLOSED_ID'));
+        if (Auth::user()->hasPermission('can-see-tasks')) {
+            $sql->with(['assignedUser:id,first_name,last_name']);
+
         } else {
-            $sql->leftJoin('users', 'users.id', '=', 'tasks.assigned_to')
-                ->select('tasks.*', 'users.first_name', 'users.last_name');
+            $sql->where('assigned_to', Auth::id());
+
         }
         return $sql->orderBy('id', 'DESC')->paginate(config('constants.ROW_PER_PAGE'));
     }

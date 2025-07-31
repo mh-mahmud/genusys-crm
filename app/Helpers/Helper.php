@@ -3,6 +3,7 @@
 
 namespace App\Helpers;
 use App\Models\Logs;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -271,5 +272,18 @@ class Helper
         }
         curl_close($ch);
     }
+
+     public static function addNotification($data)
+     {
+            Notification::create([
+                'lead_id' => $request->lead_id,
+                'user_id' => auth()->id(),
+                'notify_msg' => 'New meeting scheduled: ' . $request->meeting_subject,
+                'notify_datetime' => $request->meeting_date,
+                'send_email' => isset($request->send_email) ? 1 : 0,
+                'send_sms' => isset($request->send_sms) ? 1 : 0,
+                'notify_seen' => 0,
+            ]);
+     }
     
 }

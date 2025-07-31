@@ -125,7 +125,6 @@ class User extends Authenticatable
     }
 
 
-    
     public function hasPermission($permission) {
 
         $permission_details = $this->get_permission_data();
