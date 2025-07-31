@@ -273,15 +273,15 @@ class Helper
         curl_close($ch);
     }
 
-     public static function addNotification($data)
+     public static function storeNotification($data)
      {
             Notification::create([
-                'lead_id' => $request->lead_id,
+                'lead_id' => !empty($data['lead_id']) ? $data['lead_id'] : null,
                 'user_id' => auth()->id(),
-                'notify_msg' => 'New meeting scheduled: ' . $request->meeting_subject,
-                'notify_datetime' => $request->meeting_date,
-                'send_email' => isset($request->send_email) ? 1 : 0,
-                'send_sms' => isset($request->send_sms) ? 1 : 0,
+                'notify_msg' => $data["notify_msg"],
+                'notify_datetime' => !empty($data["notify_datetime"]) ? $data["notify_datetime"] : Carbon::now(),
+                'send_email' => !empty($data["send_email"]) ? 1 : 0,
+                'send_sms' => !empty($data["send_sms"]) ? 1 : 0,
                 'notify_seen' => 0,
             ]);
      }

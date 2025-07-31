@@ -62,6 +62,12 @@ class TaskService
                 $dataObj->save();   
                 
                 Helper::storeLog("New task added, ".$data['task_name'], "Tasks", "Add Task", NULL);
+
+                $notificationArr =  [
+                                        "notify_msg" => "New task added",
+
+                                    ];
+                Helper::storeNotification($notificationArr);
                 
                 return (object)[
                     'status'                 => 201,
