@@ -211,6 +211,7 @@
                             </div>
 
 
+                            {{--
                             <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
@@ -224,6 +225,7 @@
                                     @endif
                                 </div>
                             </div>
+                            --}}
 
                             <div class="col-md-3">
                                 <div class="fv-row mb-3">

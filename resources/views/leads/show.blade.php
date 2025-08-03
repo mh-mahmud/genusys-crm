@@ -39,8 +39,11 @@
                 @endif
 
                 &nbsp;
-                <a href="{{ route('lead-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Lead
-                    List</a>
+                <a href="{{ route('lead-index') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Lead List</a>
+                @if(!empty($customer_id))
+                &nbsp;
+                <a href="{{ route('customers') }}" class="btn btn-sm btn-warning">Customer List</a>
+                @endif
                 <!--end::Button-->
             </div>
             <!--end::Actions-->
@@ -421,8 +424,7 @@
                         </ul>
 
                         @if(!empty($lead->profile_image))
-                            <img class="py-1" height="50px" alt="Logo"
-                                 src="{{ asset('uploads/leads/' . $lead->profile_image) }}"/>
+                            <img class="py-1" height="50px" alt="Logo" src="{{ asset('uploads/leads/' . $lead->profile_image) }}"/>
                         @endif
                     </div>
                 </div>
@@ -516,20 +518,27 @@
                                     </div>
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Status</span>
-                                        @if ($lead->lead_status === 1)
-                                            <span>Active</span>
-                                        @elseif ($lead->lead_status === 0)
-                                            <span>Inactive</span>
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Status</span>
+                                        @if ($lead->lead_status == "New")
+                                        <span class="badge badge-light-primary">New</span>
+                                        @elseif ($lead->lead_status == "Qualified")
+                                        <span class="badge badge-light-primary">Qualified</span>
+                                        @elseif ($lead->lead_status == "Proposition")
+                                        <span class="badge badge-light-warning">Proposition</span>
+                                        @elseif ($lead->lead_status == "Ongoing")
+                                        <span class="badge badge-light-warning">Ongoing</span>
+                                        @elseif ($lead->lead_status == "Won")
+                                        <span class="badge badge-light-success">Won</span>
+                                        @elseif ($lead->lead_status == "Lost")
+                                        <span class="badge badge-light-danger">Lost</span>
                                         @endif
                                     </div>
 
-                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                    {{--<div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
                                         class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Rating</span>
                                         <span>{{ $lead->lead_rating }}</span>
-                                    </div>
+                                    </div>--}}
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span

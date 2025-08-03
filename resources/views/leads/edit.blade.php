@@ -244,6 +244,7 @@
                             </div>
 
                             <!-- Lead Rating -->
+                            {{--
                             <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Lead Rating</label>
@@ -253,6 +254,7 @@
                                     @endif
                                 </div>
                             </div>
+                            --}}
 
                             <div class="col-md-3">
                                 <div class="fv-row mb-3">

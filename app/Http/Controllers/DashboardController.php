@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use App\Models\ProductSpecification;
 use App\Models\Customer;
 use App\Models\Notification;
+use App\Models\Invoice;
 
 class DashboardController extends Controller
 {
@@ -31,13 +32,14 @@ class DashboardController extends Controller
     {
 
         $data = [];
+        $data['invoice_count'] = Invoice::where('invoice_status', 'Unpaid')->count();
         $user_id = Auth::user()->id;
         if (Auth()->user()->user_type == 'admin') {
-            $data['lead_list'] = Lead::where('lead_status', 1)->orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'email', 'phone', 'gender', 'age', 'lead_source']);
+            $data['lead_list'] = Lead::orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'email', 'phone', 'gender', 'age', 'lead_source']);
         } else {
-            $data['lead_list'] = Lead::where('lead_status', 1)->where('created_by', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'email', 'phone', 'gender', 'age', 'lead_source']);
+            $data['lead_list'] = Lead::where('created_by', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'email', 'phone', 'gender', 'age', 'lead_source']);
         }
-        //$data['camp_list'] = Campaign::where('status', 1)->orderBy('id', 'desc')->limit(5)->get(['id', 'campaign_title', 'start_date', 'end_date', 'campaign_type', 'campaign_limit']);
+
         if (Auth()->user()->user_type == 'admin') {
             $data['camp_list'] = Campaign::where('status', 1)->orderBy('id', 'desc')->limit(5)->get(['id', 'campaign_title', 'start_date', 'end_date', 'campaign_type', 'campaign_limit']);
         } else {
@@ -92,7 +94,7 @@ class DashboardController extends Controller
             //->where('leads.created_by', Auth::id())
             ->avg('product_specification.amc_rate');
         }
-        $data['agent_list'] = Agent::with('user')->where('status', 1)->orderBy('agent_id', 'desc')->limit(5)->get();
+        // $data['agent_list'] = Agent::with('user')->where('status', 1)->orderBy('agent_id', 'desc')->limit(5)->get();
         $data['todo_list'] = (Auth()->user()->user_type == 'admin') ? Task::where('status', '!=', 9)->limit(6)->get(['task_name', 'description', 'due_date', 'status']) : Task::where('created_by', $user_id)->orWhere('assigned_to', $user_id)->limit(6)->get(['task_name', 'description', 'due_date', 'status']);
         $data['notifications'] = Notification::leftJoin('leads', 'notifications.lead_id', '=', 'leads.id')
         ->leftJoin('users', 'notifications.notify_by', '=', 'users.id')
@@ -113,9 +115,7 @@ class DashboardController extends Controller
         $data['formName'] = $formName = LeadsForm::whereNull('parent_id')->pluck('form_name', 'form_id');
 
         //$data['count_lead'] = Lead::where('lead_status', 1)->count();
-        $data['count_lead'] = Lead::where('lead_status', 1)
-        ->whereNotIn('id', Customer::select('lead_id')->distinct())
-        ->count();
+        $data['count_lead'] = Lead::where('lead_rating', '=', null)->count();
         $data['total_customers'] = Customer::count();
         $data['active_agents'] = Agent::where('status', 1)->count();
         $data['active_products'] = Product::where('status', 1)->count();
