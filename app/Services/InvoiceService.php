@@ -40,20 +40,25 @@ class InvoiceService
 
     public function getAllInvoices()
     {
-        $userRole = DB::table('users')
-            ->join('roles', 'users.role_id', '=', 'roles.id')
-            ->where('users.id', Auth::id())
-            ->select('roles.slug')
-            ->value('slug');
+        // $userRole = DB::table('users')
+        //     ->join('roles', 'users.role_id', '=', 'roles.id')
+        //     ->where('users.id', Auth::id())
+        //     ->select('roles.slug')
+        //     ->value('slug');
 
         $query = Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
             ->join('leads', 'customers.lead_id', '=', 'leads.id')
             ->select('invoices.*', 'customers.customer_group', 'leads.first_name', 'leads.last_name')
             ->orderBy('invoices.created_at', 'desc');
 
-        if (!in_array($userRole, ['business_development', 'super_admin', 'marketing_user'])) {
-            $query->where('invoices.approval_status', 'approved');
+        // if (!in_array($userRole, ['business_development', 'super_admin', 'marketing_user'])) {
+        //     $query->where('invoices.approval_status', 'approved');
+        // }
+        if (!Auth::user()->hasPermission('can-see-invoice')) {
+            $query->where('invoices.created_by', Auth::id());
+
         }
+
 
         return $query->paginate(config('constants.ROW_PER_PAGE'));
     }
