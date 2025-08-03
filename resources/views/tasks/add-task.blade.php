@@ -93,7 +93,7 @@
                                                 </div>
                                             </div>
 
-                                            @if(Auth::user()->user_type == 'admin')
+                                            @if (Auth::user()->hasPermission('can-see-tasks'))
                                                 <div class="col-md-6">
                                                     <div class="fv-row mb-3">
                                                         <label class="form-label fw-bolder text-dark">Assigned To<span class="text-danger">*</span></label>
