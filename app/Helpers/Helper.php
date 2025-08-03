@@ -277,7 +277,7 @@ class Helper
      {
             Notification::create([
                 'lead_id' => !empty($data['lead_id']) ? $data['lead_id'] : null,
-                'user_id' => auth()->id(),
+                'user_id' => $data["user_id"],
                 'notify_msg' => $data["notify_msg"],
                 'notify_datetime' => !empty($data["notify_datetime"]) ? $data["notify_datetime"] : Carbon::now(),
                 'send_email' => !empty($data["send_email"]) ? 1 : 0,

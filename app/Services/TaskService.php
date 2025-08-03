@@ -65,7 +65,7 @@ class TaskService
 
                 $notificationArr =  [
                                         "notify_msg" => "New task added",
-
+                                        "user_id"    => $dataObj->assigned_to
                                     ];
                 Helper::storeNotification($notificationArr);
                 
