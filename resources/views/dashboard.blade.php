@@ -53,13 +53,13 @@
 
 
                 <!--begin::Row-->
-                <div class="row gy-5 g-xl-8 pb-2">
+                <div class="row gy-5 g-xl-8 pb-2" style="padding-top:20px !important;">
                     <!--begin::Col-->
                      <div class="col-sm-3">
                         <div class="card card-flush h-md-20 mb-5 mb-xl-10">
                             <!--begin::Header-->
 
-                            <div class="card-header bg-success card-header-dashboard pt-5">
+                            <div class="card-header bg-primary card-header-dashboard pt-5">
 
                                 <!--begin::Title-->
                                 <div class="card-title d-flex flex-column">
@@ -70,8 +70,7 @@
                                         <!--end::Currency-->
 
                                         <!--begin::Amount-->
-                                        <span
-                                            class="fs-2 fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$count_lead}}</span>
+                                        <span class="fs-2 fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$count_lead}}</span>
                                         <!--end::Amount-->
 
                                         <!--begin::Badge-->
@@ -99,7 +98,7 @@
                     <div class="col-sm-3">
                         <div class="card card-flush  h-md-20 mb-5 mb-xl-10">
                             <!--begin::Header-->
-                            <div class="card-header bg-danger card-header-dashboard pt-5">
+                            <div class="card-header bg-primary card-header-dashboard pt-5">
                                 <!--begin::Title-->
                                 <div class="card-title d-flex flex-column">
                                     <!--begin::Info-->
@@ -137,7 +136,7 @@
                     <div class="col-sm-3">
                         <div class="card card-flush  h-md-20 mb-5 mb-xl-10">
                             <!--begin::Header-->
-                            <div class="card-header bg-danger card-header-dashboard pt-5">
+                            <div class="card-header bg-primary card-header-dashboard pt-5">
                                 <!--begin::Title-->
                                 <div class="card-title d-flex flex-column">
                                     <!--begin::Info-->
@@ -147,21 +146,21 @@
                                         <!--end::Currency-->
 
                                         <!--begin::Amount-->
-                                        <span class="fs-2 fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$active_agents}}</span>
+                                        <span class="fs-2 fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$invoice_count}}</span>
                                         <!--end::Amount-->
 
                                         <!--begin::Badge-->
                                         <!-- <span class="badge badge-light-success fs-base">
                                             <i class="ki-duotone ki-arrow-up fs-5 text-success ms-n1"><span class="path1"></span><span class="path2"></span></i>
                                             2.2%
-                                        </span>  -->
+                                        </span> --> 
                                         <!--end::Badge-->
                                     </div>
                                     <!--end::Info-->
 
                                     <!--begin::Subtitle-->
-                                    <a href="{{ route('agents-index') }}">
-                                        <span class="text-gray-501 pt-1 fw-semibold fs-6">Active Agents</span>
+                                    <a href="{{ route('invoice-index') }}">
+                                        <span class="text-gray-501 pt-1 fw-semibold fs-6">Unpaid Invoice</span>
                                     </a>
                                     <!--end::Subtitle-->
                                 </div>
@@ -174,7 +173,7 @@
                     <div class="col-sm-3">
                         <div class="card card-flush h-md-20 mb-5 mb-xl-10">
                             <!--begin::Header-->
-                            <div class="card-header bg-success card-header-dashboard pt-5">
+                            <div class="card-header bg-primary card-header-dashboard pt-5">
                                 <!--begin::Title-->
                                 <div class="card-title d-flex flex-column">
                                     <!--begin::Info-->
@@ -213,340 +212,189 @@
 
                 <!--begin::Row-->
                 <div class="row gy-5 g-xl-8 pb-2">
-                    <!--begin::Col-->
-
-
-                    <div class="col-sm-3">
-                        <div class="card card-flush h-md-20 mb-5 mb-xl-10">
-                            <!--begin::Header-->
-
-                            <div class="card-header bg-success card-header-dashboard pt-5">
-
-                                <!--begin::Title-->
-                                <div class="card-title d-flex flex-column">
-                                    <!--begin::Info-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Currency-->
-                                        <!-- <span class="fs-4 fw-semibold text-gray-501 me-1 align-self-start">$</span> -->
-                                        <!--end::Currency-->
-
-                                        <!--begin::Amount-->
-                                        <span
-                                            class="fs-2 fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$totalWorkOrderNumber}}
-                                            </span>
-                                        <!--end::Amount-->
-
-                                        <!--begin::Badge-->
-                                        <!-- <span class="badge badge-light-success fs-base">
-                                            <i class="ki-duotone ki-arrow-up fs-5 text-success ms-n1"><span class="path1"></span><span class="path2"></span></i>
-                                            2.2%
-                                        </span>  -->
-                                        <!--end::Badge-->
-                                    </div>
-                                    <!--end::Info-->
-
-                                    <!--begin::Subtitle-->
-                                    <a href="{{ route('product-specification-index') }}">
-                                        <span class="text-gray-501 pt-1 fw-semibold fs-6">Total Work Order</span>
-                                    </a>
-                                    <!--end::Subtitle-->
-                                </div>
-                                <!--end::Title-->
-                            </div>
-                            <!--end::Header-->
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="card card-flush  h-md-20 mb-5 mb-xl-10">
-                            <!--begin::Header-->
-                            <div class="card-header bg-danger card-header-dashboard pt-5">
-                                <!--begin::Title-->
-                                <div class="card-title d-flex flex-column">
-                                    <!--begin::Info-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Currency-->
-                                        <!-- <span class="fs-4 fw-semibold text-gray-501 me-1 align-self-start">$</span> -->
-                                        <!--end::Currency-->
-
-                                        <!--begin::Amount-->
-                                        <span
-                                            class="fs-2 fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$totalWorkOrderValue}}</span>
-                                        <!--end::Amount-->
-
-                                        <!--begin::Badge-->
-                                        <!-- <span class="badge badge-light-success fs-base">
-                                            <i class="ki-duotone ki-arrow-up fs-5 text-success ms-n1"><span class="path1"></span><span class="path2"></span></i>
-                                            2.2%
-                                        </span>  -->
-                                        <!--end::Badge-->
-                                    </div>
-                                    <!--end::Info-->
-
-                                    <!--begin::Subtitle-->
-                                    <a>
-                                        <span class="text-gray-501 pt-1 fw-semibold fs-6">Total Work Order Value</span>
-                                    </a>
-                                    <!--end::Subtitle-->
-                                </div>
-                                <!--end::Title-->
-                            </div>
-                            <!--end::Header-->
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="card card-flush  h-md-20 mb-5 mb-xl-10">
-                            <!--begin::Header-->
-                            <div class="card-header bg-danger card-header-dashboard pt-5">
-                                <!--begin::Title-->
-                                <div class="card-title d-flex flex-column">
-                                    <!--begin::Info-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Currency-->
-                                        <!-- <span class="fs-4 fw-semibold text-gray-501 me-1 align-self-start">$</span> -->
-                                        <!--end::Currency-->
-
-                                        <!--begin::Amount-->
-                                        <span
-                                            class="fs-2 fw-bold text-gray-901 me-2 lh-1 ls-n2">{{$totalAmcEffectiveAmount}}</span>
-                                        <!--end::Amount-->
-
-                                        <!--begin::Badge-->
-                                        <!-- <span class="badge badge-light-success fs-base">
-                                            <i class="ki-duotone ki-arrow-up fs-5 text-success ms-n1"><span class="path1"></span><span class="path2"></span></i>
-                                            2.2%
-                                        </span>  -->
-                                        <!--end::Badge-->
-                                    </div>
-                                    <!--end::Info-->
-
-                                    <!--begin::Subtitle-->
-                                    <a>
-                                        <span class="text-gray-501 pt-1 fw-semibold fs-6">Total AMC Amount</span>
-                                    </a>
-                                    <!--end::Subtitle-->
-                                </div>
-                                <!--end::Title-->
-                            </div>
-                            <!--end::Header-->
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="card card-flush h-md-20 mb-5 mb-xl-10">
-                            <!--begin::Header-->
-                            <div class="card-header bg-success card-header-dashboard pt-5">
-                                <!--begin::Title-->
-                                <div class="card-title d-flex flex-column">
-                                    <!--begin::Info-->
-                                    <div class="d-flex align-items-center">
-                                        <!--begin::Currency-->
-                                        <!-- <span class="fs-4 fw-semibold text-gray-501 me-1 align-self-start">$</span> -->
-                                        <!--end::Currency-->
-
-                                        <!--begin::Amount-->
-                                        <span
-                                            class="fs-2 fw-bold text-gray-901 me-2 lh-1 ls-n2">{{ $totalAmcRate ? number_format($totalAmcRate, 2) . '%' : '0%' }}
-                                            </span>
-                                        <!--end::Amount-->
-
-                                        <!--begin::Badge-->
-                                        <!-- <span class="badge badge-light-success fs-base">
-                                            <i class="ki-duotone ki-arrow-up fs-5 text-success ms-n1"><span class="path1"></span><span class="path2"></span></i>
-                                            2.2%
-                                        </span>  -->
-                                        <!--end::Badge-->
-                                    </div>
-                                    <!--end::Info-->
-
-                                    <!--begin::Subtitle-->
-                                    <span class="text-gray-501 pt-1 fw-semibold fs-6">Total AMC Rate</span>
-                                    <!--end::Subtitle-->
-                                </div>
-                                <!--end::Title-->
-                            </div>
-                            <!--end::Header-->
-                        </div>
-                    </div>
-                    <!--end::Col-->
+                    &nbsp;
                 </div>
                 <!--end::Row-->
 
+                <!-- start chart -->
+                {{--
                 <div class="row g-5 g-xl-8">
-									<div class="col-xl-6">
-										<!--begin::Charts Widget 3-->
-										<div class="card card-xl-stretch mb-xl-8">
-											<!--begin::Header-->
-											<div class="card-header border-0 pt-5">
-												<h3 class="card-title align-items-start flex-column">
-													<span class="card-label fw-bolder fs-3 mb-1">Recent Transactions</span>
-													<span class="text-muted fw-bold fs-7">More than 1000 new records</span>
-												</h3>
-												<!--begin::Toolbar-->
-												<div class="card-toolbar" data-kt-buttons="true">
-													<a class="btn btn-sm btn-color-muted btn-active btn-active-primary active px-4 me-1" id="kt_charts_widget_3_year_btn">Year</a>
-													<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="kt_charts_widget_3_month_btn">Month</a>
-													<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4" id="kt_charts_widget_3_week_btn">Week</a>
-												</div>
-												<!--end::Toolbar-->
-											</div>
-											<!--end::Header-->
-											<!--begin::Body-->
-											<div class="card-body">
-												<!--begin::Chart-->
-												<div id="kt_charts_widget_3_chart" style="height: 350px"></div>
-												<!--end::Chart-->
-											</div>
-											<!--end::Body-->
-										</div>
-										<!--end::Charts Widget 3-->
-									</div>
-									<div class="col-xl-6">
-										<!--begin::Charts Widget 4-->
-										<div class="card card-xl-stretch mb-5 mb-xl-8">
-											<!--begin::Header-->
-											<div class="card-header border-0 pt-5">
-												<h3 class="card-title align-items-start flex-column">
-													<span class="card-label fw-bolder fs-3 mb-1">Recent Customers</span>
-													<span class="text-muted fw-bold fs-7">More than 500 new customers</span>
-												</h3>
-												<!--begin::Toolbar-->
-												<div class="card-toolbar" data-kt-buttons="true">
-													<a class="btn btn-sm btn-color-muted btn-active btn-active-primary active px-4 me-1" id="kt_charts_widget_4_year_btn">Year</a>
-													<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="kt_charts_widget_4_month_btn">Month</a>
-													<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4" id="kt_charts_widget_4_week_btn">Week</a>
-												</div>
-												<!--end::Toolbar-->
-											</div>
-											<!--end::Header-->
-											<!--begin::Body-->
-											<div class="card-body">
-												<!--begin::Chart-->
-												<div id="kt_charts_widget_4_chart" style="height: 350px"></div>
-												<!--end::Chart-->
-											</div>
-											<!--end::Body-->
-										</div>
-										<!--end::Charts Widget 4-->
-									</div>
+					<div class="col-xl-6">
+						<!--begin::Charts Widget 3-->
+						<div class="card card-xl-stretch mb-xl-8">
+							<!--begin::Header-->
+							<div class="card-header border-0 pt-5">
+								<h3 class="card-title align-items-start flex-column">
+									<span class="card-label fw-bolder fs-3 mb-1">Recent Transactions</span>
+									<span class="text-muted fw-bold fs-7">More than 1000 new records</span>
+								</h3>
+								<!--begin::Toolbar-->
+								<div class="card-toolbar" data-kt-buttons="true">
+									<a class="btn btn-sm btn-color-muted btn-active btn-active-primary active px-4 me-1" id="kt_charts_widget_3_year_btn">Year</a>
+									<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="kt_charts_widget_3_month_btn">Month</a>
+									<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4" id="kt_charts_widget_3_week_btn">Week</a>
 								</div>
-								<!--end::Row-->
-								<!--begin::Row-->
-								<div class="row g-5 g-xl-8">
-									<div class="col-xl-6">
-										<!--begin::Charts Widget 5-->
-										<div class="card card-xl-stretch mb-xl-8">
-											<!--begin::Header-->
-											<div class="card-header border-0 pt-5">
-												<h3 class="card-title align-items-start flex-column">
-													<span class="card-label fw-bolder fs-3 mb-1">Recent Customers</span>
-													<span class="text-muted fw-bold fs-7">More than 500 new customers</span>
-												</h3>
-												<!--begin::Toolbar-->
-												<div class="card-toolbar" data-kt-buttons="true">
-													<a class="btn btn-sm btn-color-muted btn-active btn-active-primary active px-4 me-1" id="kt_charts_widget_5_year_btn">Year</a>
-													<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="kt_charts_widget_5_month_btn">Month</a>
-													<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4" id="kt_charts_widget_5_week_btn">Week</a>
-												</div>
-												<!--end::Toolbar-->
-											</div>
-											<!--end::Header-->
-											<!--begin::Body-->
-											<div class="card-body">
-												<!--begin::Chart-->
-												<div id="kt_charts_widget_5_chart" style="height: 350px"></div>
-												<!--end::Chart-->
-											</div>
-											<!--end::Body-->
-										</div>
-										<!--end::Charts Widget 5-->
-									</div>
-									<div class="col-xl-6">
-										<!--begin::Charts Widget 5-->
-										<div class="card card-xl-stretch mb-5 mb-xl-8">
-											<!--begin::Header-->
-											<div class="card-header border-0 pt-5">
-												<h3 class="card-title align-items-start flex-column">
-													<span class="card-label fw-bolder fs-3 mb-1">Recent Orders</span>
-													<span class="text-muted fw-bold fs-7">More than 500+ new orders</span>
-												</h3>
-												<!--begin::Toolbar-->
-												<div class="card-toolbar" data-kt-buttons="true">
-													<a class="btn btn-sm btn-color-muted btn-active btn-active-primary active px-4 me-1" id="kt_charts_widget_6_sales_btn">Sales</a>
-													<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="kt_charts_widget_6_expenses_btn">Expenses</a>
-												</div>
-												<!--end::Toolbar-->
-											</div>
-											<!--end::Header-->
-											<!--begin::Body-->
-											<div class="card-body">
-												<!--begin::Chart-->
-												<div id="kt_charts_widget_6_chart" style="height: 350px"></div>
-												<!--end::Chart-->
-											</div>
-											<!--end::Body-->
-										</div>
-										<!--end::Charts Widget 5-->
-									</div>
+								<!--end::Toolbar-->
+							</div>
+							<!--end::Header-->
+							<!--begin::Body-->
+							<div class="card-body">
+								<!--begin::Chart-->
+								<div id="kt_charts_widget_3_chart" style="height: 350px"></div>
+								<!--end::Chart-->
+							</div>
+							<!--end::Body-->
+						</div>
+						<!--end::Charts Widget 3-->
+					</div>
+					<div class="col-xl-6">
+						<!--begin::Charts Widget 4-->
+						<div class="card card-xl-stretch mb-5 mb-xl-8">
+							<!--begin::Header-->
+							<div class="card-header border-0 pt-5">
+								<h3 class="card-title align-items-start flex-column">
+									<span class="card-label fw-bolder fs-3 mb-1">Recent Customers</span>
+									<span class="text-muted fw-bold fs-7">More than 500 new customers</span>
+								</h3>
+								<!--begin::Toolbar-->
+								<div class="card-toolbar" data-kt-buttons="true">
+									<a class="btn btn-sm btn-color-muted btn-active btn-active-primary active px-4 me-1" id="kt_charts_widget_4_year_btn">Year</a>
+									<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="kt_charts_widget_4_month_btn">Month</a>
+									<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4" id="kt_charts_widget_4_week_btn">Week</a>
 								</div>
-								<!--end::Row-->
-								<!--begin::Row-->
-								<div class="row g-5 g-xl-8">
-									<div class="col-xl-6">
-										<!--begin::Charts Widget 7-->
-										<div class="card card-xl-stretch mb-xl-8">
-											<!--begin::Header-->
-											<div class="card-header border-0 pt-5">
-												<h3 class="card-title align-items-start flex-column">
-													<span class="card-label fw-bolder fs-3 mb-1">Recent Users</span>
-													<span class="text-muted fw-bold fs-7">More than 500 new users</span>
-												</h3>
-												<!--begin::Toolbar-->
-												<div class="card-toolbar" data-kt-buttons="true">
-													<a class="btn btn-sm btn-color-muted btn-active btn-active-primary active px-4 me-1" id="kt_charts_widget_7_year_btn">Year</a>
-													<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="kt_charts_widget_7_month_btn">Month</a>
-													<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4" id="kt_charts_widget_7_week_btn">Week</a>
-												</div>
-												<!--end::Toolbar-->
-											</div>
-											<!--end::Header-->
-											<!--begin::Body-->
-											<div class="card-body">
-												<!--begin::Chart-->
-												<div id="kt_charts_widget_7_chart" style="height: 350px" class="card-rounded-bottom"></div>
-												<!--end::Chart-->
-											</div>
-											<!--end::Body-->
-										</div>
-										<!--end::Charts Widget 7-->
-									</div>
-									<div class="col-xl-6">
-										<!--begin::Charts Widget 8-->
-										<div class="card card-xl-stretch mb-5 mb-xl-8">
-											<!--begin::Header-->
-											<div class="card-header border-0 pt-5">
-												<h3 class="card-title align-items-start flex-column">
-													<span class="card-label fw-bolder fs-3 mb-1">Recent Orders</span>
-													<span class="text-muted fw-bold fs-7">More than 500 new orders</span>
-												</h3>
-												<!--begin::Toolbar-->
-												<div class="card-toolbar" data-kt-buttons="true">
-													<a class="btn btn-sm btn-color-muted btn-active btn-active-primary active px-4 me-1" id="kt_charts_widget_8_year_btn">Year</a>
-													<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="kt_charts_widget_8_month_btn">Month</a>
-													<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4" id="kt_charts_widget_8_week_btn">Week</a>
-												</div>
-												<!--end::Toolbar-->
-											</div>
-											<!--end::Header-->
-											<!--begin::Body-->
-											<div class="card-body">
-												<!--begin::Chart-->
-												<div id="kt_charts_widget_8_chart" style="height: 350px" class="card-rounded-bottom"></div>
-												<!--end::Chart-->
-											</div>
-											<!--end::Body-->
-										</div>
-										<!--end::Charts Widget 8-->
-									</div>
+								<!--end::Toolbar-->
+							</div>
+							<!--end::Header-->
+							<!--begin::Body-->
+							<div class="card-body">
+								<!--begin::Chart-->
+								<div id="kt_charts_widget_4_chart" style="height: 350px"></div>
+								<!--end::Chart-->
+							</div>
+							<!--end::Body-->
+						</div>
+						<!--end::Charts Widget 4-->
+					</div>
+				</div>
+
+				<div class="row g-5 g-xl-8">
+					<div class="col-xl-6">
+						<!--begin::Charts Widget 5-->
+						<div class="card card-xl-stretch mb-xl-8">
+							<!--begin::Header-->
+							<div class="card-header border-0 pt-5">
+								<h3 class="card-title align-items-start flex-column">
+									<span class="card-label fw-bolder fs-3 mb-1">Recent Customers</span>
+									<span class="text-muted fw-bold fs-7">More than 500 new customers</span>
+								</h3>
+								<!--begin::Toolbar-->
+								<div class="card-toolbar" data-kt-buttons="true">
+									<a class="btn btn-sm btn-color-muted btn-active btn-active-primary active px-4 me-1" id="kt_charts_widget_5_year_btn">Year</a>
+									<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="kt_charts_widget_5_month_btn">Month</a>
+									<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4" id="kt_charts_widget_5_week_btn">Week</a>
 								</div>
+								<!--end::Toolbar-->
+							</div>
+							<!--end::Header-->
+							<!--begin::Body-->
+							<div class="card-body">
+								<!--begin::Chart-->
+								<div id="kt_charts_widget_5_chart" style="height: 350px"></div>
+								<!--end::Chart-->
+							</div>
+							<!--end::Body-->
+						</div>
+						<!--end::Charts Widget 5-->
+					</div>
+					<div class="col-xl-6">
+						<!--begin::Charts Widget 5-->
+						<div class="card card-xl-stretch mb-5 mb-xl-8">
+							<!--begin::Header-->
+							<div class="card-header border-0 pt-5">
+								<h3 class="card-title align-items-start flex-column">
+									<span class="card-label fw-bolder fs-3 mb-1">Recent Orders</span>
+									<span class="text-muted fw-bold fs-7">More than 500+ new orders</span>
+								</h3>
+								<!--begin::Toolbar-->
+								<div class="card-toolbar" data-kt-buttons="true">
+									<a class="btn btn-sm btn-color-muted btn-active btn-active-primary active px-4 me-1" id="kt_charts_widget_6_sales_btn">Sales</a>
+									<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="kt_charts_widget_6_expenses_btn">Expenses</a>
+								</div>
+								<!--end::Toolbar-->
+							</div>
+							<!--end::Header-->
+							<!--begin::Body-->
+							<div class="card-body">
+								<!--begin::Chart-->
+								<div id="kt_charts_widget_6_chart" style="height: 350px"></div>
+								<!--end::Chart-->
+							</div>
+							<!--end::Body-->
+						</div>
+						<!--end::Charts Widget 5-->
+					</div>
+				</div>
+
+				<div class="row g-5 g-xl-8">
+					<div class="col-xl-6">
+						<!--begin::Charts Widget 7-->
+						<div class="card card-xl-stretch mb-xl-8">
+							<!--begin::Header-->
+							<div class="card-header border-0 pt-5">
+								<h3 class="card-title align-items-start flex-column">
+									<span class="card-label fw-bolder fs-3 mb-1">Recent Users</span>
+									<span class="text-muted fw-bold fs-7">More than 500 new users</span>
+								</h3>
+								<!--begin::Toolbar-->
+								<div class="card-toolbar" data-kt-buttons="true">
+									<a class="btn btn-sm btn-color-muted btn-active btn-active-primary active px-4 me-1" id="kt_charts_widget_7_year_btn">Year</a>
+									<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="kt_charts_widget_7_month_btn">Month</a>
+									<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4" id="kt_charts_widget_7_week_btn">Week</a>
+								</div>
+								<!--end::Toolbar-->
+							</div>
+							<!--end::Header-->
+							<!--begin::Body-->
+							<div class="card-body">
+								<!--begin::Chart-->
+								<div id="kt_charts_widget_7_chart" style="height: 350px" class="card-rounded-bottom"></div>
+								<!--end::Chart-->
+							</div>
+							<!--end::Body-->
+						</div>
+						<!--end::Charts Widget 7-->
+					</div>
+					<div class="col-xl-6">
+						<!--begin::Charts Widget 8-->
+						<div class="card card-xl-stretch mb-5 mb-xl-8">
+							<!--begin::Header-->
+							<div class="card-header border-0 pt-5">
+								<h3 class="card-title align-items-start flex-column">
+									<span class="card-label fw-bolder fs-3 mb-1">Recent Orders</span>
+									<span class="text-muted fw-bold fs-7">More than 500 new orders</span>
+								</h3>
+								<!--begin::Toolbar-->
+								<div class="card-toolbar" data-kt-buttons="true">
+									<a class="btn btn-sm btn-color-muted btn-active btn-active-primary active px-4 me-1" id="kt_charts_widget_8_year_btn">Year</a>
+									<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="kt_charts_widget_8_month_btn">Month</a>
+									<a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4" id="kt_charts_widget_8_week_btn">Week</a>
+								</div>
+								<!--end::Toolbar-->
+							</div>
+							<!--end::Header-->
+							<!--begin::Body-->
+							<div class="card-body">
+								<!--begin::Chart-->
+								<div id="kt_charts_widget_8_chart" style="height: 350px" class="card-rounded-bottom"></div>
+								<!--end::Chart-->
+							</div>
+							<!--end::Body-->
+						</div>
+						<!--end::Charts Widget 8-->
+					</div>
+				</div>
+                --}}
+                <!-- end chart -->
 
                 <!--begin::Row-->
                 <div class="row gy-5 g-xl-8">

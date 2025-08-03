@@ -72,8 +72,7 @@ class NotificationService {
         $notification->delete();
     }
 
-    public function searchNotifications($request)
-{
+    public function searchNotifications($request) {
     $searchTerm = trim($request->input('search'));
 
     return Notification::leftJoin('leads', 'notifications.lead_id', '=', 'leads.id')
