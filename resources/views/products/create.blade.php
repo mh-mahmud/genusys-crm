@@ -42,12 +42,13 @@
                     <div class="row">
                         <div class="col-xxl-12">
                             <div class="card card-xxl-stretch mt-4">
-                                <div class="card-header bg-light bd-cyan">
+                                <div class="card-header align-items-center bg-light bd-cyan">
                                     <!--begin::Card title-->
-                                    <div class="card-title m-0">
+                                    <div class="card-title d-flex justify-content-between m-0">
                                         <h3 class="fw-bolder m-0">Product Create</h3>
                                     </div>
                                     <!--end::Card title-->
+                                    @include('help-section.help')
                                 </div>
 
                                 <!-- Card Body-->
@@ -190,3 +191,31 @@
 
 
 @endsection
+
+{{-- <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const BASE_URL = @json(url('/'));
+            const tooltipElements = document.querySelectorAll('.help-tooltip');
+            tooltipElements.forEach(el => {
+                const tooltip = new bootstrap.Tooltip(el, {
+                    title: 'Loading...',    
+                    trigger: 'hover',
+                    html: true       
+                });
+                 el.addEventListener('mouseenter', function () {
+                     const routeName = el.dataset.route;
+
+                      if (!el.dataset.loaded) {
+                        fetch(`${BASE_URL}/get-help-content/${routeName}`)
+                        .then(res => res.json())   
+                        .then(data => {
+                            const content = data.description;
+                            el.setAttribute('data-bs-original-title', content);
+                            // tooltip.setContent({ '.tooltip-inner': content });
+                            el.dataset.loaded = 'true';
+                        });
+                    }
+            });
+        });
+    });
+    </script> --}}

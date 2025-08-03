@@ -66,12 +66,13 @@
                     <div class="row">
                         <div class="col-xxl-12">
                             <div class="card card-xxl-stretch mt-4">
-                                <div class="card-header">
+                                <div class="card-header align-items-center bg-light bd-cyan">
                                     <!--begin::Card title-->
-                                    <div class="card-title m-0">
+                                     <div class="card-title d-flex justify-content-between m-0">
                                         <h3 class="fw-bolder m-0">Add Task</h3>
                                     </div>
                                     <!--end::Card title-->
+                                    @include('help-section.help')
                                 </div>
 
                                 <!-- Card Body-->
@@ -93,7 +94,7 @@
                                                 </div>
                                             </div>
 
-                                            @if (Auth::user()->hasPermission('can-see-tasks'))
+                                            @if(Auth::user()->user_type == 'admin')
                                                 <div class="col-md-6">
                                                     <div class="fv-row mb-3">
                                                         <label class="form-label fw-bolder text-dark">Assigned To<span class="text-danger">*</span></label>

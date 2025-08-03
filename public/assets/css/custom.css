@@ -695,3 +695,10 @@ body.swal2-height-auto {
     text-overflow: ellipsis;
 }
 
+.tooltip-inner {
+    max-width: 350px; 
+    width: 100%; 
+    white-space: normal;
+    text-align: left 
+}
+
