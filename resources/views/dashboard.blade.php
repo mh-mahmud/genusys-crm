@@ -777,7 +777,7 @@
                 <!--begin::Row-->
                 <div class="row gy-5 g-xl-8">
                     <!--begin::Col-->
-                    <!-- <div class="col-xl-4">
+                    {{-- <div class="col-xl-4">
                        
                         <div class="card card-xl-stretch mb-xl-8">
                             
@@ -837,7 +837,7 @@
                            
                         </div>
                        
-                    </div> -->
+                    </div> --}}
 
                     <div class="col-xl-4">
                        
@@ -928,21 +928,18 @@
                       
                    </div>
 
+                   {{--
                     <div class="col-xl-8">
                         <!--begin::Tables Widget 9-->
                         <div class="card card-xl-stretch mb-5 mb-xl-8">
-                            <!--begin::Header-->
                             <div class="card-header card-header-dashboard border-0 bd-cyan-2">
                                 <h3 class="card-title align-items-start flex-column py-2 text-dark">
                                     <span class="card-label fw-bolder fs-3">Campaign</span>
                                 </h3>
                             </div>
-                            <!--end::Header-->
-                            <!--begin::Body-->
+
                             <div class="card-body py-3">
-                                <!--begin::Table container-->
                                 <div class="table-responsive">
-                                    <!--begin::Table-->
                                     <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
                                         <!--begin::Table head-->
                                         <thead>
@@ -950,8 +947,7 @@
                                             <th class="w-25px">
                                                 <div
                                                     class="form-check form-check-sm form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="checkbox" value="1"
-                                                           data-kt-check="true" data-kt-check-target=".widget-9-check"/>
+                                                    <input class="form-check-input" type="checkbox" value="1" data-kt-check="true" data-kt-check-target=".widget-9-check"/>
                                                 </div>
                                             </th>
                                             <th class="min-w-150px th-data">Campaign Title</th>
@@ -961,8 +957,7 @@
                                             <th class="min-w-120px th-data">Limit</th>
                                         </tr>
                                         </thead>
-                                        <!--end::Table head-->
-                                        <!--begin::Table body-->
+
                                         <tbody>
                                         @foreach($camp_list as $key=>$val)
                                             <tr>
@@ -1011,18 +1006,15 @@
                                                 </td>
                                             </tr>
                                         @endforeach
-
                                         </tbody>
-                                        <!--end::Table body-->
                                     </table>
-                                    <!--end::Table-->
                                 </div>
-                                <!--end::Table container-->
+
                             </div>
-                            <!--begin::Body-->
                         </div>
                         <!--end::Tables Widget 9-->
                     </div>
+                    --}}
 
                 </div>
                 <!--end::Row-->

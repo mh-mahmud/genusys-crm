@@ -35,9 +35,9 @@ class DashboardController extends Controller
         $data['invoice_count'] = Invoice::where('invoice_status', 'Unpaid')->count();
         $user_id = Auth::user()->id;
         if (Auth()->user()->user_type == 'admin') {
-            $data['lead_list'] = Lead::where('lead_status', 1)->orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'email', 'phone', 'gender', 'age', 'lead_source']);
+            $data['lead_list'] = Lead::orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'email', 'phone', 'gender', 'age', 'lead_source']);
         } else {
-            $data['lead_list'] = Lead::where('lead_status', 1)->where('created_by', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'email', 'phone', 'gender', 'age', 'lead_source']);
+            $data['lead_list'] = Lead::where('created_by', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'email', 'phone', 'gender', 'age', 'lead_source']);
         }
 
         if (Auth()->user()->user_type == 'admin') {
@@ -94,7 +94,7 @@ class DashboardController extends Controller
             //->where('leads.created_by', Auth::id())
             ->avg('product_specification.amc_rate');
         }
-        $data['agent_list'] = Agent::with('user')->where('status', 1)->orderBy('agent_id', 'desc')->limit(5)->get();
+        // $data['agent_list'] = Agent::with('user')->where('status', 1)->orderBy('agent_id', 'desc')->limit(5)->get();
         $data['todo_list'] = (Auth()->user()->user_type == 'admin') ? Task::where('status', '!=', 9)->limit(6)->get(['task_name', 'description', 'due_date', 'status']) : Task::where('created_by', $user_id)->orWhere('assigned_to', $user_id)->limit(6)->get(['task_name', 'description', 'due_date', 'status']);
         $data['notifications'] = Notification::leftJoin('leads', 'notifications.lead_id', '=', 'leads.id')
         ->leftJoin('users', 'notifications.notify_by', '=', 'users.id')
