@@ -126,9 +126,9 @@ use Carbon\Carbon;
 									<!-- <th class="min-w-150px">Form ID</th> -->
 									<th class="min-w-150px">Lead</th>
 									<th class="min-w-140px">Notify Date</th>
-									<th class="min-w-140px">Notify By</th>
+									<th class="min-w-140px">Notify To</th>
 									<th class="min-w-140px">Notify Message</th>
-									<th class="min-w-120px">Send SMS</th>
+									{{--<th class="min-w-120px">Send SMS</th>--}}
 									<th class="min-w-100px text-end-new">Actions</th>
 								</tr>
 							</thead>
@@ -157,8 +157,8 @@ use Carbon\Carbon;
 									</td>
 
 									<td class="text-dark fs-6">{{$notification->notify_msg }}</td>
-									<td class="text-dark fs-6">{{ $notification->send_sms == 1 ? 'Yes' : ($notification->send_sms == 0 ? 'No' : '') }}
-									</td>
+									{{--<td class="text-dark fs-6">{{ $notification->send_sms == 1 ? 'Yes' : ($notification->send_sms == 0 ? 'No' : '') }}
+									</td>--}}
 									<td>
 										<div class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
 											<a href="{{ route('notification-show', $notification->id) }}"

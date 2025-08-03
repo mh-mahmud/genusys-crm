@@ -2,6 +2,14 @@
 <html lang="en">
 <!--begin::Head-->
 
+@php
+
+$notify = \App\Models\Notification::where('notify_by', Auth::user()->id)->where('notify_seen', 0)->get();
+$count_notify = count($notify);
+
+
+@endphp
+
 <head>
 	<base href="">
 	<title>gPlex - Admin Dashboard </title>
@@ -580,13 +588,13 @@
 											<!--begin::Menu-->
 											<div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px" data-kt-menu="true">
 												<!--begin::Heading-->
-												<div class="d-flex flex-column bgi-no-repeat rounded-top" style="background-image:url('assets/media/misc/pattern-1.jpg')">
+												<div class="d-flex flex-column bgi-no-repeat rounded-top" style="background-image:url('{{ asset('assets/media/misc/pattern-1.jpg') }}">
 													<!--begin::Title-->
 													<h3 class="text-white fw-bold px-9 mt-10 mb-6">Notifications
-													<span class="fs-8 opacity-75 ps-3">24 reports</span></h3>
+													<span class="fs-8 opacity-75 ps-3">{{$count_notify}} Notification</span></h3>
 													<!--end::Title-->
 													<!--begin::Tabs-->
-													<ul class="nav nav-line-tabs nav-line-tabs-2x nav-stretch fw-bold px-9">
+													<!-- <ul class="nav nav-line-tabs nav-line-tabs-2x nav-stretch fw-bold px-9">
 														<li class="nav-item">
 															<a class="nav-link text-white opacity-75 opacity-state-100 pb-4 active" data-bs-toggle="tab" href="#kt_topbar_notifications_1">Alerts</a>
 														</li>
@@ -596,7 +604,7 @@
 														<li class="nav-item">
 															<a class="nav-link text-white opacity-75 opacity-state-100 pb-4" data-bs-toggle="tab" href="#kt_topbar_notifications_3">Logs</a>
 														</li>
-													</ul>
+													</ul> -->
 													<!--end::Tabs-->
 												</div>
 												<!--end::Heading-->
@@ -606,8 +614,12 @@
 													<div class="tab-pane fade show active" id="kt_topbar_notifications_1" role="tabpanel">
 														<!--begin::Items-->
 														<div class="scroll-y mh-325px my-5 px-8">
+
+															
 															<!--begin::Item-->
+															@foreach($notify as $key=>$val)
 															<div class="d-flex flex-stack py-4">
+																
 																<!--begin::Section-->
 																<div class="d-flex align-items-center">
 																	<!--begin::Symbol-->
@@ -626,17 +638,21 @@
 																	<!--end::Symbol-->
 																	<!--begin::Title-->
 																	<div class="mb-0 me-2">
-																		<a href="#" class="fs-6 text-gray-800 text-hover-primary fw-bolder">Project Alice</a>
-																		<div class="text-gray-400 fs-7">Phase 1 development</div>
+																		<a href="{{ route('notification-show', $val->id) }}" class="fs-6 text-gray-800 text-hover-primary fw-bolder">{{ $val->notify_msg }}</a>
+																		<!-- <div class="text-gray-400 fs-7">Phase 1 development</div> -->
 																	</div>
 																	<!--end::Title-->
 																</div>
 																<!--end::Section-->
 																<!--begin::Label-->
-																<span class="badge badge-light fs-8">1 hr</span>
+																<span class="badge badge-light fs-8">{{$val->notify_datetime}}</span>
 																<!--end::Label-->
+																
 															</div>
+															@endforeach
 															<!--end::Item-->
+
+															{{--
 															<!--begin::Item-->
 															<div class="d-flex flex-stack py-4">
 																<!--begin::Section-->
@@ -826,19 +842,19 @@
 																<!--end::Label-->
 															</div>
 															<!--end::Item-->
+															--}}
 														</div>
 														<!--end::Items-->
 														<!--begin::View more-->
 														<div class="py-3 text-center border-top">
-															<a href="../dist/pages/profile/activity.html" class="btn btn-color-gray-600 btn-active-color-primary">View All
-															<!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
+															<a href="{{ route('notification-index') }}" class="btn btn-color-gray-600 btn-active-color-primary">View All
 															<span class="svg-icon svg-icon-5">
 																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 																	<rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black" />
 																	<path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black" />
 																</svg>
 															</span>
-															<!--end::Svg Icon--></a>
+															</a>
 														</div>
 														<!--end::View more-->
 													</div>

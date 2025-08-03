@@ -4,25 +4,46 @@ namespace App\Services;
 
 use App\Models\Notification;
 use App\Models\Invoice;
+use Auth;
 
-class NotificationService
-{
-    public function getAllNotifications()
-{
-    return Notification::leftJoin('leads', 'notifications.lead_id', '=', 'leads.id')
-        ->leftJoin('users', 'notifications.notify_by', '=', 'users.id')
-        ->select(
-            'notifications.*',
-            'leads.first_name as lead_first_name',
-            'leads.last_name as lead_last_name',
-            'leads.email as lead_email',
-            'users.first_name as user_first_name',
-            'users.last_name as user_last_name',
-            'users.email as user_email'
-        )
-        ->orderBy('notifications.created_at', 'desc')
-        ->paginate(config('constants.ROW_PER_PAGE'));
-}
+class NotificationService {
+
+    public function getAllNotifications() {
+
+        if (Auth::user()->user_type == 'admin') {
+            return Notification::leftJoin('leads', 'notifications.lead_id', '=', 'leads.id')
+                ->leftJoin('users', 'notifications.notify_by', '=', 'users.id')
+                ->select(
+                    'notifications.*',
+                    'leads.first_name as lead_first_name',
+                    'leads.last_name as lead_last_name',
+                    'leads.email as lead_email',
+                    'users.first_name as user_first_name',
+                    'users.last_name as user_last_name',
+                    'users.email as user_email'
+                )
+                ->orderBy('notifications.created_at', 'desc')
+                ->paginate(config('constants.ROW_PER_PAGE'));
+        }
+        else {
+            return Notification::leftJoin('leads', 'notifications.lead_id', '=', 'leads.id')
+                ->leftJoin('users', 'notifications.notify_by', '=', 'users.id')
+                ->select(
+                    'notifications.*',
+                    'leads.first_name as lead_first_name',
+                    'leads.last_name as lead_last_name',
+                    'leads.email as lead_email',
+                    'users.first_name as user_first_name',
+                    'users.last_name as user_last_name',
+                    'users.email as user_email'
+                )
+                ->where('notify_by', Auth::user()->id)
+                ->orderBy('notifications.created_at', 'desc')
+                ->paginate(config('constants.ROW_PER_PAGE'));
+        }
+    }
+
+
 
     public function createNotification($data)
     {
@@ -31,7 +52,10 @@ class NotificationService
 
     public function getNotificationById($id)
     {
-        return Notification::findOrFail($id);
+        $update = Notification::findOrFail($id);
+        $update->notify_seen = 1;
+        $update->save();
+        return $update;
     }
 
     public function updateNotification($id, $data)
