@@ -3526,6 +3526,34 @@ $count_notify = count($notify);
 				});
 		});
 	</script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const BASE_URL = @json(url('/'));
+
+			document.querySelectorAll('.help-tooltip').forEach(el => {
+				const routeName = el.dataset.route;
+
+				fetch(`${BASE_URL}/get-help-content/${routeName}`)
+					.then(res => res.json())
+					.then(data => {
+						const content = data.description;
+						el.setAttribute('data-bs-original-title', content);
+
+						new bootstrap.Tooltip(el, {
+							trigger: 'hover',
+							html: true
+						});
+					})
+					.catch(() => {
+						el.setAttribute('data-bs-original-title', 'Error.');
+						new bootstrap.Tooltip(el, {
+							trigger: 'hover',
+							html: true
+						});
+					});
+			});
+		});
+	</script>
 	@yield('endScript')
 
 </body>
