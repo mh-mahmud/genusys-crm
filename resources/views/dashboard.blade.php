@@ -636,7 +636,7 @@
 											<!--end::Body-->
 										</div>
 										<!--end::List Widget 6-->
-					           </div>
+                    </div>
                     <!--end::Col-->
                     <!--begin::Col-->
                     <div class="col-xl-8">
@@ -840,106 +840,111 @@
                     </div> --}}
 
                     <div class="col-xl-4">
-                       
-                       <div class="card card-xl-stretch mb-xl-8">
-                         
-                           <div class="card-header card-header-dashboard border-0 bd-cyan-2">
-                               <h3 class="card-title fw-bolder"><span class="card-label fw-bolder fs-3">Todo List</span></h3>
-                               <div class="card-toolbar">
-                                 
-                                   <button type="button"
-                                           class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
-                                           data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                       
-                                       <span class="svg-icon svg-icon-2">
-                                           <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
-                                                viewBox="0 0 24 24">
-                                               <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                   <rect x="5" y="5" width="5" height="5" rx="1" fill="#000000"/>
-                                                   <rect x="14" y="5" width="5" height="5" rx="1" fill="#000000"
-                                                         opacity="0.3"/>
-                                                   <rect x="5" y="14" width="5" height="5" rx="1" fill="#000000"
-                                                         opacity="0.3"/>
-                                                   <rect x="14" y="14" width="5" height="5" rx="1" fill="#000000"
-                                                         opacity="0.3"/>
-                                               </g>
-                                           </svg>
-                                       </span>
-                                     
-                                   </button>
+                        
+                        <div class="card card-xl-stretch mb-xl-8">
+                            
+                            <div class="card-header card-header-dashboard border-0 bd-cyan-2">
+                                <h3 class="card-title fw-bolder"><span class="card-label fw-bolder fs-3">Todo List</span></h3>
+                                <div class="card-toolbar">
+                                    
+                                    <button type="button"
+                                            class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
+                                            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                        
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
+                                                    viewBox="0 0 24 24">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="5" y="5" width="5" height="5" rx="1" fill="#000000"/>
+                                                    <rect x="14" y="5" width="5" height="5" rx="1" fill="#000000"
+                                                            opacity="0.3"/>
+                                                    <rect x="5" y="14" width="5" height="5" rx="1" fill="#000000"
+                                                            opacity="0.3"/>
+                                                    <rect x="14" y="14" width="5" height="5" rx="1" fill="#000000"
+                                                            opacity="0.3"/>
+                                                </g>
+                                            </svg>
+                                        </span>
+                                        
+                                    </button>
 
-                               </div>
-                           </div>
-                       
-                           <div class="card-body pt-2">
+                                </div>
+                            </div>
+                        
+                            <div class="card-body pt-2">
 
-                               @php
-                                   $i=1;
-                               @endphp
-                               @foreach($todo_list as $key=>$val)
+                                @php
+                                    $i=1;
+                                @endphp
+                                @foreach($todo_list as $key=>$val)
 
-                                   @php
-                                       switch($i) {
-                                           case($i==1):
-                                               $bg_color = 'bg-success';
-                                           break;
+                                    @php
+                                        switch($i) {
+                                            case($i==1):
+                                                $bg_color = 'bg-success';
+                                            break;
 
-                                           case($i==2):
-                                               $bg_color = 'bg-danger';
-                                           break;
+                                            case($i==2):
+                                                $bg_color = 'bg-danger';
+                                            break;
 
-                                           case($i==3):
-                                               $bg_color = 'bg-warning';
-                                           break;
+                                            case($i==3):
+                                                $bg_color = 'bg-warning';
+                                            break;
 
-                                           case($i==4):
-                                               $bg_color = 'bg-primary';
-                                           break;
-                                           default:
-                                               $bg_color = 'bg-default';
-                                       }
-                                   @endphp
-                                   <div class="d-flex align-items-center mb-8">
-                                   
-                                       <span class="bullet bullet-vertical h-40px {{$bg_color}}"></span>
-                                  
-                                       <div class="form-check form-check-custom form-check-solid mx-5">
-                                           <input class="form-check-input" type="checkbox" value=""/>
-                                       </div>
-                                      
-                                       <div class="flex-grow-1">
-                                           <a href="{{ route('task-list') }}"
-                                              class="text-gray-800 text-hover-primary fw-bolder fs-6">{{$val->task_name}}</a>
-                                           <span class="text-muted d-block"
-                                                 style="color: red !important;font-size:10px;">Due Date: {{substr($val->due_date, 0, 10)}}</span>
-                                       </div>
-                                     
-                                       <span class=""
-                                             style="text-align:center;width:70px !important;font-size:9px;color:#fff;background-color:#3B71CA;padding:5px; border-radius:5px;">{{@$const_task[$val->status]}}</span>
-                                   </div>
-                                   @php
-                                       $i++;
-                                   @endphp
-                               @endforeach
+                                            case($i==4):
+                                                $bg_color = 'bg-primary';
+                                            break;
+                                            default:
+                                                $bg_color = 'bg-default';
+                                        }
+                                    @endphp
+                                    <div class="d-flex align-items-center mb-8">
+                                    
+                                        <span class="bullet bullet-vertical h-40px {{$bg_color}}"></span>
+                                    
+                                        <div class="form-check form-check-custom form-check-solid mx-5">
+                                            <input class="form-check-input" type="checkbox" value=""/>
+                                        </div>
+                                        
+                                        <div class="flex-grow-1">
+                                            <a href="{{ route('task-list') }}"
+                                                class="text-gray-800 text-hover-primary fw-bolder fs-6">{{$val->task_name}}</a>
+                                            <span class="text-muted d-block"
+                                                    style="color: red !important;font-size:10px;">Due Date: {{substr($val->due_date, 0, 10)}}</span>
+                                        </div>
+                                        
+                                        <span class=""
+                                                style="text-align:center;width:70px !important;font-size:9px;color:#fff;background-color:#3B71CA;padding:5px; border-radius:5px;">{{@$const_task[$val->status]}}</span>
+                                    </div>
+                                    @php
+                                        $i++;
+                                    @endphp
+                                @endforeach
 
-                           </div>
-                          
-                       </div>
-                      
-                   </div>
-
-                   {{--
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
                     <div class="col-xl-8">
                         <!--begin::Tables Widget 9-->
                         <div class="card card-xl-stretch mb-5 mb-xl-8">
+                            <!--begin::Header-->
                             <div class="card-header card-header-dashboard border-0 bd-cyan-2">
-                                <h3 class="card-title align-items-start flex-column py-2 text-dark">
-                                    <span class="card-label fw-bolder fs-3">Campaign</span>
+                                <h3 class="card-title align-items-start flex-column text-dark">
+                                    <span class="card-label fw-bolder fs-3">New Invoices</span>
                                 </h3>
+                                <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top"
+                                     data-bs-trigger="hover" title="">                                 
+                                </div>
                             </div>
-
+                            <!--end::Header-->
+                            <!--begin::Body-->
                             <div class="card-body py-3">
+                                <!--begin::Table container-->
                                 <div class="table-responsive">
+                                    <!--begin::Table-->
                                     <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
                                         <!--begin::Table head-->
                                         <thead>
@@ -947,19 +952,23 @@
                                             <th class="w-25px">
                                                 <div
                                                     class="form-check form-check-sm form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="checkbox" value="1" data-kt-check="true" data-kt-check-target=".widget-9-check"/>
+                                                    <input class="form-check-input" type="checkbox" value="1"
+                                                           data-kt-check="true" data-kt-check-target=".widget-9-check"/>
                                                 </div>
                                             </th>
-                                            <th class="min-w-150px th-data">Campaign Title</th>
-                                            <th class="min-w-140px th-data">Start date</th>
-                                            <th class="min-w-120px th-data">End Start</th>
-                                            <th class="min-w-120px th-data">Type</th>
-                                            <th class="min-w-120px th-data">Limit</th>
+                                            <th class="min-w-150px th-data">Invoice No</th>
+                                            <th class="min-w-140px th-data">Amount</th>
+                                            <th class="min-w-120px th-data">Customer</th>
+                                            <th class="min-w-150px th-data">Due Date</th>
+                                            <th class="min-w-120px th-data">Status</th>
+                                            <th class="min-w-120px th-data">Payment</th>
+
                                         </tr>
                                         </thead>
-
+                                        <!--end::Table head-->
+                                        <!--begin::Table body-->
                                         <tbody>
-                                        @foreach($camp_list as $key=>$val)
+                                        @foreach($invoice_list as $key=>$val)
                                             <tr>
                                                 <td>
                                                     <div
@@ -969,60 +978,203 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="d-flex align-items-center">
+                                                    <div class="d-flex align-items-left">
+                                                        <!-- <div class="symbol symbol-45px me-5">
+                                                            <img src="assets/media/avatars/150-3.jpg" alt="" />
+                                                        </div> -->
                                                         <div class="d-flex justify-content-start flex-column">
-                                                            <a href="{{ route('campaign-show', $val->id) }}"
-                                                               class="text-dark fw-bolder text-hover-primary fs-6">{{ $val->campaign_title }}</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <a href="#"
-                                                       class="text-dark fw-bolder text-hover-primary d-block fs-6">{{$val->start_date}}</a>
-                                                </td>
-                                                <td class="text-end">
-                                                    <div class="d-flex flex-column w-100 me-2">
-                                                        <div class="d-flex flex-stack mb-2">
-                                                            <span
-                                                                class="text-muted me-2 fs-7 fw-bold">{{$val->end_date}}</span>
+                                                            <a href="{{ URL::to("invoice/$val->id") }}"
+                                                               class="text-dark fw-bolder text-hover-primary fs-6">{{ $val->invoice_number }}</a>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td class="text-end">
+                                                    <span class="text-dark fw-bold fs-6">
+                                                        {{ number_format($val->total_amount, 2) }}
+                                                    </span>
+                                                </td>
+                                                <td class="text-left">
                                                     <div class="d-flex flex-column w-100 me-2">
                                                         <div class="d-flex flex-stack mb-2">
                                                             <span
-                                                                class="text-muted me-2 fs-7 fw-bold">{{$val->campaign_type}}</span>
+                                                                class="text-muted me-2 fs-7 fw-bold">
+                                                                {{$val->first_name}} {{$val->last_name}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="d-flex flex-column w-100 me-2">
+                                                        <div class="d-flex flex-stack mb-2">
+                                                            <span
+                                                                class="text-muted me-2 fs-7 fw-bold">
+                                                                 @if($val->due_date)
+                                                                {{ \Carbon\Carbon::parse($val->due_date)->format('d-m-Y') }}
+                                                                @endif
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                @php
+                                                $paymentDetails = collect($val->payment_details);
+                                                //$totalPayments = $paymentDetails->sum('payment');
+                                                // Filter payments where deposit_status is 'Success'
+                                                $successfulPayments = $paymentDetails->filter(function ($payment) {
+                                                    return isset($payment['deposit_status']) && $payment['deposit_status'] === 'Success';
+                                                });
+
+                                                // Sum only the successful payments
+                                                $totalPayments = $successfulPayments->sum('payment');
+
+                                                $lastPayment = $paymentDetails->last();
+                                                $paymentAmount = $lastPayment['payment'] ?? '0.00';
+                                                //$dueAmount = $lastPayment['due'] ?? $invoice->total_amount;
+                                                $dueAmount = max(0, $val->total_amount - $totalPayments) ?? $val->total_amount;
+                                            
+
+                                                if ($totalPayments == $val->total_amount) {
+                                                $status = 'Paid';
+                                                $statusClass = 'badge-light-success';
+                                                } elseif ($totalPayments == 0) {
+                                                $status = 'Unpaid';
+                                                $statusClass = 'badge-light-danger';
+                                                } elseif ($totalPayments > 0 && $totalPayments < $val->total_amount) {
+                                                    $status = 'Partial Paid';
+                                                    $statusClass = 'badge-light-warning';
+                                                    }else {
+                                                    //fallback if amount exceeds total or any unexpected case
+                                                    $status = 'Check Payment';
+                                                    $statusClass = 'badge-light-info';
+                                                }
+
+                                                @endphp
+                                                 <td class="text-center">
+                                                    <div class="d-flex flex-column w-100 me-2">
+                                                        <div class="d-flex flex-stack mb-2">
+                                                            <span
+                                                                class="text-muted me-2 fs-7 fw-bold badge {{ $statusClass }}">
+                                                                {{$status}} 
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td class="text-end">
-                                                    <div class="d-flex flex-column w-100 me-2">
-                                                        <div class="d-flex flex-stack mb-2">
-                                                            <span
-                                                                class="text-muted me-2 fs-7 fw-bold">{{$val->campaign_limit}}</span>
-                                                        </div>
-                                                    </div>
+                                                    <span class="text-muted fs-7 fw-bold">
+                                                        {{ number_format($totalPayments, 2) }}
+                                                    </span>
                                                 </td>
+
+
                                             </tr>
                                         @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
 
+                                        </tbody>
+                                        <!--end::Table body-->
+                                    </table>
+                                    <!--end::Table-->
+                                </div>
+                                <!--end::Table container-->
                             </div>
+                            <!--begin::Body-->
                         </div>
                         <!--end::Tables Widget 9-->
                     </div>
-                    --}}
+                    {{--
+                        <div class="col-xl-8">
+                            <!--begin::Tables Widget 9-->
+                            <div class="card card-xl-stretch mb-5 mb-xl-8">
+                                <div class="card-header card-header-dashboard border-0 bd-cyan-2">
+                                    <h3 class="card-title align-items-start flex-column py-2 text-dark">
+                                        <span class="card-label fw-bolder fs-3">Campaign</span>
+                                    </h3>
+                                </div>
 
+                                <div class="card-body py-3">
+                                    <div class="table-responsive">
+                                        <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                            <tr class="fw-bolder text-muted">
+                                                <th class="w-25px">
+                                                    <div
+                                                        class="form-check form-check-sm form-check-custom form-check-solid">
+                                                        <input class="form-check-input" type="checkbox" value="1" data-kt-check="true" data-kt-check-target=".widget-9-check"/>
+                                                    </div>
+                                                </th>
+                                                <th class="min-w-150px th-data">Campaign Title</th>
+                                                <th class="min-w-140px th-data">Start date</th>
+                                                <th class="min-w-120px th-data">End Start</th>
+                                                <th class="min-w-120px th-data">Type</th>
+                                                <th class="min-w-120px th-data">Limit</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            @foreach($camp_list as $key=>$val)
+                                                <tr>
+                                                    <td>
+                                                        <div
+                                                            class="form-check form-check-sm form-check-custom form-check-solid">
+                                                            <input class="form-check-input widget-9-check" type="checkbox"
+                                                                value="1"/>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="d-flex justify-content-start flex-column">
+                                                                <a href="{{ route('campaign-show', $val->id) }}"
+                                                                class="text-dark fw-bolder text-hover-primary fs-6">{{ $val->campaign_title }}</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#"
+                                                        class="text-dark fw-bolder text-hover-primary d-block fs-6">{{$val->start_date}}</a>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <div class="d-flex flex-column w-100 me-2">
+                                                            <div class="d-flex flex-stack mb-2">
+                                                                <span
+                                                                    class="text-muted me-2 fs-7 fw-bold">{{$val->end_date}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <div class="d-flex flex-column w-100 me-2">
+                                                            <div class="d-flex flex-stack mb-2">
+                                                                <span
+                                                                    class="text-muted me-2 fs-7 fw-bold">{{$val->campaign_type}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <div class="d-flex flex-column w-100 me-2">
+                                                            <div class="d-flex flex-stack mb-2">
+                                                                <span
+                                                                    class="text-muted me-2 fs-7 fw-bold">{{$val->campaign_limit}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!--end::Tables Widget 9-->
+                        </div>
+                        --}}
+
+                    </div>
+                    
+                    <!--end::Row-->
+
+                    <!--begin::Row-->
+                    <!-- calender design is here -->
+                    <!--end::Row-->
                 </div>
-                <!--end::Row-->
-
-                <!--begin::Row-->
-                <!-- calender design is here -->
-                <!--end::Row-->
-            </div>
             <!--end::Container-->
         </div>
         <!--end::Post-->

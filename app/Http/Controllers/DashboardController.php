@@ -40,6 +40,18 @@ class DashboardController extends Controller
             $data['lead_list'] = Lead::where('created_by', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'email', 'phone', 'gender', 'age', 'lead_source']);
         }
 
+        $invoice_query = Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
+            ->join('leads', 'customers.lead_id', '=', 'leads.id')
+            ->select('invoices.*', 'customers.customer_group', 'leads.first_name', 'leads.last_name')
+            ->orderBy('invoices.created_at', 'desc');
+
+        if (!Auth::user()->hasPermission('can-see-invoice')) {
+            $invoice_query->where('invoices.created_by', Auth::id());
+
+        }
+
+        $data['invoice_list'] = $invoice_query->limit(5)->get();
+
         if (Auth()->user()->user_type == 'admin') {
             $data['camp_list'] = Campaign::where('status', 1)->orderBy('id', 'desc')->limit(5)->get(['id', 'campaign_title', 'start_date', 'end_date', 'campaign_type', 'campaign_limit']);
         } else {
@@ -95,7 +107,13 @@ class DashboardController extends Controller
             ->avg('product_specification.amc_rate');
         }
         // $data['agent_list'] = Agent::with('user')->where('status', 1)->orderBy('agent_id', 'desc')->limit(5)->get();
-        $data['todo_list'] = (Auth()->user()->user_type == 'admin') ? Task::where('status', '!=', 9)->limit(6)->get(['task_name', 'description', 'due_date', 'status']) : Task::where('created_by', $user_id)->orWhere('assigned_to', $user_id)->limit(6)->get(['task_name', 'description', 'due_date', 'status']);
+        $task_query = Task::where('tasks.status', '!=', config('constants.TASK_STATUS_CLOSED_ID'));
+        if (!Auth::user()->hasPermission('can-see-tasks')) {
+            $task_query->where('assigned_to', Auth::id());
+
+        }
+        $data['todo_list'] = $task_query->orderBy('id', 'DESC')->limit(6)->get();
+        // $data['todo_list'] = (Auth()->user()->user_type == 'admin') ? Task::where('status', '!=', 9)->limit(6)->get(['task_name', 'description', 'due_date', 'status']) : Task::where('created_by', $user_id)->orWhere('assigned_to', $user_id)->limit(6)->get(['task_name', 'description', 'due_date', 'status']);
         $data['notifications'] = Notification::leftJoin('leads', 'notifications.lead_id', '=', 'leads.id')
         ->leftJoin('users', 'notifications.notify_by', '=', 'users.id')
         ->select(

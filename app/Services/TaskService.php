@@ -53,7 +53,7 @@ class TaskService
             return  DB::transaction(function () use ($data) {
                 $dataObj                        = new Task();
                 $dataObj->task_name             = $data['task_name'];
-                $dataObj->assigned_to           = Auth::user()->user_type == 'admin' ? $data['assigned_to'] : Auth::id();
+                $dataObj->assigned_to           = $data['assigned_to'] ?? Auth::id();
                 $dataObj->description           = $data['description'];
                 $dataObj->due_date              = $data['due_date'];
                 // $dataObj->status                = config('constants.TASK_TO_DO');
@@ -65,7 +65,7 @@ class TaskService
 
                 $notificationArr =  [
                                         "notify_msg" => "New task added",
-                                        "user_id"    => $dataObj->assigned_to
+                                        "notify_by"    => $dataObj->assigned_to
                                     ];
                 Helper::storeNotification($notificationArr);
                 

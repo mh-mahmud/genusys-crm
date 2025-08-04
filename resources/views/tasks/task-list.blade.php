@@ -97,7 +97,7 @@
                                         <tr class="fw-bolder text-muted bg-light bd-cyan">
                                             <th class="ps-4 min-w-120px">SL</th>
                                             <th class="min-w-150px">Task Name</th>
-                                            @if (Auth::user()->user_type == 'admin')
+                                            @if (Auth::user()->hasPermission('can-see-tasks')) 
                                                 <th class="min-w-120px">Assigned To</th>
                                             @endif
                                             <th class="min-w-150px w-400px">Description</th>
@@ -120,7 +120,7 @@
                                                     {{ ($tasks->currentPage() - 1) * $tasks->perPage() + $loop->iteration }}
                                                 </td>
                                                 <td class="text-dark fs-6">{{ $task->task_name }}</td>
-                                                @if (Auth::user()->user_type == 'admin')
+                                                @if (Auth::user()->hasPermission('can-see-tasks')) 
                                                     <td class="text-dark fs-6">
                                                         {{ $task->assignedUser?->first_name ?? '' }} {{ $task->assignedUser?->last_name ?? '' }}
                                                     </td>
