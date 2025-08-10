@@ -650,7 +650,7 @@
                                                     @if (!in_array($key, ['id', 'lead_id', 'form_id', 'created_at', 'updated_at']))
                                                         @php
                                                             $field = $fields->where('field_name', $key)->first();
-                                                            $formSize = $field->form_size ?? 'col-md-12';
+                                                            $formSize = $field->form_size ?? 'col-md-6';
                                                             $isFile = $field && $field->field_value === 'file';
 
                                                             //Map the column size to the corresponding mb- class
@@ -691,23 +691,19 @@
                                             @endforeach
 
                                             <div class="row mb-1">
-                                                <strong
-                                                    class="fs-3">{{ ucwords(str_replace('_', ' ', $tableName)) }}</strong>
+                                                
                                                 @foreach ($columnSizes as $formSize)
+                                                    
                                                     <div class="{{ $formSize }}">
-                                                        <div class="g-lead-details mb-5"
-                                                             style="columns: {{ $columnSize }}">
+                                                        <div class="fs-3 {{ $formSize }}" style="width:100%;border:1px solid #DDD;padding:7px;margin-bottom:10px;margin-top:30px;background-color:#54B4D3;">{{ ucwords(str_replace('_', ' ', $tableName)) }}</div>
+                                                        <div class="g-lead-details mb-5" style="columns: {{ $columnSize }}">
+
                                                             @foreach ($formData[$formSize] as $dataItem)
-                                                                <div
-                                                                    class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                            <span
-                                                class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">
-                                                {{ ucwords(str_replace('_', ' ', $dataItem['key'])) }}
-                                            </span>
+                                                                <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                                                    <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">{{ ucwords(str_replace('_', ' ', $dataItem['key'])) }}</span>
                                                                     @if ($dataItem['isFile'])
                                                                         @if (!empty($dataItem['value']))
-                                                                            <span><a
-                                                                                    href="{{ url('uploads/files/' . $dataItem['value']) }}"
+                                                                            <span><a href="{{ url('uploads/files/' . $dataItem['value']) }}"
                                                                                     download>Download</a></span>
                                                                         @else
                                                                             <span></span>

@@ -42,7 +42,11 @@ class Lead extends Model
        'lead_start_date',
        'lead_notes',
        'created_by',
-       'profile_image'
+       'profile_image',
+       'home_phone',
+       'work_phone',
+       'time_at_residence',
+       'prior_address'
    ];
 
     public function leadsForm()
