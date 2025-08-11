@@ -1083,10 +1083,7 @@ class LeadController  extends Controller
             }
         }
 
-        // dd($result);
-
-        // insert into leads
-        // dd($form_id);
+        DB::beginTransaction();
         $lead = new Lead();
         $lead->form_id = $form_id;
         $lead->first_name = $result['firstname'];
@@ -1116,9 +1113,10 @@ class LeadController  extends Controller
         $gninfo = new GeneralInformation();
         $gninfo->lead_id = $lead_id;
         $gninfo->form_id = $form_id;
-        $gninfo->created_by = Auth::user->id();
-        $gninfo->effective_date = $result['datequoted'];
+        $gninfo->created_by = Auth::user()->id;
+        $gninfo->effective_date = date("Y-m-d", strtotime($result['datequoted']));
         $gninfo->policy_term = $result['priorinsurance'];
+        // $gninfo->policy_term = null;
         $gninfo->payment_option = $result['paymentmethod'];
         $gninfo->exclusions = $result['numofexclusions'];
         $gninfo->allow_credit_score = $result['creditscore'];
@@ -1129,7 +1127,7 @@ class LeadController  extends Controller
         $gninfo->medical_payments = null;
         $gninfo->uninsured_bi = $cardata1['uninsbi'];
         $gninfo->uninsured_pd = $cardata1['uninspd'];
-        $gninfo->accidental_death = $result['accdeath'];
+        $gninfo->accidental_death = null;
         $gninfo->save();
 
         // insert into quotes data
@@ -1137,21 +1135,113 @@ class LeadController  extends Controller
         $qdata->lead_id = $lead_id;
         $qdata->form_id = $form_id;
         $qdata->created_by = Auth::user()->id;
-        $qdata->contact_method = $result['kaka'];
-        $qdata->preferred_contact = $result['kaka'];
-        $qdata->lead_source = $result['kaka'];
-        $qdata->marketing_number = $result['kaka'];
-        $qdata->quote_description = $result['kaka'];
-        $qdata->native_language = $result['kaka'];
-        $qdata->paperles_discount = $result['kaka'];
+        $qdata->contact_method = $result['contactsource'];
+        $qdata->preferred_contact = $result['preferredcontact'];
+        $qdata->lead_source = $result['leadsource'];
+        $qdata->marketing_number = $result['marketingnumber'];
+        $qdata->quote_description = $result['quotedescription'];
+        $qdata->native_language = $result['nativelanguage'];
+        $qdata->paperles_discount = $result['paperlessdiscount'];
+        $qdata->save();
 
         // insert into driver information
+        $dvinfo = new DriverInformation();
+        $dvinfo->lead_id = $lead_id;
+        $dvinfo->form_id = $form_id;
+        $dvinfo->created_by = Auth::user()->id;
+        $dvinfo->drivers = $result['numofdrivers'];
+        $dvinfo->driver_type = $driver1['persontype'];
+        $dvinfo->full_name = $driver1['firstname']." ".$driver1['middlename']." ".$driver1['lastname'];
+        $dvinfo->dob = date("Y-m-d", strtotime($driver1['dob']));
+        $dvinfo->age = $driver1['age'];
+        $dvinfo->gender = $driver1['gender'];
+        $dvinfo->marital = $driver1['marital'];
+        $dvinfo->relationship = $driver1['relation'];
+        $dvinfo->dl_number = $driver1['drvlicensenumber'];
+        $dvinfo->save();
 
         // insert into driver attribute
+        $dvattr = new DriverAttributes();
+        $dvattr->lead_id = $lead_id;
+        $dvattr->form_id = $form_id;
+        $dvattr->created_by = Auth::user()->id;
+        $dvattr->prior_insurance = $driver1['priorinsurance'];
+        $dvattr->reason_for_no_insurance = $driver1['reasonfornoinsurance'];
+        $dvattr->time_licensed_us = $driver1['monthslicensed'];
+        $dvattr->time_licensed_texas = $driver1['monthslicensedstate'];
+
+        $dvattr->foreign_licensed = $driver1['monthsforeignlicense'];
+        $dvattr->foreign_licensed_experience = $driver1['monthsforeignlicense'];
+
+        $dvattr->sr_22_reason_filling = $driver1['sr22reason'];
+        $dvattr->suspended_license = $driver1['suspendedlic'];
+        $dvattr->time_since_suspension = $driver1['monthssuspended'];
+        $dvattr->industry = $driver1['industryoccupation'];
+        $dvattr->occupation = $driver1['occupation'];
+        $dvattr->time_employed = $driver1['employedtime'];
+        $dvattr->education_level = $driver1['educationlevel'];
+        $dvattr->residence_type = $driver1['residencytype'];
+        $dvattr->residence_status = $driver1['residencystatus'];
+        $dvattr->property_insurance = $driver1['propertyinsurance'];
+        $dvattr->companion_home = $driver1['isacompany'];
+        $dvattr->driver_training = $driver1['driverstraining'];
+        $dvattr->defensive_driving = $driver1['defensivedriving'];
+        $dvattr->sr22 = $driver1['sr22'];
+        $dvattr->sr22a = $driver1['sr22a'];
+        $dvattr->save();
 
         // insert into vehicle information
+        $vidata = new VehicleInformation();
+        $vidata->lead_id = $lead_id;
+        $vidata->form_id = $form_id;
+        $vidata->created_by = Auth::user()->id;
+        $vidata->cars = $cardata1['policylinkid'];
+        $vidata->car_type = $cardata1['vehicletype'];
+        $vidata->vin = $cardata1['vin'];
+        $vidata->model_year = $cardata1['year'];
+        $vidata->make = $cardata1['maker'];
+        $vidata->model = $cardata1['model'];
+        $vidata->license_plate_no = $cardata1['licenseplatenumber'];
+        $vidata->zip_code = $cardata1['zipcode'];
+        $vidata->country = $cardata1['county'];
+        $vidata->city = $cardata1['city'];
+        $vidata->alternate_garage = $cardata1['garaged'];
+        $vidata->loss_payee_type = $cardata1['purchasetype'];
+        $vidata->comp = $cardata1['comp'];
+        $vidata->coll = $cardata1['coll'];
+        $vidata->towing = $cardata1['towing'];
+        $vidata->rental = $cardata1['rental'];
+        $vidata->custom = $cardata1['custom'];
+        $vidata->gap = $cardata1['gapcoverage'];
+        $vidata->save();
 
         // insert into vehicle attributes
+        $vi_attr = new VehicleAttributes();
+        $vi_attr->lead_id = $lead_id;
+        $vi_attr->form_id = $form_id;
+        $vi_attr->created_by = Auth::user()->id;
+        $vi_attr->usage = $cardata1['usage'];
+        $vi_attr->ride_share = $cardata1['rideshare'];
+        $vi_attr->primary_operator = $cardata1['primaryoperator'];
+        $vi_attr->percent_driven_to_work = $cardata1['percenttowork'];
+        $vi_attr->telematics = null;
+        $vi_attr->miles_driven_to_work = $cardata1['miles'];
+        $vi_attr->annual_miles_driven = $cardata1['annualmiles'];
+        $vi_attr->odometer = $cardata1['odometer'];
+        $vi_attr->purchase_cost = $cardata1['purchasecost'];
+        $vi_attr->msrp = $cardata1['msrp'];
+        $vi_attr->acv = $cardata1['acv'];
+        $vi_attr->purchase_date = date("Y-m-d", strtotime($cardata1['purchasedate']));
+        $vi_attr->new_or_used = null;
+        $vi_attr->leased_vehicle = $cardata1['leasedvehicle'];
+        $vi_attr->salvaged = $cardata1['salvaged'];
+        $vi_attr->anti_theft = $cardata1['antitheft'];
+        $vi_attr->save();
+        DB::commit();
+
+        Helper::storeLog("Json File uploaded and data inserted successfully", "Lead", "Upload Json",$lead_id);
+        return redirect()->back()->with('success', "File uploaded and data inserted successfully.");
+
     }
 
 
