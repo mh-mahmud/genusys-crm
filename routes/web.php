@@ -68,8 +68,12 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/lead/total-lead', [LeadController::class, 'total_lead'])->name('total-lead');
 	Route::get('/lead/create', [LeadController::class, 'create'])->name('lead-create')->middleware(['check-permission']);
 	Route::get('/lead/leads-upload', [LeadController::class, 'leads_upload'])->name('leads-upload')->middleware(['check-permission']);
+	Route::get('/lead/leads-json-upload', [LeadController::class, 'leads_json_upload'])->name('leads-json-upload')->middleware(['check-permission']);
 	Route::get('/lead/sample-file', [LeadController::class, 'downloadSampleFile'])->name('sample-file');
+
 	Route::post('/lead/upload', [LeadController::class, 'upload_file'])->name('lead-upload-file');
+	Route::post('/lead/upload/json', [LeadController::class, 'upload_json_file'])->name('lead-upload-json-file');
+
     Route::post('/lead', [LeadController::class, 'store'])->name('lead-store');
 	Route::post('/lead/quick-lead-store', [LeadController::class, 'quickLeadStore'])->name('quick-lead-store');
 	Route::get('/lead/{id?}', [LeadController::class, 'show'])->name('lead-show')->middleware(['check-permission']);
