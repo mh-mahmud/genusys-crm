@@ -11,3 +11,4 @@ ALTER TABLE `lead_form_details` ADD `form_serial` INT NULL DEFAULT NULL AFTER `f
 ALTER TABLE `leads` ADD `home_phone` VARCHAR(50) NULL DEFAULT NULL AFTER `phone`, ADD `work_phone` VARCHAR(50) NULL DEFAULT NULL AFTER `home_phone`;
 ALTER TABLE `leads` ADD `prior_address` TEXT NULL DEFAULT NULL AFTER `address`;
 ALTER TABLE `leads` ADD `time_at_residence` VARCHAR(255) NULL DEFAULT NULL AFTER `work_phone`;
+ALTER TABLE `leads` ADD `language` VARCHAR(50) NULL DEFAULT NULL AFTER `country`;

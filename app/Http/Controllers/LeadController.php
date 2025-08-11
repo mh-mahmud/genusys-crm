@@ -32,6 +32,13 @@ use DateTime;
 use App\Models\Product;
 use App\Helpers\Helper;
 
+use App\Models\VehicleInformation;
+use App\Models\VehicleAttributes;
+use App\Models\GeneralInformation;
+use App\Models\QuoteDetails;
+use App\Models\DriverAttributes;
+use App\Models\DriverInformation;
+
 class LeadController  extends Controller
 {
     protected $leadService;
@@ -589,6 +596,12 @@ class LeadController  extends Controller
         return view('leads.leads_upload', compact('formId'));
     }
 
+    public function leads_json_upload(Request $request)
+    {
+        $formId = $request->input('form_id');
+        return view('leads.leads_json_upload', compact('formId'));
+    }
+
 
     public function downloadSampleFile_backup(Request $request)
     {
@@ -1016,6 +1029,129 @@ class LeadController  extends Controller
         } else {
             return redirect()->back()->with('error', 'File not uploaded.');
         }
+    }
+
+    public function upload_json_file(Request $request) {
+        // dd($request->form_id);
+        $form_id = $request->form_id;
+        $messages = [
+            'fileUpload.required' => 'The file upload is required.',
+            'fileUpload.file' => 'The uploaded file must be a valid file.',
+            'fileUpload.mimes' => 'The uploaded file must be a file of type: json',
+            // 'form_id.required' => 'The form ID is required.',
+            // 'form_id.exists' => 'The selected form ID is invalid.',
+        ];
+
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'fileUpload' => 'required|file|mimes:json',
+            // 'form_id' => 'required|exists:leads_form,form_id'
+        ], $messages);
+
+        if ($validator->fails()) {
+            // Collect validation error messages
+            $errorMessages = implode(' ', $validator->errors()->all());
+            return redirect()->back()->with('error', $errorMessages)->withInput();
+        }
+
+        $file = $request->file('fileUpload');
+        $path = $file->getRealPath();
+        $data = file_get_contents($path);
+        // $data = json_decode($data);
+        $jdata = json_decode($data, true);
+        $quote_data = $jdata['QuoteData'];
+
+        // ratedata for another use
+        $rate_data = $jdata['RateAnalysisResults'];
+
+
+        $lines = explode("\r\n", $quote_data);
+        $result = [];
+        $driver1 = [];
+        $cardata1 = [];
+
+        foreach($lines as $line) {
+            $parts = str_getcsv($line);
+            if(isset($parts[0], $parts[2]) && $parts[1]=="pol0") {
+                $result[$parts[0]] = $parts[2];
+            }
+            if(isset($parts[0], $parts[2]) && $parts[1]=="drv1") {
+                $driver1[$parts[0]] = $parts[2];
+            }
+            if(isset($parts[0], $parts[2]) && $parts[1]=="car1") {
+                $cardata1[$parts[0]] = $parts[2];
+            }
+        }
+
+        // dd($result);
+
+        // insert into leads
+        // dd($form_id);
+        $lead = new Lead();
+        $lead->form_id = $form_id;
+        $lead->first_name = $result['firstname'];
+        $lead->last_name = $result['lastname'];
+        $lead->email = $result['emailaddress'];
+        $lead->phone = $result['cellphone'];
+        $lead->home_phone = $result['homephone'];
+        $lead->work_phone = $result['workphone'];
+        $lead->time_at_residence = $result['residetime'];
+        $lead->gender = $result['gender'];
+        $lead->dob = date("Y-m-d", strtotime($result['dob']));
+        $lead->marital_status = $result['marital'];
+        $lead->address = $result['address1'];
+        $lead->prior_address = $result['prioraddr1'];
+        $lead->age = $result['age'];
+        $lead->lead_status = "New";
+        $lead->city = $result['city'];
+        $lead->zip = $result['zipcode'];
+        $lead->state = $result['state'];
+        $lead->country = $result['countryoforigin'];
+        $lead->language = $result['nativelanguage'];
+        $lead->save();
+        $lead_id = $lead->id;
+
+
+        // insert into general information
+        $gninfo = new GeneralInformation();
+        $gninfo->lead_id = $lead_id;
+        $gninfo->form_id = $form_id;
+        $gninfo->created_by = Auth::user->id();
+        $gninfo->effective_date = $result['datequoted'];
+        $gninfo->policy_term = $result['priorinsurance'];
+        $gninfo->payment_option = $result['paymentmethod'];
+        $gninfo->exclusions = $result['numofexclusions'];
+        $gninfo->allow_credit_score = $result['creditscore'];
+        $gninfo->non_owner = $result['nonowner'];
+        $gninfo->broadform = $result['broadform'];
+        $gninfo->liability = null;
+        $gninfo->pip = $cardata1['pip'];
+        $gninfo->medical_payments = null;
+        $gninfo->uninsured_bi = $cardata1['uninsbi'];
+        $gninfo->uninsured_pd = $cardata1['uninspd'];
+        $gninfo->accidental_death = $result['accdeath'];
+        $gninfo->save();
+
+        // insert into quotes data
+        $qdata = new QuoteDetails();
+        $qdata->lead_id = $lead_id;
+        $qdata->form_id = $form_id;
+        $qdata->created_by = Auth::user()->id;
+        $qdata->contact_method = $result['kaka'];
+        $qdata->preferred_contact = $result['kaka'];
+        $qdata->lead_source = $result['kaka'];
+        $qdata->marketing_number = $result['kaka'];
+        $qdata->quote_description = $result['kaka'];
+        $qdata->native_language = $result['kaka'];
+        $qdata->paperles_discount = $result['kaka'];
+
+        // insert into driver information
+
+        // insert into driver attribute
+
+        // insert into vehicle information
+
+        // insert into vehicle attributes
     }
 
 
