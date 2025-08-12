@@ -348,12 +348,9 @@ class LeadController  extends Controller
 
     public function add($tableName, $leadId)
     {
-
-
         $columns = [];
         $columnDetails = [];
         $fields = collect(); 
-        // Decide tables to fetch based on table name
         $tablesMap = [
             'driver_information'  => ['driver_information', 'driver_attributes'],
             'vehicle_information' => ['vehicle_information', 'vehicle_attributes']
