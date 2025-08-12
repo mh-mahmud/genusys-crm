@@ -327,7 +327,7 @@
                                    data-bs-toggle="tab" href="#g_lead_table" data-tab="g_lead_table"
                                    id="g_lead_table_tab"
                                    data-bs-target="#g_lead_table" role="tab" aria-controls="g_lead_table"
-                                   aria-selected="true">Lead Table</a>
+                                   aria-selected="true">Custom Data</a>
                             </li>
                             <!-- <li class="nav-item">
                                 <a class="nav-link @if(session('success') || session('error'))
@@ -341,6 +341,7 @@
                                    aria-selected="true">Dashboard</a>
                             </li> -->
 
+                            @if(in_array("email_module", $menu_access))
                             <li class="nav-item">
                                 <a class="nav-link {{ session('active_tab') === 'g_lead_dashboard_tab' ? 'active' : '' }}"
                                    data-bs-toggle="tab" href="#g_lead_dashboard" data-tab="g_lead_dashboard"
@@ -348,6 +349,7 @@
                                    data-bs-target="#g_lead_dashboard" role="tab" aria-controls="g_lead_dashboard"
                                    aria-selected="true">Dashboard</a>
                             </li>
+                            @endif
 
                             @if(in_array("email_module", $menu_access))
                             <li class="nav-item">
@@ -466,8 +468,8 @@
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Form Name</span>
-                                        <span>{{ $lead->leadsForm?->form_name ?? '' }}</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">FORM NAME</span>
+                                        <span style="font-weight:bold">{{ $lead->leadsForm?->form_name ?? '' }}</span>
                                     </div>
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
@@ -489,21 +491,36 @@
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Phone</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Cell Phone</span>
                                         <span>{{ $lead->phone }}</span>
                                     </div>
 
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                    <span
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Home Phone</span>
+                                        <span>{{ $lead->home_phone }}</span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                    <span
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Work Phone</span>
+                                        <span>{{ $lead->work_phone }}</span>
+                                    </div>
+
+                                    {{--
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
                                         class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Alternative Number</span>
                                         <span>{{ $lead->alternative_number }}</span>
                                     </div>
 
+
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
                                         class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Contact Person Name</span>
                                         <span>{{ $lead->contact_person_name }}</span>
                                     </div>
+                                    --}}
 
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
@@ -512,11 +529,12 @@
                                         <span>{{ $lead->address }}</span>
                                     </div>
 
+                                    {{--
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Company</span>
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Company</span>
                                         <span>{{ $lead->company }}</span>
                                     </div>
+                                    --}}
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Status</span>
@@ -535,11 +553,12 @@
                                         @endif
                                     </div>
 
-                                    {{--<div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                    {{--
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
                                         class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Rating</span>
                                         <span>{{ $lead->lead_rating }}</span>
-                                    </div>--}}
+                                    </div>
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
@@ -558,6 +577,7 @@
                                         class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Industry</span>
                                         <span>{{ $lead->industry }}</span>
                                     </div>
+                                    --}}
 
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
@@ -572,11 +592,13 @@
                                     </span>
                                     </div>
 
+                                    {{--
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
                                         class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Street</span>
                                         <span>{{ $lead->street }}</span>
                                     </div>
+                                    --}}
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
@@ -602,11 +624,13 @@
                                         <span>{{ $lead->country }}</span>
                                     </div>
 
+                                    {{--
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
                                         class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Start Date</span>
                                         <span>{{ $lead->lead_start_date ? \Carbon\Carbon::parse($lead->lead_start_date)->format('d-m-Y') : '' }}</span>
                                     </div>
+                                    --}}
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
@@ -614,6 +638,7 @@
                                         <span>{{ $lead->lead_notes }}</span>
                                     </div>
 
+                                    {{--
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                         <span
                                             class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Profile Image</span>
@@ -622,6 +647,7 @@
                                             <img src="{{ asset('uploads/leads/' . $lead->profile_image) }}" width="150">
                                         @endif
                                     </div>
+                                    --}}
                                 </div>
                             </div>
                         </div>
@@ -632,6 +658,7 @@
                         <div class="card">
                             <div class="card-body">
 
+                                <div class="row mb-1">
                                 @foreach ($tableData as $tableName => $data)
                                     <!-- @if (!empty($data))
                                         -->
@@ -691,7 +718,7 @@
                                                 @endforeach
                                             @endforeach
 
-                                            <div class="row mb-1">
+                                            
                                                 
                                                 @foreach ($columnSizes as $formSize)
                                                     
@@ -717,10 +744,11 @@
                                                         </div>
                                                     </div>
                                                 @endforeach
-                                            </div>
+                                            
                                         @endif
                                     @endif
                                 @endforeach
+                                </div>
 
                                 {{-- Display table_view after form_view --}}
                                 @foreach ($tableData as $tableName => $data)
