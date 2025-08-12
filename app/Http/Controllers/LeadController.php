@@ -1070,11 +1070,9 @@ class LeadController  extends Controller
             // 'form_id.required' => 'The form ID is required.',
             // 'form_id.exists' => 'The selected form ID is invalid.',
         ];
-
         // Validate the request
         $validator = Validator::make($request->all(), [
-            'fileUpload' => 'required|file|mimes:json',
-            // 'form_id' => 'required|exists:leads_form,form_id'
+            'fileUpload' => 'required|file|mimes:json,txt'
         ], $messages);
 
         if ($validator->fails()) {
@@ -1082,6 +1080,8 @@ class LeadController  extends Controller
             $errorMessages = implode(' ', $validator->errors()->all());
             return redirect()->back()->with('error', $errorMessages)->withInput();
         }
+
+
 
         $file = $request->file('fileUpload');
         $path = $file->getRealPath();
@@ -1091,9 +1091,16 @@ class LeadController  extends Controller
         $quote_data = $jdata['QuoteData'];
 
         // ratedata for another use
-        $rate_data = $jdata['RateAnalysisResults'];
-        $api_analysis_data = json_encode($rate_data);
-        $api_quote_data = json_encode($jdata['QuoteData']);
+        $api_analysis_data = null;
+        $api_quote_data = null;
+        if(isset($jdata['RateAnalysisResults'])) {
+            $rate_data = $jdata['RateAnalysisResults'];
+            $api_analysis_data = json_encode($rate_data);
+        }
+
+        if(isset($jdata['QuoteData'])) {
+            $api_quote_data = json_encode($jdata['QuoteData']);
+        }
 
 
         $lines = explode("\r\n", $quote_data);
@@ -1112,6 +1119,12 @@ class LeadController  extends Controller
             if(isset($parts[0], $parts[2]) && $parts[1]=="car1") {
                 $cardata1[$parts[0]] = $parts[2];
             }
+        }
+
+        // check for dublication
+        $chk_data = Lead::where('email', $result['emailaddress'])->first();
+        if(!empty($chk_data)) {
+            return redirect()->back()->with('error', "Dublicate lead found");
         }
 
         DB::beginTransaction();
