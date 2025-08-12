@@ -211,7 +211,9 @@ class LeadService
         $messages = [];
 
         $request->validate([
-            'first_name' => 'required|unique:leads,first_name'
+            // 'first_name' => 'required|unique:leads,first_name'
+            'first_name' => 'required'
+
         ]);
 
         // prepare validation rules based on the form fields

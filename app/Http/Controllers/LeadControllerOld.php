@@ -348,38 +348,14 @@ class LeadController  extends Controller
 
     public function add($tableName, $leadId)
     {
-
-
-        $columns = [];
-        $columnDetails = [];
-        $fields = collect(); 
-        // Decide tables to fetch based on table name
-        $tablesMap = [
-            'driver_information'  => ['driver_information', 'driver_attributes'],
-            'vehicle_information' => ['vehicle_information', 'vehicle_attributes']
-        ];
-
-        $tablesToFetch = $tablesMap[$tableName] ?? [$tableName];
-
-        foreach ($tablesToFetch as $table) {
-            $table = trim($table); 
-            if (Schema::hasTable($table)) {
-                $columns = array_merge($columns, Schema::getColumnListing($table));
-                $columnDetails = array_merge($columnDetails, DB::select("SHOW COLUMNS FROM `$table`"));
-                 $fields = $fields->merge(
-                    LeadFormDetail::where('table_name', $table)->get()
-                );
-            }
-        }
-
         //column names
-        // $columns = Schema::getColumnListing($tableName);
+        $columns = Schema::getColumnListing($tableName);
         // fetch lead form details
-        // $fields = LeadFormDetail::where('table_name', $tableName)->get();
+        $fields = LeadFormDetail::where('table_name', $tableName)->get();
         //fetch lead details associated with the lead ID
         $leads = Lead::where('id', $leadId)->first();
         //fetch column details with data types using raw SQL query
-        // $columnDetails = DB::select("SHOW COLUMNS FROM $tableName");
+        $columnDetails = DB::select("SHOW COLUMNS FROM $tableName");
 
         //map column names to their types
         $columnTypes = [];
@@ -412,6 +388,7 @@ class LeadController  extends Controller
         // return view with necessary data
         return view('leads.add', compact('tableName', 'filteredColumns', 'leads', 'columnTypes', 'dropdownOptions'));
     }
+
 
     public function storeTableData(Request $request)
     {
