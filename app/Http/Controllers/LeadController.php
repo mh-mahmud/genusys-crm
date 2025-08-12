@@ -38,6 +38,7 @@ use App\Models\GeneralInformation;
 use App\Models\QuoteDetails;
 use App\Models\DriverAttributes;
 use App\Models\DriverInformation;
+use App\Models\RateAnalysisData;
 
 class LeadController  extends Controller
 {
@@ -1063,6 +1064,8 @@ class LeadController  extends Controller
 
         // ratedata for another use
         $rate_data = $jdata['RateAnalysisResults'];
+        $api_analysis_data = json_encode($rate_data);
+        $api_quote_data = json_encode($jdata['QuoteData']);
 
 
         $lines = explode("\r\n", $quote_data);
@@ -1237,11 +1240,20 @@ class LeadController  extends Controller
         $vi_attr->salvaged = $cardata1['salvaged'];
         $vi_attr->anti_theft = $cardata1['antitheft'];
         $vi_attr->save();
+
+        // save api data
+        $rate_api = new RateAnalysisData();
+        $rate_api->lead_id = $lead_id;
+        $rate_api->form_id = $form_id;
+        $rate_api->created_by = Auth::user()->id;
+        $rate_api->rate_analysis_data = $api_analysis_data;
+        $rate_api->quote_data = $api_quote_data;
+        $rate_api->save();
+
         DB::commit();
 
         Helper::storeLog("Json File uploaded and data inserted successfully", "Lead", "Upload Json",$lead_id);
         return redirect()->back()->with('success', "File uploaded and data inserted successfully.");
-
     }
 
 
