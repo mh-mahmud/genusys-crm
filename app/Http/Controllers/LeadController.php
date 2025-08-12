@@ -269,7 +269,11 @@ class LeadController  extends Controller
             $proposals = Proposal::where('lead_id', $id)->get();
         }
         
-        
+        $rate_api_data = [];
+        $api_data = RateAnalysisData::where('lead_id', $id)->first();
+        if(!empty($api_data)) {
+            $rate_api_data = json_decode($api_data->rate_analysis_data);
+        }
         
         
         //$logs = Logs::where('lead_id', $id)->get();
@@ -337,7 +341,7 @@ class LeadController  extends Controller
         ->select('customers.*', 'leads.first_name', 'leads.last_name')
         ->first();
         $latestMeeting = Meeting::where('lead_id', $id)->orderBy('created_at', 'desc')->first();
-        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates', 'products', 'customers','lead_data_id','lead_customer','latestMeeting', 'menu_access'));
+        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates', 'products', 'customers','lead_data_id','lead_customer','latestMeeting', 'menu_access', 'rate_api_data'));
     }
 
 

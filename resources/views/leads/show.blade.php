@@ -857,6 +857,50 @@
                                     @endif 
                                 @endforeach
 
+                                <!-- add api data -->
+                                <div class="mb-10 bg-light p-5 rounded-3">
+                                    <div class="d-flex justify-content-between align-items-center py-2">
+                                        <strong class="fs-5">Rate Analysis Data</strong>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table
+                                            class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                                            <thead>
+                                            <tr class="fw-bolder text-muted bg-light bd-cyan">
+                                                <th class="ps-4 min-w-50px">SL</th>
+                                                <th class="ps-4 min-w-150px">Company Name</th>
+                                                <th class="ps-4 min-w-150px">Term</th>
+                                                <th class="ps-4 min-w-150px">Down Payment</th>
+                                                <th class="ps-4 min-w-150px">Payment Amount</th>
+                                                <th class="ps-4 min-w-150px">Total Premium</th>
+                                                <th class="ps-4 min-w-150px">Purchased</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @if (!empty($rate_api_data))
+                                                @foreach ($rate_api_data as $index => $row)
+                                                    <tr>
+                                                        <td class="ps-4 text-dark fs-6">{{ $index + 1 }}</td>
+                                                        <td class="ps-4 text-dark fs-6">{{ $row->CompanyName }}</td>
+                                                        <td class="ps-4 text-dark fs-6">{{ $row->Term }}</td>
+                                                        <td class="ps-4 text-dark fs-6">{{ $row->DownPayment }}</td>
+                                                        <td class="ps-4 text-dark fs-6">{{ $row->PaymentAmount }}</td>
+                                                        <td class="ps-4 text-dark fs-6">{{ $row->TotalPremium }}</td>
+                                                        <td class="ps-4 text-dark fs-6">{{ ($row->Purchased==true) ? "Yes" : "No" }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td colspan="100%" class="text-center">No data available
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+
                             </div>
                         </div>
                     </div>
