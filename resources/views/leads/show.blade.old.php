@@ -1,7 +1,6 @@
 @extends('layouts.master')
 @php
     use Carbon\Carbon;
-    $notShowTable = ["vehicle_attributes", "driver_attributes"]
 @endphp
 
 @section('content')
@@ -724,7 +723,7 @@
 
                                 {{-- Display table_view after form_view --}}
                                 @foreach ($tableData as $tableName => $data)
-                                    @if (!empty($data) && !in_array($tableName, $notShowTable))
+                                    @if (!empty($data))
                                         @php
                                             $field = $fields->firstWhere('table_name', $tableName);
                                             $viewType = $field->view_type ?? 'table_view'; // Default to table_view if view_type is not set
@@ -853,8 +852,14 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        
-                                    @endif 
+                                        <!--
+
+
+
+
+
+
+                                    @endif -->
                                 @endforeach
 
                             </div>

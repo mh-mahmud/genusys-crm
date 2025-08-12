@@ -12,3 +12,9 @@ ALTER TABLE `leads` ADD `home_phone` VARCHAR(50) NULL DEFAULT NULL AFTER `phone`
 ALTER TABLE `leads` ADD `prior_address` TEXT NULL DEFAULT NULL AFTER `address`;
 ALTER TABLE `leads` ADD `time_at_residence` VARCHAR(255) NULL DEFAULT NULL AFTER `work_phone`;
 ALTER TABLE `leads` ADD `language` VARCHAR(50) NULL DEFAULT NULL AFTER `country`;
+
+--12-Aug-2025, Ishtiak Add
+
+ALTER TABLE `vehicle_attributes` ADD `vehicle_info_id` BIGINT(20) NULL AFTER `form_id`;
+
+ALTER TABLE `driver_attributes` ADD `driver_info_id` BIGINT NULL AFTER `form_id`;

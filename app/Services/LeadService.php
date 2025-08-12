@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
+use App\Models\DriverInformation;
 use App\Models\Lead;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\LeadFormDetail;
+use App\Models\VehicleInformation;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
@@ -302,6 +304,15 @@ class LeadService
             $hasDynamicFields = collect($data)->filter(function ($value, $key) {
                 return !in_array($key, ['lead_id', 'form_id','created_by', 'created_at', 'updated_at']) && !empty($value);
             })->isNotEmpty();
+            if($tableName == "vehicle_attributes") {
+                $data["vehicle_info_id"] = VehicleInformation::where("lead_id", $lead->id)
+                                                    ->value('id');
+                
+            } else if($tableName == "driver_attributes") {
+                $data["driver_info_id"] = DriverInformation::where("lead_id", $lead->id)
+                                                    ->value('id');
+                
+            }
 
             // insert data fields with values to insert
             if ($hasDynamicFields) {
