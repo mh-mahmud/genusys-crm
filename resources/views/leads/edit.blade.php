@@ -478,6 +478,7 @@
 
                         </div>
 
+                        {{--
                         @foreach ($tableData as $tableName => $data)
                         @if ($data->isNotEmpty())
                         <div class="mt-4">
@@ -534,6 +535,7 @@
                         </div>
                         @endif
                         @endforeach
+                        --}}
 
 
                         <!--End Row-->
