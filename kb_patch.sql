@@ -18,3 +18,17 @@ ALTER TABLE `leads` ADD `language` VARCHAR(50) NULL DEFAULT NULL AFTER `country`
 ALTER TABLE `vehicle_attributes` ADD `vehicle_info_id` BIGINT(20) NULL AFTER `form_id`;
 
 ALTER TABLE `driver_attributes` ADD `driver_info_id` BIGINT NULL AFTER `form_id`;
+
+-- provided by Hasan
+DROP TABLE IF EXISTS `rate_analysis_data`;
+CREATE TABLE IF NOT EXISTS `rate_analysis_data` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `lead_id` int NOT NULL,
+  `form_id` int NOT NULL,
+  `created_by` int DEFAULT NULL,
+  `rate_analysis_data` longtext COLLATE utf8mb4_unicode_ci,
+  `quote_data` longtext COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
