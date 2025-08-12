@@ -112,7 +112,7 @@ class LeadController  extends Controller
 
         if ($request->has('form_id')) {
             $formId = $request->input('form_id');
-            $fields = LeadFormDetail::where('form_id', $formId)->orderBy('id')->get();
+            $fields = LeadFormDetail::where('form_id', $formId)->orderBy('form_serial')->orderBy('id')->get();
 
             foreach ($fields as $field) {
                 $fieldsByTable[$field->table_name][] = $field;
