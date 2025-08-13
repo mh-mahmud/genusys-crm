@@ -97,6 +97,20 @@
                             <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
+                                    <label class="form-label fw-bolder text-dark">Middle Name</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="middlename" value="{{ old('middlename') }}" autocomplete="off" />
+                                    <!--end::Input-->
+                                    @if ($errors->has('middlename'))
+                                    <span class="text-danger">{{ $errors->first('middlename') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="fv-row mb-3">
+                                    <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Last Name</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->

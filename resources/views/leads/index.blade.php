@@ -291,11 +291,9 @@ use Carbon\Carbon;
 									<th class="ps-4 rounded-start min-w-40px">SL</th>
 									<!-- <th class="min-w-150px">Form ID</th> -->
 									<!-- <th class="min-w-150px">Form Name</th> -->
-									<th class="min-w-150px">First Name</th>
-									<th class="min-w-150px">Last Name</th>
-									<!-- <th class="min-w-150px">Gender</th>
-									<th class="min-w-150px">Age</th>
-									<th class="min-w-150px">Title</th> -->
+									<th class="min-w-250px">Full Name</th>
+									<th class="min-w-50px">Gender</th>
+									<th class="min-w-50px">Age</th>
 									<th class="min-w-150px">Email</th>
 									<th class="min-w-150px">Phone</th>
 									<th class="min-w-150px">Source</th>
@@ -311,11 +309,9 @@ use Carbon\Carbon;
 
 									<td class="ps-5 text-dark fs-6">{{($leads->currentPage() - 1) * $leads->perPage() + $loop->iteration}}</td>
 									<!-- <td class="text-dark fs-6">{{ $lead->leadsForm?->form_name ?? '' }}</td> -->
-									<td class="text-dark fs-6 ">{{ $lead->first_name }}</td>
-                                    <td class="text-dark fs-6 ">{{ $lead->last_name }}</td>
-                                    <!-- <td class="text-dark w-400px fs-6">{{ $lead->gender }}</td>
+									<td class="text-dark fs-6 ">{{ $lead->first_name." ".$lead->middlename." ".$lead->last_name }}</td>
+                                    <td class="text-dark fs-6">{{ $lead->gender }}</td>
                                     <td class="text-dark fs-6">{{ $lead->age }}</td>
-                                    <td class="text-dark fs-6">{{ $lead->title }}</td> -->
                                     <td class="text-dark fs-6">{{ $lead->email }}</td>
                                     <td class="text-dark fs-6">{{ $lead->phone }}</td>
                                     <td class="text-dark fs-6">{{ $lead->lead_source }}</td>
