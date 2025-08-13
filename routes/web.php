@@ -25,6 +25,7 @@ use App\Http\Controllers\InvoiceCustomFormController;
 use App\Http\Controllers\ProductSpecificationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FormFeatureController;
+use App\Http\Controllers\ResultCodeController;
 
 
 use App\Models\Promotion;
@@ -392,6 +393,14 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('feature-edit/{id?}', [FormFeatureController::class, 'formFeatureEdit'])->name('feature-edit');
 	Route::put('feature-update-pro/{id}', [FormFeatureController::class, 'formFeatureUpdate'])->name('feature-update-pro');
 	Route::get('get-help-content/{route}', [FormFeatureController::class, 'getDescription'])->name('get-help-content');
+
+	Route::get('result-code-list', [ResultCodeController::class, 'resultCodeList'])->name('result-code-list');
+	Route::get('add-result-code', [ResultCodeController::class, 'resultCodeCreate'])->name('add-result-code');
+	Route::post('add-result-code-pro', [ResultCodeController::class, 'resultCodeStore'])->name('add-result-code-pro');
+	Route::delete('result-code-delete/{id?}', [ResultCodeController::class, 'resultCodeDelete'])->name('result-code-delete');
+	Route::get('result-code-show/{id?}', [ResultCodeController::class, 'resultCodeShow'])->name('result-code-show');
+	Route::get('result-code-edit/{id?}', [ResultCodeController::class, 'resultCodeEdit'])->name('result-code-edit');
+	Route::put('result-code-update-pro/{id}', [ResultCodeController::class, 'resultCodeUpdate'])->name('result-code-update-pro');
 
 
 });

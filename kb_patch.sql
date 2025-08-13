@@ -35,3 +35,6 @@ CREATE TABLE IF NOT EXISTS `rate_analysis_data` (
 
 -- 2025-08-13
 ALTER TABLE `leads` ADD `middlename` VARCHAR(100) NULL DEFAULT NULL AFTER `last_name`; 
+
+-- 2025-08-13, Ishtiak
+CREATE TABLE `crm_insurance`.`result_codes` (`id` INT NOT NULL AUTO_INCREMENT , `code` VARCHAR(10) NOT NULL , `title` VARCHAR(255) NOT NULL , `status` INT NOT NULL DEFAULT '1' , `created_at` TIMESTAMP NOT NULL , `created_by` BIGINT NOT NULL , `updated_at` TIMESTAMP NULL DEFAULT NULL , `updated_by` BIGINT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
