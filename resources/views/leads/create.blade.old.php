@@ -80,12 +80,7 @@
                     <form class="g-form w-100" action="{{ route('lead-store') }}" enctype="multipart/form-data" method="POST">
                         @csrf
                         <div class="row">
-                            <!-- Left Side Inputs -->
-                            <div class="col-md-7">
-                                <div class="row">
-                                    <h5 class="mb-0" style="border:1px solid #DDD;padding:7px;margin-bottom:30px !important;margin-top:30px;background-color:#54B4D3;color:#f7f7f7">Client Contact Information</h5>
-
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">First Name</label>
@@ -99,21 +94,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">Middle Name</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="middlename" value="{{ old('middlename') }}" autocomplete="off" />
-                                    <!--end::Input-->
-                                    @if ($errors->has('middlename'))
-                                    <span class="text-danger">{{ $errors->first('middlename') }}</span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Last Name</label>
@@ -127,7 +108,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Address</label>
@@ -142,7 +123,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Zip</label>
@@ -156,7 +137,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Country</label>
@@ -170,7 +151,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">City</label>
@@ -184,7 +165,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">State</label>
@@ -198,7 +179,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Time at Residence</label>
@@ -212,7 +193,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Prior Address</label>
@@ -227,7 +208,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Cell Phone</label>
@@ -241,7 +222,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Home Phone</label>
@@ -255,7 +236,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Work Phone</label>
@@ -269,7 +250,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Email</label>
@@ -326,7 +307,7 @@
                                 </div>
                             </div>--}}
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Lead Status</label>
                                     <select class="form-control form-control-sm form-control-solid" name="lead_status">
@@ -345,8 +326,67 @@
                             </div>
 
 
+                            {{--
+                            <div class="col-md-3">
+                                <div class="fv-row mb-3">
+                                    <!--begin::Label-->
+                                    <label class="form-label fw-bolder text-dark">Lead Rating</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input class="form-control form-control-sm form-control-solid" type="number" name="lead_rating" value="{{ old('lead_rating') }}" autocomplete="off" />
+                                    <!--end::Input-->
+                                    @if ($errors->has('lead_rating'))
+                                    <span class="text-danger">{{ $errors->first('lead_rating') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                            
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
+                                <div class="fv-row mb-3">
+                                    <!--begin::Label-->
+                                    <label class="form-label fw-bolder text-dark">Website</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="website" value="{{ old('website') }}" autocomplete="off" />
+                                    <!--end::Input-->
+                                    @if ($errors->has('website'))
+                                    <span class="text-danger">{{ $errors->first('website') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="fv-row mb-3">
+                                    <!--begin::Label-->
+                                    <label class="form-label fw-bolder text-dark">Lead Owner</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="lead_owner" value="{{ old('lead_owner') }}" autocomplete="off" />
+                                    <!--end::Input-->
+                                    @if ($errors->has('lead_owner'))
+                                    <span class="text-danger">{{ $errors->first('lead_owner') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="fv-row mb-3">
+                                    <!--begin::Label-->
+                                    <label class="form-label fw-bolder text-dark">Industry</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input class="form-control form-control-sm form-control-solid" type="text" name="industry" value="{{ old('industry') }}" autocomplete="off" />
+                                    <!--end::Input-->
+                                    @if ($errors->has('industry'))
+                                    <span class="text-danger">{{ $errors->first('industry') }}</span>
+                                    @endif
+                                </div>
+                            </div>--}}
+
+
+
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Lead Source</label>
                                     <select class="form-control form-control-sm form-control-solid" name="lead_source">
@@ -404,7 +444,7 @@
 
 
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="fv-row mb-3">
                                     <!--begin::Label-->
                                     <label class="form-label fw-bolder text-dark">Lead Notes</label>
@@ -418,113 +458,51 @@
                                 </div>
                             </div>
 
+                            <!-- Dynamically Generated Fields -->
 
 
-                                </div>
-                            </div>
-
-                            <!-- Right Side Placeholder -->
-                            <div class="col-md-5">
-                                <div class="row">
-                                    <h5 class="mb-0" style="border:1px solid #DDD;padding:7px;margin-bottom:30px !important;margin-top:30px;background-color:#54B4D3;color:#f7f7f7">Note Section</h5>
-
-                                    <div class="col-md-12">
-                                        <div class="fv-row mb-3">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-bolder text-dark">Lead Notes</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <textarea class="form-control form-control-sm form-control-solid" name="lead_notes" rows="3">{{ old('lead_notes') }}</textarea>
-                                            <!--end::Input-->
-                                            @if ($errors->has('lead_notes'))
-                                            <span class="text-danger">{{ $errors->first('lead_notes') }}</span>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <div class="fv-row mb-3">
-                                            <label class="form-label fw-bolder text-dark">Lead Source</label>
-                                            <select class="form-control form-control-sm form-control-solid" name="lead_source">
-                                                <option value="" disabled {{ old('lead_source') == '' ? 'selected' : '' }}>Select Lead Source</option>
-                                                @foreach(config('constants.lead_source') as $source)
-                                                <option value="{{ $source }}" {{ old('lead_source') == $source ? 'selected' : '' }}>
-                                                    {{ $source }}
-                                                </option>
-                                                @endforeach
-                                            </select>
-                                            @if ($errors->has('lead_source'))
-                                            <span class="text-danger">{{ $errors->first('lead_source') }}</span>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="row">
-                                    <h5 class="mb-0" style="border:1px solid #DDD;padding:7px;margin-bottom:30px !important;margin-top:30px;background-color:#54B4D3;color:#f7f7f7">Action Information</h5>
-
-                                    {{-- html code here --}}
-                                </div>
-                            </div>
                         </div>
-
-
                         <div id="dynamic-fields" class="row">
                             <input type="hidden" name="form_id" value="{{ request()->input('form_id') }}">
+                            @foreach($fieldsByTable as $tableName => $fields)
+                            <div class="col-md-12" style="border:1px solid #DDD;padding:7px;margin-bottom:10px;margin-top:30px;background-color:#54B4D3;">
+                                <h5 style="color:#f7f7f7">{{ ucwords(str_replace('_', ' ', $tableName)) }}</h5>
+                            </div>
 
-                            @php
-                            $cardCollection = collect($fieldsByTable);
-                            @endphp
+                            @foreach($fields as $field)
+                            <div class="col-md-3">
+                                <div class="fv-row mb-3">
+                                    <label for="{{ $field->field_name }}" class="form-label fw-bolder text-dark">{{ ucwords(str_replace('_', ' ', $field->field_name)) }}</label>
+                                    @if(in_array($field->field_value, ['varchar', 'char']))
+                                    <input type="text" class="form-control form-control-sm form-control-solid" id="{{ $field->field_name }}" name="{{ $field->field_name }}" value="{{ old($field->field_name) }}">
+                                    @elseif($field->field_value == 'int')
+                                    <input type="number" class="form-control form-control-sm form-control-solid" id="{{ $field->field_name }}" name="{{ $field->field_name }}" value="{{ old($field->field_name) }}">
+                                    @elseif($field->field_value == 'date')
+                                    <input type="date" class="form-control form-control-sm form-control-solid" id="common_dob" name="{{ $field->field_name }}" value="{{ old($field->field_name) }}">
+                                    @elseif($field->field_value == 'text')
+                                    <textarea class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}" rows="1">{{ old($field->field_name) }}</textarea>
+                                    @elseif($field->field_value == 'file')
+                                    <input type="file" class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}">
+                                    @elseif($field->field_value == 'dropdown')
+                                    @php
+                                    // Split the character_length string into an array of options
+                                    $dropdownOptions = explode(',', $field->character_length);
+                                    @endphp
 
-                            @foreach($cardCollection->chunk(2) as $rows)
-                            <div class="row">
-                                @foreach($rows as $tableName => $fields)
-                                <div class="col-md-6" style="">
-                                <h5 class="mb-0" style="border:1px solid #DDD;padding:7px;margin-bottom:10px;margin-top:30px;background-color:#54B4D3;color:#f7f7f7">{{ ucwords(str_replace('_', ' ', $tableName)) }}</h5>
-                                
-                                <div class="row">
-                                    @foreach($fields as $field)
-                                        <div class="col-md-6">
-                                            <div class="fv-row mb-1">
-                                                <label for="{{ $field->field_name }}" class="form-label fw-bolder text-dark">{{ ucwords(str_replace('_', ' ', $field->field_name)) }}</label>
-                                                @if(in_array($field->field_value, ['varchar', 'char']))
-                                                <input type="text" class="form-control form-control-sm form-control-solid" id="{{ $field->field_name }}" name="{{ $field->field_name }}" value="{{ old($field->field_name) }}">
-                                                @elseif($field->field_value == 'int')
-                                                <input type="number" class="form-control form-control-sm form-control-solid" id="{{ $field->field_name }}" name="{{ $field->field_name }}" value="{{ old($field->field_name) }}">
-                                                @elseif($field->field_value == 'date')
-                                                <input type="date" class="form-control form-control-sm form-control-solid" id="common_dob" name="{{ $field->field_name }}" value="{{ old($field->field_name) }}">
-                                                @elseif($field->field_value == 'text')
-                                                <textarea class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}" rows="1">{{ old($field->field_name) }}</textarea>
-                                                @elseif($field->field_value == 'file')
-                                                <input type="file" class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}">
-                                                @elseif($field->field_value == 'dropdown')
-                                                @php
-                                                // Split the character_length string into an array of options
-                                                $dropdownOptions = explode(',', $field->character_length);
-                                                @endphp
-
-                                                <select class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}" id="{{ $field->field_name }}">
-                                                    {{--<option value="" selected>Select {{ ucwords(str_replace('_', ' ', $field->field_name)) }}</option>--}}
-                                                    <option value="" selected>-- Select --</option>
-                                                    @foreach($dropdownOptions as $option)
-                                                    <option value="{{ $option }}" {{ old($field->field_name) == $option ? 'selected' : '' }}>
-                                                        {{ ucfirst($option) }}
-                                                    </option>
-                                                    @endforeach
-                                                </select>
-                                                @endif
-                                            </div>
-                                        </div>
+                                    <select class="form-control form-control-sm form-control-solid" name="{{ $field->field_name }}" id="{{ $field->field_name }}">
+                                        {{--<option value="" selected>Select {{ ucwords(str_replace('_', ' ', $field->field_name)) }}</option>--}}
+                                        <option value="" selected>-- Select --</option>
+                                        @foreach($dropdownOptions as $option)
+                                        <option value="{{ $option }}" {{ old($field->field_name) == $option ? 'selected' : '' }}>
+                                            {{ ucfirst($option) }}
+                                        </option>
                                         @endforeach
+                                    </select>
+                                    @endif
                                 </div>
-
-                                </div>
-                                @endforeach
                             </div>
                             @endforeach
-                        
-                           
+                            @endforeach
                         </div>
                         <!--End Row-->
                         <div class="card-footer d-flex justify-content-end py-6 px-9">
