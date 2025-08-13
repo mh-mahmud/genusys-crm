@@ -5045,7 +5045,7 @@
         }
 
         // document.getElementById('g_lead_tickets_tab').addEventListener('click', function() {
-        getTickets(phone_no);
+        // getTickets(phone_no);
 
         // });
 
