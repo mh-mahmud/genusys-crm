@@ -473,44 +473,43 @@
                                     </div>
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">First Name</span>
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">First Name</span>
                                         <span>{{ $lead->first_name }}</span>
                                     </div>
+
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Last Name</span>
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Middle Name</span>
+                                        <span>{{ $lead->middlename }}</span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Last Name</span>
                                         <span>{{ $lead->last_name }}</span>
                                     </div>
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Email</span>
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Email</span>
                                         <span>{{ $lead->email }}</span>
                                     </div>
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Cell Phone</span>
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Cell Phone</span>
                                         <span>{{ $lead->phone }}</span>
                                     </div>
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Home Phone</span>
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Home Phone</span>
                                         <span>{{ $lead->home_phone }}</span>
                                     </div>
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Work Phone</span>
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Work Phone</span>
                                         <span>{{ $lead->work_phone }}</span>
                                     </div>
 
                                     {{--
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Alternative Number</span>
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Alternative Number</span>
                                         <span>{{ $lead->alternative_number }}</span>
                                     </div>
 
