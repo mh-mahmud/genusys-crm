@@ -79,9 +79,11 @@
 
                     <form class="g-form w-100" action="{{ route('lead-store') }}" enctype="multipart/form-data" method="POST">
                         @csrf
+
                         <div class="row">
+
                             <!-- Left Side Inputs -->
-                            <div class="col-md-7">
+                            <div class="col-md-6">
                                 <div class="row">
                                     <h5 class="mb-2" style="border:1px solid #DDD;padding:7px;background-color:#54B4D3;color:#f7f7f7">Client Contact Information</h5>
 
@@ -283,166 +285,70 @@
                                         </div>
                                     </div>
 
-                            {{--
-                            <div class="col-md-3">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">Alternative Number</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="alternative_number" value="{{ old('alternative_number') }}" autocomplete="off" />
-                                    <!--end::Input-->
-                                    @if ($errors->has('alternative_number'))
-                                    <span class="text-danger">{{ $errors->first('alternative_number') }}</span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">Contact Person Name</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="contact_person_name" value="{{ old('contact_person_name') }}" autocomplete="off" />
-                                    <!--end::Input-->
-                                    @if ($errors->has('contact_person_name'))
-                                    <span class="text-danger">{{ $errors->first('contact_person_name') }}</span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">Company</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="company" value="{{ old('company') }}" autocomplete="off" />
-                                    <!--end::Input-->
-                                    @if ($errors->has('company'))
-                                    <span class="text-danger">{{ $errors->first('company') }}</span>
-                                    @endif
-                                </div>
-                            </div>--}}
-
-                                <div class="col-md-6">
-                                    <div class="fv-row mb-3">
-                                        <label class="form-label fw-bolder text-dark">Lead Status</label>
-                                        <select class="form-control form-control-sm form-control-solid" name="lead_status">
-                                            <option value="">-- Select Status --</option>
-                                            <option value="New">New</option>
-                                            <option value="Qualified">Qualified</option>
-                                            <option value="Proposition">Proposition</option>
-                                            <option value="Ongoing">Ongoing</option>
-                                            <option value="Won">Won</option>
-                                            <option value="Lost">Lost</option>
-                                        </select>
-                                        @if ($errors->has('lead_status'))
-                                        <span class="text-danger">{{ $errors->first('lead_status') }}</span>
-                                        @endif
-                                    </div>
-                                </div>
-
-
-
-                                <div class="col-md-6">
-                                    <div class="fv-row mb-3">
-                                        <label class="form-label fw-bolder text-dark">Lead Source</label>
-                                        <select class="form-control form-control-sm form-control-solid" name="lead_source">
-                                            <option value="" disabled {{ old('lead_source') == '' ? 'selected' : '' }}>Select Lead Source</option>
-                                            @foreach(config('constants.lead_source') as $source)
-                                            <option value="{{ $source }}" {{ old('lead_source') == $source ? 'selected' : '' }}>
-                                                {{ $source }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                        @if ($errors->has('lead_source'))
-                                        <span class="text-danger">{{ $errors->first('lead_source') }}</span>
-                                        @endif
-                                    </div>
-                                </div>
-
-
-                            {{--
-                            <div class="col-md-3">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">Street</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input class="form-control form-control-sm form-control-solid" type="text" name="street" value="{{ old('street') }}" autocomplete="off" />
-                                    <!--end::Input-->
-                                    @if ($errors->has('street'))
-                                    <span class="text-danger">{{ $errors->first('street') }}</span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark">Lead Start Date</label>
-                                    <input class="form-control form-control-sm form-control-solid flatpickr" type="text" id="common_dob" name="lead_start_date" value="{{ old('lead_start_date') }}" />
-                                    @if ($errors->has('lead_start_date'))
-                                    <div class="text-danger">{{ $errors->first('lead_start_date') }}</div>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="fv-row mb-3">
-                                    <label class="form-label  fw-bolder text-dark">Profile Image</label>
-                                    <input class="form-control form-control-sm form-control-solid" type="file" name="profile_image" autocomplete="off" />
-                                    @if ($errors->has('profile_image'))
-                                    <span class="text-danger">{{ $errors->first('profile_image') }}</span>
-                                    @endif
-                                </div>
-                            </div>
-                            --}}
-
-
-
-
-                                <div class="col-md-6">
-                                    <div class="fv-row mb-3">
-                                        <!--begin::Label-->
-                                        <label class="form-label fw-bolder text-dark">Lead Notes</label>
-                                        <!--end::Label-->
-                                        <!--begin::Input-->
-                                        <textarea class="form-control form-control-sm form-control-solid" name="lead_notes" rows="3">{{ old('lead_notes') }}</textarea>
-                                        <!--end::Input-->
-                                        @if ($errors->has('lead_notes'))
-                                        <span class="text-danger">{{ $errors->first('lead_notes') }}</span>
-                                        @endif
-                                    </div>
-                                </div>
-
-
-
-                                </div>
-                            </div>
-
-                            <!-- Right Side Placeholder -->
-                            <div class="col-md-5">
-                                <div class="row">
-                                    <h5 class="mb-2" style="border:1px solid #DDD;padding:7px;background-color:#54B4D3;color:#f7f7f7">Note Section</h5>
-
-                                    <div class="col-md-12">
+                                    {{--
+                                    <div class="col-md-3">
                                         <div class="fv-row mb-3">
                                             <!--begin::Label-->
-                                            <label class="form-label fw-bolder text-dark">Lead Notes</label>
+                                            <label class="form-label fw-bolder text-dark">Alternative Number</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <textarea class="form-control form-control-sm form-control-solid" name="lead_notes" rows="3">{{ old('lead_notes') }}</textarea>
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="alternative_number" value="{{ old('alternative_number') }}" autocomplete="off" />
                                             <!--end::Input-->
-                                            @if ($errors->has('lead_notes'))
-                                            <span class="text-danger">{{ $errors->first('lead_notes') }}</span>
+                                            @if ($errors->has('alternative_number'))
+                                            <span class="text-danger">{{ $errors->first('alternative_number') }}</span>
                                             @endif
                                         </div>
                                     </div>
 
-                                    <div class="col-md-12">
+                                    <div class="col-md-3">
+                                        <div class="fv-row mb-3">
+                                            <!--begin::Label-->
+                                            <label class="form-label fw-bolder text-dark">Contact Person Name</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="contact_person_name" value="{{ old('contact_person_name') }}" autocomplete="off" />
+                                            <!--end::Input-->
+                                            @if ($errors->has('contact_person_name'))
+                                            <span class="text-danger">{{ $errors->first('contact_person_name') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="fv-row mb-3">
+                                            <!--begin::Label-->
+                                            <label class="form-label fw-bolder text-dark">Company</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="company" value="{{ old('company') }}" autocomplete="off" />
+                                            <!--end::Input-->
+                                            @if ($errors->has('company'))
+                                            <span class="text-danger">{{ $errors->first('company') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>--}}
+
+                                    <div class="col-md-6">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">Lead Status</label>
+                                            <select class="form-control form-control-sm form-control-solid" name="lead_status">
+                                                <option value="">-- Select Status --</option>
+                                                <option value="New">New</option>
+                                                <option value="Qualified">Qualified</option>
+                                                <option value="Proposition">Proposition</option>
+                                                <option value="Ongoing">Ongoing</option>
+                                                <option value="Won">Won</option>
+                                                <option value="Lost">Lost</option>
+                                            </select>
+                                            @if ($errors->has('lead_status'))
+                                            <span class="text-danger">{{ $errors->first('lead_status') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-md-6">
                                         <div class="fv-row mb-3">
                                             <label class="form-label fw-bolder text-dark">Lead Source</label>
                                             <select class="form-control form-control-sm form-control-solid" name="lead_source">
@@ -459,9 +365,71 @@
                                         </div>
                                     </div>
 
+
+
+
+                                    <div class="col-md-6">
+                                        <div class="fv-row mb-3">
+                                            <!--begin::Label-->
+                                            <label class="form-label fw-bolder text-dark">Lead Notes</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <textarea class="form-control form-control-sm form-control-solid" name="lead_notes" rows="3">{{ old('lead_notes') }}</textarea>
+                                            <!--end::Input-->
+                                            @if ($errors->has('lead_notes'))
+                                            <span class="text-danger">{{ $errors->first('lead_notes') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+                            <!-- <div class="col-md-1">
+                                <div class="row">&nbsp;</div>
+                            </div> -->
+
+                            <!-- Right Side Placeholder -->
+                            <div class="col-md-6">
+                                <div class="row" style="margin-left:10px !important;">
+                                    <h5 class="mb-2" style="border:1px solid #DDD;padding:7px;background-color:#54B4D3;color:#f7f7f7">Note Section</h5>
+
+                                    <div class="col-md-12">
+                                        <div class="fv-row mb-3">
+                                            <!--begin::Label-->
+                                            <label class="form-label fw-bolder text-dark">Write a Note</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <textarea class="form-control form-control-sm form-control-solid" name="lead_notes" rows="3">{{ old('lead_notes') }}</textarea>
+                                            <!--end::Input-->
+                                            @if ($errors->has('lead_notes'))
+                                            <span class="text-danger">{{ $errors->first('lead_notes') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">Result Code</label>
+                                            <select class="form-control form-control-sm form-control-solid" name="lead_source">
+                                                <option value="" disabled {{ old('lead_source') == '' ? 'selected' : '' }}>Select Code</option>
+                                                @foreach(config('constants.lead_source') as $source)
+                                                <option value="{{ $source }}" {{ old('lead_source') == $source ? 'selected' : '' }}>
+                                                    {{ $source }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('lead_source'))
+                                            <span class="text-danger">{{ $errors->first('lead_source') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+
                                 </div>
 
-                                <div class="row">
+                                <div class="row" style="margin-left:10px !important;">
                                     <h5 class="mb-3" style="border:1px solid #DDD;padding:7px;background-color:#54B4D3;color:#f7f7f7">Action Information</h5>
                                       <span class="mb-2">Quote Number</span>          
                                     <div class="mb-5">
@@ -559,6 +527,7 @@
 
                                 </div>
                             </div>
+
                         </div>
 
 
