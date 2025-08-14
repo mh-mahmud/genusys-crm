@@ -47,7 +47,8 @@ class Lead extends Model
        'home_phone',
        'work_phone',
        'time_at_residence',
-       'prior_address'
+       'prior_address',
+       'assigned_to'
    ];
 
     public function leadsForm()

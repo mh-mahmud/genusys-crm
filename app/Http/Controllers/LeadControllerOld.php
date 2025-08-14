@@ -118,9 +118,9 @@ class LeadController  extends Controller
                 $fieldsByTable[$field->table_name][] = $field;
             }
         }
-        // dd($fieldsByTable);
+        
 
-        return view('leads.create', compact('formName', 'fieldsByTable', 'old_phone'));
+        return view('leads.create', compact('formName', 'fieldsByTable', 'old_phone', 'users'));
     }
 
 

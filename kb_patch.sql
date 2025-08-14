@@ -41,6 +41,8 @@ CREATE TABLE `crm_insurance`.`result_codes` (`id` INT NOT NULL AUTO_INCREMENT , 
 ALTER TABLE `vehicle_attributes` ADD `vehicle_info_id` BIGINT(20) NULL AFTER `form_id`;
 ALTER TABLE `driver_attributes` ADD `driver_info_id` BIGINT NULL AFTER `form_id`;
 
+
+
 -- 2025-08-14 ==================================
 CREATE TABLE IF NOT EXISTS `lead_status` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -80,3 +82,4 @@ CREATE TABLE IF NOT EXISTS `result_action` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+ALTER TABLE `leads` ADD `assigned_to` INT NULL DEFAULT NULL AFTER `lead_notes`; 
