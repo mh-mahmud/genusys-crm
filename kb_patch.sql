@@ -16,7 +16,6 @@ ALTER TABLE `leads` ADD `language` VARCHAR(50) NULL DEFAULT NULL AFTER `country`
 --12-Aug-2025, Ishtiak Add
 
 ALTER TABLE `vehicle_attributes` ADD `vehicle_info_id` BIGINT(20) NULL AFTER `form_id`;
-
 ALTER TABLE `driver_attributes` ADD `driver_info_id` BIGINT NULL AFTER `form_id`;
 
 -- provided by Hasan
@@ -34,4 +33,8 @@ CREATE TABLE IF NOT EXISTS `rate_analysis_data` (
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 2025-08-13
-ALTER TABLE `leads` ADD `middlename` VARCHAR(100) NULL DEFAULT NULL AFTER `last_name`; 
+ALTER TABLE `leads` ADD `middlename` VARCHAR(100) NULL DEFAULT NULL AFTER `last_name`;
+
+-- 2025-08-14
+ALTER TABLE `vehicle_attributes` ADD `vehicle_info_id` BIGINT(20) NULL AFTER `form_id`;
+ALTER TABLE `driver_attributes` ADD `driver_info_id` BIGINT NULL AFTER `form_id`;
