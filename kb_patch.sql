@@ -16,7 +16,6 @@ ALTER TABLE `leads` ADD `language` VARCHAR(50) NULL DEFAULT NULL AFTER `country`
 --12-Aug-2025, Ishtiak Add
 
 ALTER TABLE `vehicle_attributes` ADD `vehicle_info_id` BIGINT(20) NULL AFTER `form_id`;
-
 ALTER TABLE `driver_attributes` ADD `driver_info_id` BIGINT NULL AFTER `form_id`;
 
 -- provided by Hasan
@@ -33,7 +32,6 @@ CREATE TABLE IF NOT EXISTS `rate_analysis_data` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 2025-08-13
 ALTER TABLE `leads` ADD `middlename` VARCHAR(100) NULL DEFAULT NULL AFTER `last_name`; 
 
 -- 2025-08-14, Ishtiak
@@ -68,3 +66,52 @@ INSERT INTO `result_action` (`id`, `rule_code`, `rule_description`, `rule_based`
 (3, 'LV', 'Left Voice-Mail', 'Yes', '6', 'No', 'No', 2, '60', 'PARK', 1, '2025-08-14 05:30:10', NULL),
 (4, 'NC4A', 'NC After 4 Attempts', 'Yes', '6', 'No', 'No', 2, '60', 'PARK', 1, '2025-08-14 05:30:10', NULL),
 (5, 'PARK', 'Parked', 'No', '0', 'No', 'No', 2, '1440', NULL, 1, '2025-08-14 05:31:20', NULL);
+
+
+-- 2025-08-13, Ishtiak
+CREATE TABLE `crm_insurance`.`result_codes` (`id` INT NOT NULL AUTO_INCREMENT , `code` VARCHAR(10) NOT NULL , `title` VARCHAR(255) NOT NULL , `status` INT NOT NULL DEFAULT '1' , `created_at` TIMESTAMP NOT NULL , `created_by` BIGINT NOT NULL , `updated_at` TIMESTAMP NULL DEFAULT NULL , `updated_by` BIGINT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+ALTER TABLE `vehicle_attributes` ADD `vehicle_info_id` BIGINT(20) NULL AFTER `form_id`;
+ALTER TABLE `driver_attributes` ADD `driver_info_id` BIGINT NULL AFTER `form_id`;
+
+
+
+-- 2025-08-14 ==================================
+CREATE TABLE IF NOT EXISTS `lead_status` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `status_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `group_code` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `group_code` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `group_description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `result_action` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `rule_code` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rule_description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rule_based` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `num_attempts` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `callback` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dead` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lead_status_id` int DEFAULT NULL,
+  `next_dist` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `result_code` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE `leads` ADD `assigned_to` INT NULL DEFAULT NULL AFTER `lead_notes`; 
