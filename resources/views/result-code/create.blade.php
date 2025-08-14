@@ -145,8 +145,8 @@
                                         <select class=" form-control form-control-sm form-control-solid" name="comment_required"
                                                 aria-label="Default select example">
                                             <option value=''>Select</option>
-                                            <option value="y">Yes</option>
-                                            <option value="n">No</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
 
                                         </select>
                                     </div>
@@ -158,8 +158,8 @@
                                         <select class=" form-control form-control-sm form-control-solid" name="selectable"
                                                 aria-label="Default select example">
                                             <option value=''>Select</option>
-                                            <option value="y">Yes</option>
-                                            <option value="n">No</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
 
                                         </select>
                                     </div>
@@ -168,12 +168,9 @@
                                 <div class="col-md-6">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">Active</label>
-                                        <select class=" form-control form-control-sm form-control-solid" name="status"
-                                                aria-label="Default select example">
-
+                                        <select class=" form-control form-control-sm form-control-solid" name="status" aria-label="Default select example">
                                             <option value="1" selected>Active</option>
                                             <option value="0">Inactive</option>
-
                                         </select>
                                     </div>
                                 </div>
@@ -181,9 +178,7 @@
 
                             <div class="card-footer d-flex justify-content-end">
                                 <input type="reset" value="Reset" class="btn btn-sm btn-light me-2">
-                                <button type="submit" class="btn btn-sm btn-primary"
-                                        id="kt_account_profile_details_submit">Save Changes
-                                </button>
+                                <button type="submit" class="btn btn-sm btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
                             </div>
 
                         </form>
