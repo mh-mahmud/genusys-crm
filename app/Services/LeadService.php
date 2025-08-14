@@ -251,6 +251,7 @@ class LeadService
         }
 
         // create the lead data
+        DB::beginTransaction();
         $data['created_by'] = Auth::user()->id;
         $lead = Lead::create($data);
         $tableData = [];
@@ -321,6 +322,7 @@ class LeadService
                 DB::table($tableName)->insert($data);
             }
         }
+        DB::commit();
 
         return $lead;
     }

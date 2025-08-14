@@ -62,7 +62,7 @@
                                 <div class="col-md-6">
                                     <div class="fv-row mb-3">
                                         <!--begin::Label-->
-                                        <label class="form-label fw-bolder text-dark">Code<span
+                                        <label class="form-label fw-bolder text-dark">Result Code<span
                                                 class="text-danger">*</span></label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
@@ -78,7 +78,7 @@
                                 <div class="col-md-6">
                                     <div class="fv-row mb-3">
                                         <!--begin::Label-->
-                                        <label class="form-label fw-bolder text-dark">Title<span
+                                        <label class="form-label fw-bolder text-dark">Result Description<span
                                                 class="text-danger">*</span></label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
@@ -91,9 +91,83 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="fv-row mb-3">
-                                        <label class="form-label fw-bolder text-dark">Status</label>
+                                        <label class="form-label fw-bolder text-dark">Result Group</label>
+                                        <select class=" form-control form-control-sm form-control-solid" id="result_group_id" name="result_group_id"
+                                                aria-label="Default select example">
+                                            <option value=''>Select</option>
+                                            @foreach($group_code as $code)
+                                                <option value="{{$code->id}}" {{ old('result_group_id') == $code->id ? 'selected' : '' }}>{{ $code->group_description }}</option>
+                                            @endforeach
+                                        </select>
+                                        {{-- @if ($errors->has('result_group_id'))
+                                            <span class="text-danger">{{ $errors->first('result_group_id') }}</span>
+                                        @endif --}}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="fv-row mb-3">
+                                        <label class="form-label fw-bolder text-dark">Result Action</label>
+                                        <select class=" form-control form-control-sm form-control-solid" id="result_action_id" name="result_action_id"
+                                                aria-label="Default select example">
+                                            <option value=''>Select</option>
+                                            @foreach($result_action as $action)
+                                                <option value="{{$action->id}}" {{ old('result_action_id') == $action->id ? 'selected' : '' }}>{{ $action->rule_description }}</option>
+                                            @endforeach
+                                        </select>
+                                        {{-- @if ($errors->has('result_action_id'))
+                                            <span class="text-danger">{{ $errors->first('result_action_id') }}</span>
+                                        @endif --}}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="fv-row mb-3">
+                                        <label class="form-label fw-bolder text-dark">Lead Status</label>
+                                        <select class=" form-control form-control-sm form-control-solid" id="lead_status_id" name="lead_status_id"
+                                                aria-label="Default select example">
+                                            <option value=''>Select</option>
+                                            @foreach($lead_status as $status)
+                                                <option value="{{$action->id}}" {{ old('lead_status_id') == $status->id ? 'selected' : '' }}>{{ $status->status_name }}</option>
+                                            @endforeach
+                                        </select>
+                                        {{-- @if ($errors->has('lead_status_id'))
+                                            <span class="text-danger">{{ $errors->first('lead_status_id') }}</span>
+                                        @endif --}}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="fv-row mb-3">
+                                        <label class="form-label fw-bolder text-dark">Comment Required</label>
+                                        <select class=" form-control form-control-sm form-control-solid" name="comment_required"
+                                                aria-label="Default select example">
+                                            <option value=''>Select</option>
+                                            <option value="y">Yes</option>
+                                            <option value="n">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="fv-row mb-3">
+                                        <label class="form-label fw-bolder text-dark">Selectable</label>
+                                        <select class=" form-control form-control-sm form-control-solid" name="selectable"
+                                                aria-label="Default select example">
+                                            <option value=''>Select</option>
+                                            <option value="y">Yes</option>
+                                            <option value="n">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="fv-row mb-3">
+                                        <label class="form-label fw-bolder text-dark">Active</label>
                                         <select class=" form-control form-control-sm form-control-solid" name="status"
                                                 aria-label="Default select example">
 

@@ -39,6 +39,7 @@ use App\Models\QuoteDetails;
 use App\Models\DriverAttributes;
 use App\Models\DriverInformation;
 use App\Models\RateAnalysisData;
+use App\Models\ResultCode;
 
 class LeadController  extends Controller
 {
@@ -118,28 +119,10 @@ class LeadController  extends Controller
                 $fieldsByTable[$field->table_name][] = $field;
             }
         }
-        // dd($fieldsByTable);
+        $users = User::where('user_type', 'user')->where('status', 1)->get(['id', 'user_id', 'first_name', 'last_name', 'email', 'phone_number']);
+        $lead_result_codes = ResultCode::select('id', 'code', 'title')->get();
 
-        return view('leads.create', compact('formName', 'fieldsByTable', 'old_phone'));
-    }
-
-
-
-    public function store_backup(Request $request)
-    {
-        $request->validate([
-            'first_name' => 'required|string|max:191',
-            'last_name' => 'required|string|max:191',
-            'title' => 'required|string|max:191',
-            'email' => 'nullable|string|email|max:191|unique:leads,email',
-            'phone' => 'required|string|max:191',
-
-        ]);
-
-        $data = $request->all();
-        $this->leadService->createLead($data);
-
-        return redirect()->route('lead-index')->with('success', 'Lead created successfully.');
+        return view('leads.create', compact('formName', 'fieldsByTable', 'old_phone', 'users', 'lead_result_codes'));
     }
 
     public function store(Request $request)

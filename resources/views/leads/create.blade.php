@@ -87,7 +87,7 @@
                                 <div class="row">
                                     <h5 class="mb-2" style="border:1px solid #DDD;padding:7px;background-color:#54B4D3;color:#f7f7f7">Client Contact Information</h5>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="fv-row mb-3">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">First Name</label>
@@ -101,7 +101,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="fv-row mb-3">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Middle Name</label>
@@ -115,7 +115,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="fv-row mb-3">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Last Name</label>
@@ -413,16 +413,16 @@
                                     <div class="col-md-12">
                                         <div class="fv-row mb-3">
                                             <label class="form-label fw-bolder text-dark">Result Code</label>
-                                            <select class="form-control form-control-sm form-control-solid" name="lead_source">
-                                                <option value="" disabled {{ old('lead_source') == '' ? 'selected' : '' }}>Select Code</option>
-                                                @foreach(config('constants.lead_source') as $source)
-                                                <option value="{{ $source }}" {{ old('lead_source') == $source ? 'selected' : '' }}>
-                                                    {{ $source }}
+                                            <select class="form-control form-control-sm form-control-solid" name="result_codes_id">
+                                                <option value="" disabled {{ old('result_codes_id') == '' ? 'selected' : '' }}>Select Code</option>
+                                                @foreach($lead_result_codes as $result_code)
+                                                <option value="{{ $result_code->id }}" {{ old('result_codes_id') == $result_code->id ? 'selected' : '' }}>
+                                                    {{ $result_code->title }}
                                                 </option>
                                                 @endforeach
                                             </select>
-                                            @if ($errors->has('lead_source'))
-                                            <span class="text-danger">{{ $errors->first('lead_source') }}</span>
+                                            @if ($errors->has('result_codes_id'))
+                                            <span class="text-danger">{{ $errors->first('result_codes_id') }}</span>
                                             @endif
                                         </div>
                                     </div>
@@ -437,7 +437,7 @@
                                         <table class="custom-table">
                                                 <tr>
                                                     <td>Created</td>
-                                                    <td>8/5/2025</td>
+                                                    <td>{{ date("Y-m-d") }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Last modified</td>
@@ -456,22 +456,22 @@
                                                 <tr>
                                                     <td>Assigned To</td>
                                                     <td>
-                                                        <select class="form-control form-control-sm form-control-solid" name="lead_source">
-                                                            <option value="" disabled {{ old('lead_source') == '' ? 'selected' : '' }}>Select</option>
-                                                            @foreach(config('constants.lead_source') as $source)
-                                                            <option value="{{ $source }}" {{ old('lead_source') == $source ? 'selected' : '' }}>
-                                                                {{ $source }}
+                                                        <select class="form-control form-control-sm form-control-solid" name="assigned_to">
+                                                            <option value="" {{ old('assigned_to') == '' ? 'selected' : '' }}>-- Select Lead --</option>
+                                                            @foreach($users as $value)
+                                                            <option value="{{ $value->id }}" {{ old('assigned_to') == $value->id ? 'selected' : '' }}>
+                                                                {{ $value->first_name . " " . $value->last_name }}
                                                             </option>
                                                             @endforeach
                                                         </select>
-                                                        @if ($errors->has('lead_source'))
-                                                        <span class="text-danger">{{ $errors->first('lead_source') }}</span>
+                                                        @if ($errors->has('assigned_to'))
+                                                        <span class="text-danger">{{ $errors->first('assigned_to') }}</span>
                                                         @endif
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Created</td>
-                                                    <td>Admin</td>
+                                                    <td>Created by</td>
+                                                    <td>{{ Auth::user()->name }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Last modified</td>
@@ -495,7 +495,7 @@
                                         <table class="custom-table">
                                             </tr>
                                                 <td>Location</td>
-                                                <td>Fiesta</td>
+                                                <td>US</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -544,7 +544,7 @@
                                 <div class="col-md-6" style="">
                                 <h5 class="mb-0" style="border:1px solid #DDD;padding:7px;margin-bottom:10px;margin-top:30px;background-color:#54B4D3;color:#f7f7f7">{{ ucwords(str_replace('_', ' ', $tableName)) }}</h5>
                                 
-                                <div class="row">
+                                <div class="row" style="margin-top:20px">
                                     @foreach($fields as $field)
                                         <div class="col-md-6">
                                             <div class="fv-row mb-1">

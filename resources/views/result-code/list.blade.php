@@ -119,9 +119,14 @@
 						<thead>
 						<tr class="fw-bolder text-muted bg-light bd-cyan">
 						    <th class="ps-4 rounded-start min-w-40px">SL</th>
-							<th class="min-w-120px">Code</th>
-							<th class="min-w-150px">Title</th>
-							<th class="min-w-120px">Status</th>
+							<th class="min-w-120px">Result Code</th>
+							<th class="min-w-150px">Result Description</th>
+							<th class="min-w-150px">Result Group</th>
+							<th class="min-w-150px">Result Action</th>
+							<th class="min-w-120px">Lead Status</th>
+							<th class="min-w-120px">Comment</th>
+							<th class="min-w-120px">Selectable</th>
+							<th class="min-w-120px">Active</th>
 							<th class="min-w-100px text-end-new">Actions</th>
 						</tr>
 						</thead>
