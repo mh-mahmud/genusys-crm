@@ -452,7 +452,7 @@ class LeadService
     }
 
 
-    public function getTableData($tableName, $leadId)
+    public function getTableData_14082025($tableName, $leadId)
     {
         //get column names
         $columns = Schema::getColumnListing($tableName);
@@ -513,7 +513,85 @@ class LeadService
         ];
     }
 
-    public function updateTableData($request, $tableName, $leadId, $formId, $formData)
+    public function getTableData($tableName, $leadId)
+{
+    $tablesMap = [
+        'driver_information'  => ['driver_information', 'driver_attributes'],
+        'vehicle_information' => ['vehicle_information', 'vehicle_attributes']
+    ];
+
+    // define tables to fetch
+    $tablesToFetch = $tablesMap[$tableName] ?? [$tableName];
+    $tableData = [];
+
+    foreach ($tablesToFetch as $table) {
+        $table = trim($table);
+
+        if (Schema::hasTable($table)) {
+            // get columns and details
+            $columns = Schema::getColumnListing($table);
+            $columnDetails = DB::select("SHOW COLUMNS FROM $table");
+
+            // extra field
+            $fields = LeadFormDetail::where('table_name', $table)->get();
+
+            $columnTypes = [];
+            $dropdownOptions = [];
+
+            foreach ($columnDetails as $column) {
+                $columnName = $column->Field;
+                $columnType = $column->Type;
+
+                foreach ($fields as $field) {
+                    if ($field->field_value == 'file' && $columnName == $field->field_name) {
+                        $columnType = 'file';
+                        break;
+                    } elseif ($field->field_value == 'dropdown' && $columnName == $field->field_name) {
+                        $columnType = 'dropdown';
+                        if (!empty($field->character_length)) {
+                            $dropdownOptions[$columnName] = explode(',', $field->character_length);
+                        }
+                        break;
+                    }
+                }
+                $columnTypes[$columnName] = $columnType;
+            }
+
+            // remove unwanted columns
+            $filteredColumns = array_filter($columns, function ($col) {
+                return !in_array($col, ['id','created_by', 'created_at', 'updated_at']);
+            });
+            
+
+            // fetch existing data for editing
+            $existingData = DB::table($table)
+                ->where('id', $leadId)
+                ->first();
+
+            $tableData[$table] = [
+                'columns'         => $filteredColumns,
+                'types'           => $columnTypes,
+                'dropdownOptions' => $dropdownOptions,
+                'existingData'    => $existingData
+            ];
+        }
+    }
+
+    // main lead
+    //$leads = Lead::where('id', $leadId)->first();
+     $leads = DB::table($tableName)
+            ->where('id', $leadId)
+            ->first();
+
+    return [
+        'tableName'  => $tableName,
+        'tableData'  => $tableData,
+        'leads'      => $leads
+    ];
+}
+
+
+    public function updateTableData14082025($request, $tableName, $leadId, $formId, $formData)
     {
 
         if (!Schema::hasTable($tableName)) {
@@ -579,6 +657,94 @@ class LeadService
             ->where('form_id', $formId)
             ->update($formData);
     }
+
+
+    public function updateTableData($request, $tableName, $leadId, $formId, $formData)
+{
+    // mapping main table to others tables
+    $tablesMap = [
+        'driver_information'  => ['driver_information', 'driver_attributes'],
+        'vehicle_information' => ['vehicle_information', 'vehicle_attributes']
+    ];
+
+    $tablesToUpdate = $tablesMap[$tableName] ?? [$tableName];
+
+    foreach ($tablesToUpdate as $table) {
+
+        if (!Schema::hasTable($table)) {
+            throw new \Exception("Table $table does not exist.");
+        }
+
+        // only take relevant fields for this table
+        $tableInputs = $formData[$table] ?? [];
+        //get existing data
+        $existingData = DB::table($table)
+            ->where('id', $leadId)
+            ->where('form_id', $formId)
+            ->first();
+
+        if (!$existingData) {
+            throw new \Exception("Record not found in $table.");
+        }
+
+        // get LeadFormDetail fields
+        $fields = LeadFormDetail::where('table_name', $table)->get();
+        $rules = [];
+        $messages = [];
+
+        foreach ($fields as $field) {
+            $columnName = $field->field_name;
+
+            // file upload
+            if ($field->field_value === 'file' && $request->hasFile($table . '.' . $columnName)) {
+
+                // delete old file
+                if (!empty($existingData->$columnName)) {
+                    $oldFilePath = getcwd() . '/uploads/files/' . $existingData->$columnName;
+                    if (file_exists($oldFilePath)) {
+                        @unlink($oldFilePath);
+                    }
+                }
+
+                $uploadedFile = $request->file($table . '.' . $columnName);
+                $fileNameWithExt = $uploadedFile->getClientOriginalName();
+                $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                $extension = $uploadedFile->getClientOriginalExtension();
+                $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+
+                $uploadedFile->move(getcwd() . '/uploads/files', $fileNameToStore);
+                $tableInputs[$columnName] = $fileNameToStore;
+            }
+
+            // validation
+            if ($field->field_value === 'int') {
+                $rules[$columnName] = 'nullable|integer|digits_between:1,10';
+                $messages["{$columnName}.digits_between"] = ucwords(str_replace('_', ' ', $columnName)) . " must be between 1 and 10 digits.";
+            }
+        }
+
+        // automatic fields
+        if (Schema::hasColumn($table, 'updated_at')) {
+            $tableInputs['updated_at'] = now();
+        }
+        if (Schema::hasColumn($table, 'created_by')) {
+            $tableInputs['created_by'] = Auth::user()->username;
+        }
+
+        // validate table inputs
+        $validator = Validator::make($tableInputs, $rules, $messages);
+        if ($validator->fails()) {
+            throw new ValidationException($validator);
+        }
+
+        //update the table
+        DB::table($table)
+            ->where('id', $leadId)
+            ->where('form_id', $formId)
+            ->update($tableInputs);
+    }
+}
+
     
 
     public function searchLeadForm($request)
