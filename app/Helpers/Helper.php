@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use App\Models\GroupCode;
+use App\Models\LeadStatus;
+use App\Models\ResultAction;
 class Helper
 {
     public static function generateTableId() 
@@ -286,5 +289,13 @@ class Helper
                 'notify_seen' => 0,
             ]);
      }
+
+     public static function resultCodeDropDownData()
+     {
+        $data["lead_status"] = LeadStatus::select('id', 'status_name')->get(); 
+        $data["group_code"] = GroupCode::select('id', 'group_code', 'group_description')->get();   
+        $data["result_action"] = ResultAction::select('id', 'rule_code', 'rule_description')->get(); 
+        return $data;
+    }
     
 }

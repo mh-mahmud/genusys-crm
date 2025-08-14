@@ -4,7 +4,6 @@ namespace App\Services;
 use App\Models\ResultCode;
 use Exception;
 use Illuminate\Support\Facades\Auth;
-
 class ResultCodeService
 {
     public function resultCodeList($request)
@@ -12,7 +11,7 @@ class ResultCodeService
         $sql = ResultCode::query();
         $data = $request->all();
         if(!empty($data["search"])) {
-            $sql->where('name','like', '%' . $data["search"] . '%');
+            $sql->where('title','like', '%' . $data["search"] . '%');
 
         }
         if (isset($data['paginate']) && $data['paginate'] == false) {
@@ -36,6 +35,11 @@ class ResultCodeService
             $dataObj                        = new ResultCode();
             $dataObj->title                 = $data['title'];
             $dataObj->code                  = $data['code'];
+            $dataObj->result_group_id       = $data['result_group_id'];
+            $dataObj->result_action_id      = $data['result_action_id'];
+            $dataObj->lead_status_id        = $data['lead_status_id'];
+            $dataObj->comment_required      = $data['comment_required'];
+            $dataObj->selectable            = $data['selectable'];
             $dataObj->created_by            = Auth::id();
             $dataObj->status                = $data['status'];
 
@@ -76,4 +80,6 @@ class ResultCodeService
             'status'                 => 200,
         ];
     }
+
+    
 }

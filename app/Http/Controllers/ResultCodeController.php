@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Services\ResultCodeService;
 use App\Helpers\Helper;
 
+
 class ResultCodeController extends Controller {
 
     protected $resultCodeService;
@@ -16,14 +17,15 @@ class ResultCodeController extends Controller {
     }
 
     public function resultCodeList(Request $request)
-    {      
+    {     
         $codes = $this->resultCodeService->resultCodeList($request);
         return view('result-code.list', compact('codes'));
     }
 
     public function resultCodeCreate()
-    {       
-        return view('result-code.create');
+    {   
+        $data = Helper::resultCodeDropDownData();
+        return view('result-code.create', $data);
     }
 
     public function resultCodeStore(Request $request)
@@ -31,7 +33,7 @@ class ResultCodeController extends Controller {
         $result = $this->resultCodeService->resultCodeStore($request);
         if($result->status == 201){
             Helper::storeLog("Result code added successfully", "Result code", "Create Result code");
-            return redirect()->route('country-list')->with('success', 'Result code added successfully.');
+            return redirect()->route('result-code-list')->with('success', 'Result code added successfully.');
 
         }else{
             session()->flash('error', 'Can not Add!');
@@ -50,7 +52,7 @@ class ResultCodeController extends Controller {
         $result = $this->resultCodeService->resultCodeDelete($id);
         if($result->status == 200){
             Helper::storeLog("Country deleted successfully", "Country", "Delete Country");
-            return redirect()->route('country-list')->with('success', 'Country deleted successfully.');
+            return redirect()->route('result-code-list')->with('success', 'Country deleted successfully.');
 
         }else{
             session()->flash('error', 'Can not Delete !');

@@ -36,5 +36,35 @@ CREATE TABLE IF NOT EXISTS `rate_analysis_data` (
 -- 2025-08-13
 ALTER TABLE `leads` ADD `middlename` VARCHAR(100) NULL DEFAULT NULL AFTER `last_name`; 
 
--- 2025-08-13, Ishtiak
-CREATE TABLE `crm_insurance`.`result_codes` (`id` INT NOT NULL AUTO_INCREMENT , `code` VARCHAR(10) NOT NULL , `title` VARCHAR(255) NOT NULL , `status` INT NOT NULL DEFAULT '1' , `created_at` TIMESTAMP NOT NULL , `created_by` BIGINT NOT NULL , `updated_at` TIMESTAMP NULL DEFAULT NULL , `updated_by` BIGINT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+-- 2025-08-14, Ishtiak
+CREATE TABLE `result_codes` (
+  `id` int(11) NOT NULL,
+  `code` varchar(10) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `result_group_id` int(11) DEFAULT NULL,
+  `result_action_id` int(11) DEFAULT NULL,
+  `lead_status_id` int(11) DEFAULT NULL,
+  `comment_required` char(1) DEFAULT NULL COMMENT 'y = Yes, n = Not Required',
+  `selectable` int(11) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_by` bigint(20) NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `updated_by` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `lead_status` (`id`, `status_name`, `status`, `created_at`, `updated_at`) VALUES (NULL, 'Hot', '1', current_timestamp(), NULL), (NULL, 'Warm', '1', current_timestamp(), NULL);
+
+INSERT INTO `lead_status` (`id`, `status_name`, `status`, `created_at`, `updated_at`) VALUES (NULL, 'Sold', '1', current_timestamp(), NULL), (NULL, 'Dead', '1', current_timestamp(), NULL);
+
+INSERT INTO `group_code` (`id`, `group_code`, `group_description`, `status`, `created_at`, `updated_at`) VALUES (NULL, 'CP', 'Contact Positive', '1', current_timestamp(), NULL), (NULL, 'CN', 'Contact Negative', '1', current_timestamp(), NULL);
+
+INSERT INTO `group_code` (`id`, `group_code`, `group_description`, `status`, `created_at`, `updated_at`) VALUES (NULL, 'NC', 'Not Contact', '1', current_timestamp(), NULL);
+
+
+INSERT INTO `result_action` (`id`, `rule_code`, `rule_description`, `rule_based`, `num_attempts`, `callback`, `dead`, `lead_status_id`, `next_dist`, `result_code`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'CC', 'Close Contact', 'No', '0', 'No', 'Yes', 4, '0', NULL, 1, '2025-08-14 05:26:21', NULL),
+(2, 'SC', 'Schedule a Callback', 'No', '1', 'Yes', 'Yes', 2, '1', NULL, 1, '2025-08-14 05:26:21', NULL),
+(3, 'LV', 'Left Voice-Mail', 'Yes', '6', 'No', 'No', 2, '60', 'PARK', 1, '2025-08-14 05:30:10', NULL),
+(4, 'NC4A', 'NC After 4 Attempts', 'Yes', '6', 'No', 'No', 2, '60', 'PARK', 1, '2025-08-14 05:30:10', NULL),
+(5, 'PARK', 'Parked', 'No', '0', 'No', 'No', 2, '1440', NULL, 1, '2025-08-14 05:31:20', NULL);
