@@ -413,16 +413,16 @@
                                     <div class="col-md-12">
                                         <div class="fv-row mb-3">
                                             <label class="form-label fw-bolder text-dark">Result Code</label>
-                                            <select class="form-control form-control-sm form-control-solid" name="lead_source">
-                                                <option value="" disabled {{ old('lead_source') == '' ? 'selected' : '' }}>Select Code</option>
-                                                @foreach(config('constants.lead_source') as $source)
-                                                <option value="{{ $source }}" {{ old('lead_source') == $source ? 'selected' : '' }}>
-                                                    {{ $source }}
+                                            <select class="form-control form-control-sm form-control-solid" name="result_codes_id">
+                                                <option value="" disabled {{ old('result_codes_id') == '' ? 'selected' : '' }}>Select Code</option>
+                                                @foreach($lead_result_codes as $result_code)
+                                                <option value="{{ $result_code->id }}" {{ old('result_codes_id') == $result_code->id ? 'selected' : '' }}>
+                                                    {{ $result_code->title }}
                                                 </option>
                                                 @endforeach
                                             </select>
-                                            @if ($errors->has('lead_source'))
-                                            <span class="text-danger">{{ $errors->first('lead_source') }}</span>
+                                            @if ($errors->has('result_codes_id'))
+                                            <span class="text-danger">{{ $errors->first('result_codes_id') }}</span>
                                             @endif
                                         </div>
                                     </div>

@@ -68,10 +68,7 @@ INSERT INTO `result_action` (`id`, `rule_code`, `rule_description`, `rule_based`
 (5, 'PARK', 'Parked', 'No', '0', 'No', 'No', 2, '1440', NULL, 1, '2025-08-14 05:31:20', NULL);
 
 
--- 2025-08-13, Ishtiak
-CREATE TABLE `crm_insurance`.`result_codes` (`id` INT NOT NULL AUTO_INCREMENT , `code` VARCHAR(10) NOT NULL , `title` VARCHAR(255) NOT NULL , `status` INT NOT NULL DEFAULT '1' , `created_at` TIMESTAMP NOT NULL , `created_by` BIGINT NOT NULL , `updated_at` TIMESTAMP NULL DEFAULT NULL , `updated_by` BIGINT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
-ALTER TABLE `vehicle_attributes` ADD `vehicle_info_id` BIGINT(20) NULL AFTER `form_id`;
-ALTER TABLE `driver_attributes` ADD `driver_info_id` BIGINT NULL AFTER `form_id`;
+CREATE TABLE `crm_insurance`.`lead_result_code` (`id` BIGINT NOT NULL AUTO_INCREMENT , `lead_id` BIGINT NOT NULL , `result_codes_id` INT NOT NULL , `lead_note` TEXT NULL , `created_by` BIGINT NOT NULL , `created_at` TIMESTAMP NOT NULL , `updted_by` TIMESTAMP NULL , `updated_at` INT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
 
 

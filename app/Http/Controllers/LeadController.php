@@ -39,6 +39,7 @@ use App\Models\QuoteDetails;
 use App\Models\DriverAttributes;
 use App\Models\DriverInformation;
 use App\Models\RateAnalysisData;
+use App\Models\ResultCode;
 
 class LeadController  extends Controller
 {
@@ -119,8 +120,9 @@ class LeadController  extends Controller
             }
         }
         $users = User::where('user_type', 'user')->where('status', 1)->get(['id', 'user_id', 'first_name', 'last_name', 'email', 'phone_number']);
+        $lead_result_codes = ResultCode::select('id', 'code', 'title')->get();
 
-        return view('leads.create', compact('formName', 'fieldsByTable', 'old_phone', 'users'));
+        return view('leads.create', compact('formName', 'fieldsByTable', 'old_phone', 'users', 'lead_result_codes'));
     }
 
     public function store(Request $request)
