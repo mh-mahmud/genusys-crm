@@ -8,7 +8,11 @@ class ResultCodeService
 {
     public function resultCodeList($request)
     {
-        $sql = ResultCode::query();
+        $sql = ResultCode::with([
+                    'groupCode:id,group_code,group_description',      
+                    'resultAction:id,rule_code,rule_description',  
+                    'leadStatus:id,status_name'   
+                ]);
         $data = $request->all();
         if(!empty($data["search"])) {
             $sql->where('title','like', '%' . $data["search"] . '%');

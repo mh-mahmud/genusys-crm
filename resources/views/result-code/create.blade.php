@@ -130,7 +130,7 @@
                                                 aria-label="Default select example">
                                             <option value=''>Select</option>
                                             @foreach($lead_status as $status)
-                                                <option value="{{$action->id}}" {{ old('lead_status_id') == $status->id ? 'selected' : '' }}>{{ $status->status_name }}</option>
+                                                <option value="{{$status->id}}" {{ old('lead_status_id') == $status->id ? 'selected' : '' }}>{{ $status->status_name }}</option>
                                             @endforeach
                                         </select>
                                         {{-- @if ($errors->has('lead_status_id'))
