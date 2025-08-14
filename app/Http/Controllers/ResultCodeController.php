@@ -31,6 +31,7 @@ class ResultCodeController extends Controller {
     public function resultCodeStore(Request $request)
     { 
         $result = $this->resultCodeService->resultCodeStore($request);
+        // dd($result);
         if($result->status == 201){
             Helper::storeLog("Result code added successfully", "Result code", "Create Result code");
             return redirect()->route('result-code-list')->with('success', 'Result code added successfully.');

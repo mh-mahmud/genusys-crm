@@ -112,3 +112,20 @@ CREATE TABLE IF NOT EXISTS `result_action` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 ALTER TABLE `leads` ADD `assigned_to` INT NULL DEFAULT NULL AFTER `lead_notes`; 
+
+
+-- insert new table
+CREATE TABLE IF NOT EXISTS `lead_result_code` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `lead_id` bigint NOT NULL,
+  `result_codes_id` int NOT NULL,
+  `lead_notes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `created_by` bigint NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `updted_by` int DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `lead_result_code` (`id`, `lead_id`, `result_codes_id`, `lead_notes`, `created_by`, `created_at`, `updted_by`, `updated_at`) VALUES
+(1, 18, 2, 'dsfgvdre rgh erhe 5hth te\r\ne gerer et ergergert erer er\r\n errgre er erwre\r\n  ge rgreereger g', 1, '2025-08-14 09:20:24', NULL, '2025-08-14 09:20:24');

@@ -7,6 +7,7 @@ use App\Models\Lead;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\LeadFormDetail;
+use App\Models\LeadResultCode;
 use App\Models\VehicleInformation;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Schema;
@@ -255,6 +256,15 @@ class LeadService
         $data['created_by'] = Auth::user()->id;
         $lead = Lead::create($data);
         $tableData = [];
+
+        // insert into lead_reasult_code
+        $res_code = new LeadResultCode();
+        $res_code->lead_id = $lead->id;
+        $res_code->result_codes_id = $data['result_codes_id'];
+        $res_code->lead_notes = $data['lead_notes'];
+        $res_code->created_by = Auth::user()->id;
+        $res_code->save();
+
 
         // prepare fields and data for insertion into dynamic tables
         foreach ($fields as $field) {
