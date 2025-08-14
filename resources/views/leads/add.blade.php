@@ -42,101 +42,80 @@
 <div class="container-xxl">
     <div class="row">
         <div class="col-xxl-12">
-            <div class="card card-xxl-stretch mt-4">
-                <div class="card-header bg-light bd-cyan">
-                    <!--begin::Card title-->
-                    <div class="card-title m-0">
-                        <h3 class="fw-bolder m-0">{{ ucwords(str_replace('_', ' ', $tableName)) }}</h3>
-                    </div>
-                    <!--end::Card title-->
-                </div>
+            <form class="g-form w-100" action="{{ route('store-tabledata') }}" enctype="multipart/form-data" method="POST">
+                @csrf
+                <input type="hidden" name="tableName" value="{{ $tableName }}">
+                <input type="hidden" name="form_id" value="{{ $leads->form_id }}">
+                <input type="hidden" name="lead_id" value="{{ $leads->id }}">
 
-                <!-- Card Body-->
-                <div class="card-body">
-
-                    <!-- Start Form-->
-
-                    <form class="g-form w-100" action="{{ route('store-tabledata') }}" enctype="multipart/form-data" method="POST">
-                        <input type="hidden" name="tableName" value="{{ $tableName }}">
-                        <input type="hidden" name="form_id" value="{{ $leads->form_id }}">
-                        <input type="hidden" name="lead_id" value="{{ $leads->id }}">
-
-                        @csrf
-                        <div class="row">
-                            @foreach ($filteredColumns as $column)
-                            @if (!in_array($column, ['lead_id', 'form_id','created_by']))
-                            <div class="col-md-4">
-
-                                <div class="fv-row mb-3">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder text-dark" for="{{ $column }}">{{ ucwords(str_replace('_', ' ', $column)) }}</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    @php
-                                    $inputType = 'text'; // Default input type
-                                    if (isset($columnTypes[$column])) {
-                                    $type = strtolower($columnTypes[$column]);
-                                    if (strpos($type, 'int') !== false || strpos($type, 'numeric') !== false) {
-                                    $inputType = 'number';
-                                    } elseif (strpos($type, 'date') !== false) {
-                                    $inputType = 'date';
-                                    } elseif (strpos($type, 'email') !== false) {
-                                    $inputType = 'email';
-                                    } elseif (strpos($type, 'text') !== false || strpos($type, 'blob') !== false) {
-                                    $inputType = 'textarea';
-                                    }elseif ($type == 'file') {
-                                    $inputType = 'file';
-                                    }elseif ($type == 'dropdown') {
-                                    $inputType = 'dropdown';
-                                    }
-                                    }
-                                    @endphp
-                                    @if ($inputType === 'textarea')
-                                    <textarea class="form-control form-control-sm  form-control-solid" id="{{ $column }}" name="{{ $column }}"></textarea>
-                                    @elseif($inputType === 'date')
-                                    <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="common_dob" name="{{ $column }}">
-                                    @elseif($inputType === 'file')
-                                    <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $column }}">
-                                    @elseif($inputType === 'dropdown')
-                                    <select class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $column }}">
-                                        <option value="" selected>Select {{ ucwords(str_replace('_', ' ', $column)) }}</option>
-                                        @foreach($dropdownOptions[$column] as $option)
-                                        <option value="{{ $option }}">{{ ucfirst($option) }}</option>
-                                        @endforeach
-                                    </select>
-                                    @else
-                                    <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $column }}">
-                                    @endif
-                                </div>
-
+                @foreach($tableData as $tbl => $data)
+                    <div class="card card-xxl-stretch mt-4">
+                        <div class="card-header bg-light bd-cyan">
+                            <div class="card-title m-0">
+                                <h3 class="fw-bolder m-0">{{ ucwords(str_replace('_', ' ', $tbl)) }}</h3>
                             </div>
-                            @endif
-                            @endforeach
                         </div>
+
+                        <div class="card-body">
+                            <div class="row">
+                                @foreach($data['columns'] as $column)
+                                    @if (!in_array($column, ['lead_id', 'form_id','created_by']))
+                                        <div class="col-md-4">
+                                            <div class="fv-row mb-3">
+                                                <label class="form-label fw-bolder text-dark" for="{{ $column }}">
+                                                    {{ ucwords(str_replace('_', ' ', $column)) }}
+                                                </label>
+
+                                                @php
+                                                    $inputType = 'text';
+                                                    $type = strtolower($data['types'][$column] ?? '');
+
+                                                    if (strpos($type, 'int') !== false || strpos($type, 'numeric') !== false) {
+                                                        $inputType = 'number';
+                                                    } elseif (strpos($type, 'date') !== false) {
+                                                        $inputType = 'date';
+                                                    } elseif (strpos($type, 'email') !== false) {
+                                                        $inputType = 'email';
+                                                    } elseif (strpos($type, 'text') !== false || strpos($type, 'blob') !== false) {
+                                                        $inputType = 'textarea';
+                                                    } elseif ($type == 'file') {
+                                                        $inputType = 'file';
+                                                    } elseif ($type == 'dropdown') {
+                                                        $inputType = 'dropdown';
+                                                    }
+                                                @endphp
+
+                                                @if ($inputType === 'textarea')
+                                                    <textarea class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $tbl }}[{{ $column }}]"></textarea>
+                                                @elseif($inputType === 'file' || $inputType === 'email' || $inputType === 'number')
+                                                    <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $tbl }}[{{ $column }}]">
+
+                                                  @elseif($inputType === 'date')
+                                                    <input type="{{ $inputType }}" class="form-control form-control-sm form-control-solid" id="common_dob" name="{{ $tbl }}[{{ $column }}]">
+                                                @elseif($inputType === 'dropdown')
+                                                    <select class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $tbl }}[{{ $column }}]">
+                                                        <option value="" selected>Select {{ ucwords(str_replace('_', ' ', $column)) }}</option>
+                                                        @foreach($data['dropdownOptions'][$column] ?? [] as $option)
+                                                            <option value="{{ $option }}">{{ ucfirst($option) }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                @else
+                                                    <input type="text" class="form-control form-control-sm form-control-solid" id="{{ $column }}" name="{{ $tbl }}[{{ $column }}]">
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+                <div class="card-footer d-flex justify-content-end py-6 px-9">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
                 </div>
-
-
-
-
-
-
-            </div>
-            <!--End Row-->
-            <div class="card-footer d-flex justify-content-end py-6 px-9">
-                <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes
-                </button>
-            </div>
-
             </form>
-
-            <!-- End Form-->
-
         </div>
-        <!--End Card body-->
-
-        <!--begin::Actions-->
-
-        <!--end::Actions-->
     </div>
 </div>
 </div>

@@ -329,7 +329,7 @@ class LeadController  extends Controller
 
 
 
-    public function add($tableName, $leadId)
+    public function add_14082025($tableName, $leadId)
     {
         $columns = [];
         $columnDetails = [];
@@ -393,7 +393,69 @@ class LeadController  extends Controller
         return view('leads.add', compact('tableName', 'filteredColumns', 'leads', 'columnTypes', 'dropdownOptions'));
     }
 
-    public function storeTableData(Request $request)
+
+    public function add($tableName, $leadId)
+{
+    $tablesMap = [
+        'driver_information'  => ['driver_information', 'driver_attributes'],
+        'vehicle_information' => ['vehicle_information', 'vehicle_attributes']
+    ];
+
+    $tablesToFetch = $tablesMap[$tableName] ?? [$tableName];
+
+    $tableData = []; // store columns,types,options grouped by table
+
+    foreach ($tablesToFetch as $table) {
+        $table = trim($table);
+
+        if (Schema::hasTable($table)) {
+            $columns = Schema::getColumnListing($table);
+            $columnDetails = DB::select("SHOW COLUMNS FROM `$table`");
+            $fields = LeadFormDetail::where('table_name', $table)->get();
+
+            $columnTypes = [];
+            $dropdownOptions = [];
+
+            foreach ($columnDetails as $column) {
+                $columnName = $column->Field;
+                $columnType = $column->Type;
+
+                foreach ($fields as $field) {
+                    if ($field->field_value == 'file' && $columnName == $field->field_name) {
+                        $columnType = 'file';
+                        break;
+                    } elseif ($field->field_value == 'dropdown' && $columnName == $field->field_name) {
+                        $columnType = 'dropdown';
+                        if (!empty($field->character_length)) {
+                            $dropdownOptions[$columnName] = explode(',', $field->character_length);
+                        }
+                        break;
+                    }
+                }
+
+                $columnTypes[$columnName] = $columnType;
+            }
+
+            // remove unwanted fields
+            $filteredColumns = array_filter($columns, function ($col) {
+                return !in_array($col, ['id', 'created_at', 'updated_at']);
+            });
+
+            $tableData[$table] = [
+                'columns'         => $filteredColumns,
+                'types'           => $columnTypes,
+                'dropdownOptions' => $dropdownOptions
+            ];
+        }
+    }
+
+    $leads = Lead::where('id', $leadId)->first();
+
+    return view('leads.add', compact('tableName', 'tableData', 'leads'));
+}
+
+
+    public function storeTableData_14082025(Request $request)
     {
         $tableName = $request->input('tableName');
         $data = $request->except(['_token', 'tableName']);
@@ -424,6 +486,69 @@ class LeadController  extends Controller
         Helper::storeLog("Lead $tableName table data created successfully", "Lead", "Create Lead Table Data",$lead_id);
         return redirect()->route('lead-show', ['id' => $lead_id])->with('success', 'Data inserted successfully');
     }
+
+    public function storeTableData(Request $request)
+{
+    $tableName = $request->input('tableName');
+    $lead_id   = $request->input('lead_id');
+    $form_id   = $request->input('form_id');
+
+    //mapping main table to related tables
+    $tablesMap = [
+        'driver_information'  => ['driver_information', 'driver_attributes'],
+        'vehicle_information' => ['vehicle_information', 'vehicle_attributes']
+    ];
+
+    // get list of tables to insert into
+    $tablesToInsert = $tablesMap[$tableName] ?? [$tableName];
+
+    foreach ($tablesToInsert as $table) {
+        //only this table input data
+        $tableInputs = $request->input($table, []);
+
+        //add common fields
+        $tableInputs['lead_id'] = $lead_id;
+        $tableInputs['form_id'] = $form_id;
+        
+        $fields = LeadFormDetail::where('table_name', $table)->get();
+        foreach ($fields as $field) {
+            $columnName = $field->field_name;
+
+            if ($field->field_value === 'file' && $request->hasFile($table . '.' . $columnName)) {
+                $uploadedFile = $request->file($table . '.' . $columnName);
+                $fileNameWithExt = $uploadedFile->getClientOriginalName();
+                $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                $extension = $uploadedFile->getClientOriginalExtension();
+                $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+
+                $uploadedFile->move(getcwd() . '/uploads/files', $fileNameToStore);
+                $tableInputs[$columnName] = $fileNameToStore;
+            }
+        }
+
+        // add creator
+        if (Schema::hasColumns($table, ['created_by','created_at', 'updated_at'])) {
+            $tableInputs['created_by'] = Auth::user()->username;
+            $tableInputs['created_at'] = now();
+            $tableInputs['updated_at'] = now();
+        }
+
+        //insert
+        DB::table($table)->insert($tableInputs);
+
+        Helper::storeLog(
+            "Lead $table table data created successfully",
+            "Lead",
+            "Create Lead Table Data",
+            $lead_id
+        );
+    }
+
+    return redirect()
+        ->route('lead-show', ['id' => $lead_id])
+        ->with('success', 'Data inserted successfully');
+}
+
 
 
     public function deleteTableData($tableName, $id, $leadId)

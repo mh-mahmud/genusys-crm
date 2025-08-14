@@ -70,6 +70,7 @@ class AuthController extends Controller
     {
         //Check user is already logged in
         if (session()->has('users')) {
+            //dd('sdsds');
             return redirect('dashboard')->with('success', 'You are already logged in.');
         }
 
