@@ -26,7 +26,7 @@
         <div class="d-flex align-items-center py-1">
 
             <!--begin::Button-->
-            <a href="{{ route('lead-show', ['id' => $leads->id]) }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Lead Show</a>
+            <a href="{{ route('lead-show', ['id' => $leads->id]) }}" class="btn btn-sm btn-danger" id="kt_toolbar_primary_button">Back</a>
 
             <!--end::Button-->
         </div>
