@@ -205,28 +205,6 @@ class LeadController  extends Controller
         return redirect()->route('dashboard')->with('success', 'Lead created successfully.');
     }
 
-
-    public function show_backup($id)
-    {
-        $lead = $this->leadService->getLeadById($id);
-        return view('leads.show', compact('lead'));
-    }
-
-    public function show_backup_2($id)
-    {
-        $lead = $this->leadService->getLeadById($id);
-
-        //dynamic fields data based on lead_id
-        $fields = LeadFormDetail::where('form_id', $lead->form_id)->get();
-        $tableData = [];
-        foreach ($fields as $field) {
-            $tableName = $field->table_name;
-            $tableData[$tableName] = DB::table($tableName)->where('lead_id', $lead->id)->first();
-        }
-
-        return view('leads.show', compact('lead', 'tableData'));
-    }
-
     public function show($id)
     {
 
@@ -346,7 +324,9 @@ class LeadController  extends Controller
         ->select('customers.*', 'leads.first_name', 'leads.last_name')
         ->first();
         $latestMeeting = Meeting::where('lead_id', $id)->orderBy('created_at', 'desc')->first();
-        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates', 'products', 'customers','lead_data_id','lead_customer','latestMeeting', 'menu_access', 'rate_api_data', 'lead_result_codes'));
+        $notelogs = LeadResultCode::with('lead_res_code')->where('lead_id', $id)->get();
+        // dd($notelogs[0]->lead_res_code->title);
+        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates', 'products', 'customers','lead_data_id','lead_customer','latestMeeting', 'menu_access', 'rate_api_data', 'lead_result_codes', 'notelogs'));
     }
 
 

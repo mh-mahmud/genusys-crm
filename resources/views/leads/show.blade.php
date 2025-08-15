@@ -448,7 +448,7 @@
 
                             <div class="card-header bg-light bd-cyan align-items-center">
                                 <div class="card-title">
-                                    <h4>Lead Details</h4>
+                                    <h4>Client Contact Information</h4>
                                 </div>
                                 <a href="{{ route('lead-edit', $lead_data_id) }}" class="btn btn-sm btn-success"
                                    id="kt_toolbar_primary_button">
@@ -985,8 +985,8 @@
                             <div class="card-body">
 
                                 <div class="row mb-1">
-                                    <div class="col-md-6">
-                                        <div class="row" style="margin-left:10px !important;">
+                                    <div class="col-md-5" style="border:1px solid #ddd;">
+                                        <div class="row">
                                             <h5 class="mb-2" style="border:1px solid #DDD;padding:7px;background-color:#54B4D3;color:#f7f7f7">Note Section</h5>
                                             <form class="g-form w-100" action="{{ route('save-lead-note') }}" enctype="multipart/form-data" method="POST">
                                             @csrf
@@ -1032,10 +1032,10 @@
                                         
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-7">
                                         <div class="mb-10 bg-light p-5 rounded-3">
                                             <div class="d-flex justify-content-between align-items-center py-2">
-                                                <strong class="fs-5">Rate Analysis Data</strong>
+                                                <strong class="fs-5">Note Logs</strong>
                                             </div>
                                             <div class="table-responsive">
                                                 <table
@@ -1045,21 +1045,17 @@
                                                         <th class="ps-4 min-w-50px">SL</th>
                                                         <th class="ps-4 min-w-150px">Result Code</th>
                                                         <th class="ps-4 min-w-150px">Notes</th>
-                                                        <th class="ps-4 min-w-150px">Created By</th>
                                                         <th class="ps-4 min-w-150px">Created at</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    @if (!empty($rate_api_data))
-                                                        @foreach ($rate_api_data as $index => $row)
+                                                    @if (!empty($notelogs))
+                                                        @foreach ($notelogs as $index => $row)
                                                             <tr>
                                                                 <td class="ps-4 text-dark fs-6">{{ $index + 1 }}</td>
-                                                                <td class="ps-4 text-dark fs-6">{{ $row->CompanyName }}</td>
-                                                                <td class="ps-4 text-dark fs-6">{{ $row->Term }}</td>
-                                                                <td class="ps-4 text-dark fs-6">{{ $row->DownPayment }}</td>
-                                                                <td class="ps-4 text-dark fs-6">{{ $row->PaymentAmount }}</td>
-                                                                <td class="ps-4 text-dark fs-6">{{ $row->TotalPremium }}</td>
-                                                                <td class="ps-4 text-dark fs-6">{{ ($row->Purchased==true) ? "Yes" : "No" }}</td>
+                                                                <td class="ps-4 text-dark fs-6">{{ $row->lead_res_code->title }}</td>
+                                                                <td class="ps-4 text-dark fs-6">{{ $row->lead_notes }}</td>
+                                                                <td class="ps-4 text-dark fs-6">{{ $row->created_at }}</td>
                                                             </tr>
                                                         @endforeach
                                                     @else
