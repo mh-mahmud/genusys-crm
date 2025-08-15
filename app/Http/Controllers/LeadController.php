@@ -125,6 +125,21 @@ class LeadController  extends Controller
         return view('leads.create', compact('formName', 'fieldsByTable', 'old_phone', 'users', 'lead_result_codes'));
     }
 
+    public function save_lead_note(Request $request) {
+        $request->validate([
+            'lead_notes' => 'required|string|max:191',
+            'result_codes_id' => 'required'
+        ]);
+
+        // insert into lead_reasult_code
+        $res_code = new LeadResultCode();
+        $res_code->lead_id = $lead->id;
+        $res_code->result_codes_id = $request->result_codes_id;
+        $res_code->lead_notes = $request->lead_notes;
+        $res_code->created_by = Auth::user()->id;
+        $res_code->save();
+    }
+
     public function store(Request $request)
     {
 
@@ -217,6 +232,7 @@ class LeadController  extends Controller
         // dd($menu_access);
 
         $lead = $this->leadService->getLeadById($id);
+        $lead_result_codes = ResultCode::select('id', 'code', 'title')->get();
         $lead_data_id = $id;
         $is_customer = Customer::where('lead_id', $id)->first();
         $customer_id = null;
@@ -324,7 +340,7 @@ class LeadController  extends Controller
         ->select('customers.*', 'leads.first_name', 'leads.last_name')
         ->first();
         $latestMeeting = Meeting::where('lead_id', $id)->orderBy('created_at', 'desc')->first();
-        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates', 'products', 'customers','lead_data_id','lead_customer','latestMeeting', 'menu_access', 'rate_api_data'));
+        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates', 'products', 'customers','lead_data_id','lead_customer','latestMeeting', 'menu_access', 'rate_api_data', 'lead_result_codes'));
     }
 
 

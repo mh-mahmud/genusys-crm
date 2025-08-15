@@ -329,6 +329,13 @@
                                    data-bs-target="#g_lead_table" role="tab" aria-controls="g_lead_table"
                                    aria-selected="true">Custom Data</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link @if(session('success') || session('error')) active @endif"
+                                   data-bs-toggle="tab" href="#g_lead_table2" data-tab="g_lead_table2"
+                                   id="g_lead_table_tab2"
+                                   data-bs-target="#g_lead_table2" role="tab" aria-controls="g_lead_table2"
+                                   aria-selected="true">Notes/Reminders</a>
+                            </li>
                             <!-- <li class="nav-item">
                                 <a class="nav-link @if(session('success') || session('error'))
                                 active
@@ -969,6 +976,109 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Notes/Reminders -->
+
+                    <div class="tab-pane fade show @if(session('success') || session('error')) active @endif"
+                         id="g_lead_table2" role="tabpanel" aria-labelledby="g_lead_table_tab2">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="row mb-1">
+                                    <div class="col-md-6">
+                                        <div class="row" style="margin-left:10px !important;">
+                                            <h5 class="mb-2" style="border:1px solid #DDD;padding:7px;background-color:#54B4D3;color:#f7f7f7">Note Section</h5>
+                                            <form class="g-form w-100" action="{{ route('save-lead-note') }}" enctype="multipart/form-data" method="POST">
+                                            <div class="col-md-12">
+                                                <div class="fv-row mb-3">
+                                                    <!--begin::Label-->
+                                                    <label class="form-label fw-bolder text-dark">Write a Note</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <textarea class="form-control form-control-sm form-control-solid" name="lead_notes" rows="3">{{ old('lead_notes') }}</textarea>
+                                                    <!--end::Input-->
+                                                    @if ($errors->has('lead_notes'))
+                                                    <span class="text-danger">{{ $errors->first('lead_notes') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Result Code</label>
+                                                    <select class="form-control form-control-sm form-control-solid" name="result_codes_id">
+                                                        <option value="" disabled {{ old('result_codes_id') == '' ? 'selected' : '' }}>Select Code</option>
+                                                        @foreach($lead_result_codes as $result_code)
+                                                        <option value="{{ $result_code->id }}" {{ old('result_codes_id') == $result_code->id ? 'selected' : '' }}>
+                                                            {{ $result_code->title }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @if ($errors->has('result_codes_id'))
+                                                    <span class="text-danger">{{ $errors->first('result_codes_id') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                                <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Submit</button>
+                                            </div>
+                                            </form>
+
+                                        </div>
+
+                                        
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="mb-10 bg-light p-5 rounded-3">
+                                            <div class="d-flex justify-content-between align-items-center py-2">
+                                                <strong class="fs-5">Rate Analysis Data</strong>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table
+                                                    class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                                                    <thead>
+                                                    <tr class="fw-bolder text-muted bg-light bd-cyan">
+                                                        <th class="ps-4 min-w-50px">SL</th>
+                                                        <th class="ps-4 min-w-150px">Result Code</th>
+                                                        <th class="ps-4 min-w-150px">Notes</th>
+                                                        <th class="ps-4 min-w-150px">Created By</th>
+                                                        <th class="ps-4 min-w-150px">Created at</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @if (!empty($rate_api_data))
+                                                        @foreach ($rate_api_data as $index => $row)
+                                                            <tr>
+                                                                <td class="ps-4 text-dark fs-6">{{ $index + 1 }}</td>
+                                                                <td class="ps-4 text-dark fs-6">{{ $row->CompanyName }}</td>
+                                                                <td class="ps-4 text-dark fs-6">{{ $row->Term }}</td>
+                                                                <td class="ps-4 text-dark fs-6">{{ $row->DownPayment }}</td>
+                                                                <td class="ps-4 text-dark fs-6">{{ $row->PaymentAmount }}</td>
+                                                                <td class="ps-4 text-dark fs-6">{{ $row->TotalPremium }}</td>
+                                                                <td class="ps-4 text-dark fs-6">{{ ($row->Purchased==true) ? "Yes" : "No" }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @else
+                                                        <tr>
+                                                            <td colspan="100%" class="text-center">No data available
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- End notes or section -->
 
                     <!-- <div class="tab-pane fade show @if(session('success') || session('error'))
                         active
