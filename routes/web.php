@@ -87,6 +87,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('/leads/store-tabledata', [LeadController::class, 'storeTableData'])->name('store-tabledata');
     Route::delete('/leads/delete-tabledata/{tableName?}/{id?}/{leadId?}', [LeadController::class, 'deleteTableData'])->name('delete-tabledata')->middleware(['check-permission']);
 	Route::get('/lead/edit-tabledata/{tableName?}/{leadId?}/edit', [LeadController::class, 'editTableData'])->name('lead-edit-tabledata')->middleware(['check-permission']);
+	Route::get('/lead/show-table-details/{tableName?}/{leadId?}/details', [LeadController::class, 'ShowTableDataDetails'])->name('lead-show-table-details')->middleware(['check-permission']);
 	Route::post('/lead/update-table-data', [LeadController::class, 'updateTableData'])->name('update-tabledata');
 	Route::post('/lead/update-table-data-show', [LeadController::class, 'updateTableDatashow'])->name('update-tabledata-show');
 	// search lead on url
