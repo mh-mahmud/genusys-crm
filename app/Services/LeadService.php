@@ -603,6 +603,84 @@ class LeadService
 }
 
 
+    public function getTableDataDetails($tableName, $leadId)
+{
+    $tablesMap = [
+        'driver_information'  => ['driver_information', 'driver_attributes'],
+        'vehicle_information' => ['vehicle_information', 'vehicle_attributes']
+    ];
+
+    // define tables to fetch
+    $tablesToFetch = $tablesMap[$tableName] ?? [$tableName];
+    $tableData = [];
+
+    foreach ($tablesToFetch as $table) {
+        $table = trim($table);
+
+        if (Schema::hasTable($table)) {
+            // get columns and details
+            $columns = Schema::getColumnListing($table);
+            $columnDetails = DB::select("SHOW COLUMNS FROM $table");
+
+            // extra field
+            $fields = LeadFormDetail::where('table_name', $table)->get();
+
+            $columnTypes = [];
+            $dropdownOptions = [];
+
+            foreach ($columnDetails as $column) {
+                $columnName = $column->Field;
+                $columnType = $column->Type;
+
+                foreach ($fields as $field) {
+                    if ($field->field_value == 'file' && $columnName == $field->field_name) {
+                        $columnType = 'file';
+                        break;
+                    } elseif ($field->field_value == 'dropdown' && $columnName == $field->field_name) {
+                        $columnType = 'dropdown';
+                        if (!empty($field->character_length)) {
+                            $dropdownOptions[$columnName] = explode(',', $field->character_length);
+                        }
+                        break;
+                    }
+                }
+                $columnTypes[$columnName] = $columnType;
+            }
+
+            // remove unwanted columns
+            $filteredColumns = array_filter($columns, function ($col) {
+                return !in_array($col, ['id','created_by', 'created_at', 'updated_at']);
+            });
+            
+
+            // fetch existing data for editing
+            $existingData = DB::table($table)
+                ->where('id', $leadId)
+                ->first();
+
+            $tableData[$table] = [
+                'columns'         => $filteredColumns,
+                'types'           => $columnTypes,
+                'dropdownOptions' => $dropdownOptions,
+                'existingData'    => $existingData
+            ];
+        }
+    }
+
+    // main lead
+    //$leads = Lead::where('id', $leadId)->first();
+     $leads = DB::table($tableName)
+            ->where('id', $leadId)
+            ->first();
+
+    return [
+        'tableName'  => $tableName,
+        'tableData'  => $tableData,
+        'leads'      => $leads
+    ];
+}
+
+
     public function updateTableData14082025($request, $tableName, $leadId, $formId, $formData)
     {
 
