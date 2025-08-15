@@ -962,6 +962,8 @@
                                         <div class="row" style="margin-left:10px !important;">
                                             <h5 class="mb-2" style="border:1px solid #DDD;padding:7px;background-color:#54B4D3;color:#f7f7f7">Note Section</h5>
                                             <form class="g-form w-100" action="{{ route('save-lead-note') }}" enctype="multipart/form-data" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="lead_id" value="{{ $lead->id }}">
                                             <div class="col-md-12">
                                                 <div class="fv-row mb-3">
                                                     <!--begin::Label-->

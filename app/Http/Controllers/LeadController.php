@@ -40,6 +40,7 @@ use App\Models\DriverAttributes;
 use App\Models\DriverInformation;
 use App\Models\RateAnalysisData;
 use App\Models\ResultCode;
+use App\Models\LeadResultCode;
 
 class LeadController  extends Controller
 {
@@ -131,13 +132,18 @@ class LeadController  extends Controller
             'result_codes_id' => 'required'
         ]);
 
-        // insert into lead_reasult_code
-        $res_code = new LeadResultCode();
-        $res_code->lead_id = $lead->id;
-        $res_code->result_codes_id = $request->result_codes_id;
-        $res_code->lead_notes = $request->lead_notes;
-        $res_code->created_by = Auth::user()->id;
-        $res_code->save();
+        try {
+            // insert into lead_reasult_code
+            $res_code = new LeadResultCode();
+            $res_code->lead_id = $request->lead_id;
+            $res_code->result_codes_id = $request->result_codes_id;
+            $res_code->lead_notes = $request->lead_notes;
+            $res_code->created_by = Auth::user()->id;
+            $res_code->save();
+            return redirect()->back()->with('success', 'Note created successfully.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error occurred while retrieving data.']);
+        }
     }
 
     public function store(Request $request)
