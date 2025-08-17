@@ -499,6 +499,8 @@
                                             </tr>
                                         </table>
                                     </div>
+
+                                    {{--
                                     <div class="mb-5">
                                         <h5 class="custom-bottom-border">Last Carrier Saved</h5>
                                         <table class="custom-table">
@@ -524,6 +526,7 @@
                                             </tr>
                                         </table>
                                     </div>
+                                    --}}
 
                                 </div>
                             </div>

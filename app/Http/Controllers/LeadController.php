@@ -1314,7 +1314,7 @@ class LeadController  extends Controller
         $dvinfo->lead_id = $lead_id;
         $dvinfo->form_id = $form_id;
         $dvinfo->created_by = Auth::user()->id;
-        $dvinfo->drivers = $result['numofdrivers'];
+        // $dvinfo->drivers = $result['numofdrivers'];
         $dvinfo->driver_type = $driver1['persontype'];
         $dvinfo->full_name = $driver1['firstname']." ".$driver1['middlename']." ".$driver1['lastname'];
         $dvinfo->dob = date("Y-m-d", strtotime($driver1['dob']));
@@ -1360,7 +1360,7 @@ class LeadController  extends Controller
         $vidata->lead_id = $lead_id;
         $vidata->form_id = $form_id;
         $vidata->created_by = Auth::user()->id;
-        $vidata->cars = $cardata1['policylinkid'];
+        // $vidata->cars = $cardata1['policylinkid'];
         $vidata->car_type = $cardata1['vehicletype'];
         $vidata->vin = $cardata1['vin'];
         $vidata->model_year = $cardata1['year'];
