@@ -129,3 +129,7 @@ CREATE TABLE IF NOT EXISTS `lead_result_code` (
 
 INSERT INTO `lead_result_code` (`id`, `lead_id`, `result_codes_id`, `lead_notes`, `created_by`, `created_at`, `updted_by`, `updated_at`) VALUES
 (1, 18, 2, 'dsfgvdre rgh erhe 5hth te\r\ne gerer et ergergert erer er\r\n errgre er erwre\r\n  ge rgreereger g', 1, '2025-08-14 09:20:24', NULL, '2025-08-14 09:20:24');
+
+
+ALTER TABLE `lead_result_code` CHANGE `result_codes_id` `result_codes_id` INT NULL DEFAULT NULL;
+ALTER TABLE `lead_result_code` CHANGE `created_by` `created_by` INT NULL DEFAULT NULL;

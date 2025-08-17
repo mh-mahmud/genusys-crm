@@ -258,12 +258,14 @@ class LeadService
         $tableData = [];
 
         // insert into lead_reasult_code
-        $res_code = new LeadResultCode();
-        $res_code->lead_id = $lead->id;
-        $res_code->result_codes_id = $data['result_codes_id'];
-        $res_code->lead_notes = $data['lead_notes'];
-        $res_code->created_by = Auth::user()->id;
-        $res_code->save();
+        if(!empty($data['result_codes_id']) && !empty($data['lead_notes'])) {
+            $res_code = new LeadResultCode();
+            $res_code->lead_id = $lead->id;
+            $res_code->result_codes_id = $data['result_codes_id'];
+            $res_code->lead_notes = $data['lead_notes'];
+            $res_code->created_by = Auth::user()->id;
+            $res_code->save();
+        }
 
 
         // prepare fields and data for insertion into dynamic tables

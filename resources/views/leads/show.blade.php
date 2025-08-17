@@ -329,13 +329,15 @@
                                    data-bs-target="#g_lead_table" role="tab" aria-controls="g_lead_table"
                                    aria-selected="true">Custom Data</a>
                             </li>
+
                             <li class="nav-item">
-                                <a class="nav-link @if(session('success') || session('error')) active @endif"
-                                   data-bs-toggle="tab" href="#g_lead_table2" data-tab="g_lead_table2"
-                                   id="g_lead_table_tab2"
-                                   data-bs-target="#g_lead_table2" role="tab" aria-controls="g_lead_table2"
+                                <a class="nav-link "
+                                   data-bs-toggle="tab" href="#g_RAKIB_lead_table2" data-tab="g_RAKIB_lead_table2"
+                                   id="g_RAKIB_lead_table_tab2"
+                                   data-bs-target="#g_RAKIB_lead_table2" role="tab" aria-controls="g_RAKIB_lead_table2"
                                    aria-selected="true">Notes/Reminders</a>
                             </li>
+
                             <!-- <li class="nav-item">
                                 <a class="nav-link @if(session('success') || session('error'))
                                 active
@@ -979,8 +981,7 @@
 
                     <!-- Notes/Reminders -->
 
-                    <div class="tab-pane fade show @if(session('success') || session('error')) active @endif"
-                         id="g_lead_table2" role="tabpanel" aria-labelledby="g_lead_table_tab2">
+                    <div class="tab-pane fade" id="g_RAKIB_lead_table2" role="tabpanel" aria-labelledby="g_RAKIB_lead_table_tab2">
                         <div class="card">
                             <div class="card-body">
 
@@ -1023,7 +1024,7 @@
                                             </div>
 
                                             <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                                <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Submit</button>
+                                                <button type="submit" class="btn btn-primary" id="">Submit</button>
                                             </div>
                                             </form>
 
@@ -1761,7 +1762,7 @@
                                                                                                     <button
                                                                                                         type="submit"
                                                                                                         class="btn btn-primary"
-                                                                                                        id="kt_account_profile_details_submit">
+                                                                                                        id="">
                                                                                                         Save Changes
                                                                                                     </button>
                                                                                                 </div>
@@ -3796,7 +3797,7 @@
                                         <!--End Row-->
                                         <div class="card-footer d-flex justify-content-end py-6 px-9">
                                             <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">Send
+                                                    id="">Send
                                             </button>
                                         </div>
 
@@ -3911,7 +3912,7 @@
 
                                         <!--End Row-->
                                         <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                            <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
+                                            <button type="submit" class="btn btn-primary" id="">Save Changes</button>
                                         </div>
 
                                     </form>
@@ -4132,7 +4133,7 @@
                                         <!--End Row-->
                                         <div class="card-footer d-flex justify-content-end py-6 px-9">
                                             <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">Save Changes
+                                                    id="">Save Changes
                                             </button>
                                         </div>
                                     </form>
@@ -4631,9 +4632,7 @@
 
                                                 <!--begin::Actions-->
                                                 <div class="card-footer d-flex justify-content-end py-4 pe-0">
-                                                    <button type="submit" class="btn btn-primary"
-                                                            id="kt_account_profile_details_submit">Submit
-                                                    </button>
+                                                    <button type="submit" class="btn btn-primary" id="">Submit</button>
                                                 </div>
                                                 <!--end::Actions-->
                                             </div>
