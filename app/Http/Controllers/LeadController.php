@@ -1548,6 +1548,35 @@ class LeadController  extends Controller
         return view('leads.lead_status_list', compact('data'));
     }
 
+    public function add_status_code() {
+        return view('leads.add_status_code');
+    }
+
+    public function save_status_code(Request $request) {
+        // dd($request->all());
+        $code = new LeadStatus([
+            'status_name' => $request->status_name,
+            'status' => $request->status
+        ]);
+        $code->save();
+        Helper::storeLog("Lead status created successfully", "Lead Status", "Create Status");
+        return redirect()->route('lead-status-list')->with('success', 'Status created successfully.');
+    }
+
+    public function edit_status_code($id) {
+        $data = LeadStatus::findorfail($id);
+        return view('leads.edit_status_code', compact('data'));
+    }
+
+    public function update_status_code(Request $request) {
+        // dd($request->all());
+        $data = LeadStatus::findorfail($request->id);
+        $data->status_name = $request->status_name;
+        $data->status = $request->status;
+        $data->update();
+        return redirect()->route('lead-status-list')->with('success', 'Status updated successfully.');
+    }
+
   
 
     

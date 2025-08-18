@@ -27,7 +27,7 @@
                         <!--begin::Actions-->
                         <div class="d-flex align-items-center py-1">
 
-                            <a href="{{ route('add-result-code') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Add</a>
+                            <a href="{{ route('add-status-code') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Add</a>
 
                             <!--end::Button-->
                         </div>
@@ -143,7 +143,7 @@
 									<div
 														class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
 											
-										<a title="Edit" href="{{ route('result-code-edit', $code->id) }}"
+										<a title="Edit" href="{{ route('status-code-edit', $code->id) }}"
 										class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 											<!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
 											<span class="svg-icon svg-icon-3">
