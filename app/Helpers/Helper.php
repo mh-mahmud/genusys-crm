@@ -292,9 +292,15 @@ class Helper
 
      public static function resultCodeDropDownData()
      {
-        $data["lead_status"] = LeadStatus::select('id', 'status_name')->get(); 
-        $data["group_code"] = GroupCode::select('id', 'group_code', 'group_description')->get();   
-        $data["result_action"] = ResultAction::select('id', 'rule_code', 'rule_description')->get(); 
+        $data["lead_status"] = LeadStatus::where('status', 1)
+                                        ->select('id', 'status_name')
+                                        ->get(); 
+        $data["group_code"] = GroupCode::where('status', 1)
+                                        ->select('id', 'group_code', 'group_description')
+                                        ->get();   
+        $data["result_action"] = ResultAction::where('status', 1)
+                                            ->select('id', 'rule_code', 'rule_description')
+                                            ->get(); 
         return $data;
     }
     

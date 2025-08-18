@@ -13,12 +13,12 @@
                              data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                              class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                             <!--begin::Title-->
-                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Product
+                            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Result Code
                                 <!--begin::Separator-->
                                 <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                                 <!--end::Separator-->
                                 <!--begin::Description-->
-                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Fill up the Product</small>
+                                <small class="text-muted fs-7 fw-bold my-1 ms-1">Fill up the Result Code</small>
                                 <!--end::Description--></h1>
                             <!--end::Title-->
                         </div>
@@ -26,7 +26,7 @@
                         <!--begin::Actions-->
                         <div class="d-flex align-items-center py-1">
 
-                            <a href="{{ route('product-list') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Product List</a>
+                            <a href="{{ route('result-code-list') }}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Result Code List</a>
                             <!--end::Button-->
                         </div>
                         <!--end::Actions-->
@@ -45,7 +45,7 @@
                                 <div class="card-header bg-light bd-cyan">
                                     <!--begin::Card title-->
                                     <div class="card-title m-0">
-                                        <h3 class="fw-bolder m-0">Product Edit</h3>
+                                        <h3 class="fw-bolder m-0">Result Code Edit</h3>
                                     </div>
                                     <!--end::Card title-->
                                 </div>
@@ -55,20 +55,23 @@
 
                                     <!-- Start Form-->
 
-                                    <form class="g-form w-100" action="{{ route('product-update-pro', $product->id) }}"  method="POST" enctype="multipart/form-data">
+                                    <form class="g-form w-100" action="{{ route('result-code-update-pro', $result_code->id) }}"  method="POST" enctype="multipart/form-data">
                                          @csrf
                                          @method('PUT')
+
+                                        <div class="row">
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Name<span class="text-danger">*</span></label>
+                                                    <label class="form-label fw-bolder text-dark">Result Code<span
+                                                            class="text-danger">*</span></label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="name" autocomplete="off" value="{{ $product->name }}" />
+                                                        type="text" name="code" autocomplete="off" value="{{ old('code', $result_code->code) }}"/>
                                                     <!--end::Input-->
-                                                    @if ($errors->has('name'))
-                                                        <span class="text-danger">{{ $errors->first('name') }}</span>
+                                                    @if ($errors->has('code'))
+                                                        <span class="text-danger">{{ $errors->first('code') }}</span>
                                                     @endif
                                                 </div>
                                             </div>
@@ -76,84 +79,103 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Code<span class="text-danger">*</span></label>
+                                                    <label class="form-label fw-bolder text-dark">Result Description<span
+                                                            class="text-danger">*</span></label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="product_code" autocomplete="off" value="{{ $product->product_code }}" />
+                                                        type="text" name="title" autocomplete="off" value="{{ old('title', $result_code->title) }}"/>
                                                     <!--end::Input-->
-                                                    @if ($errors->has('product_code'))
-                                                        <span class="text-danger">{{ $errors->first('product_code') }}</span>
+                                                    @if ($errors->has('title'))
+                                                        <span class="text-danger">{{ $errors->first('title') }}</span>
                                                     @endif
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Type<span class="text-danger">*</span></label>
-                                                    <select class="form-control form-control-sm form-control-solid" name="product_type">
-                                                        <option value="">Select</option>
-                                                        @foreach (config('constants.PRODUCT_TYPE') as $key => $type)
-                                                        <option value="{{ $key }}" {{ $product->product_type ==  $key  ? 'selected' : '' }}>
-                                                            {{ $type }}
-                                                        </option>
+                                                    <label class="form-label fw-bolder text-dark">Result Group</label>
+                                                    <select class=" form-control form-control-sm form-control-solid" id="result_group_id" name="result_group_id"
+                                                            aria-label="Default select example">
+                                                        <option value=''>Select</option>
+                                                        @foreach($group_code as $code)
+                                                            <option value="{{$code->id}}" {{ old('result_group_id', $result_code->result_group_id) == $code->id ? 'selected' : '' }}>{{ $code->group_description }}</option>
                                                         @endforeach
                                                     </select>
-                                                    @if ($errors->has('product_type'))
-                                                        <span class="text-danger">{{ $errors->first('product_type') }}</span>
-                                                    @endif
+                                                    {{-- @if ($errors->has('result_group_id'))
+                                                        <span class="text-danger">{{ $errors->first('result_group_id') }}</span>
+                                                    @endif --}}
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Cost</label>
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="product_cost" autocomplete="off" value="{{ $product->product_cost }}" />
-                                                    @if ($errors->has('product_cost'))
-                                                        <span class="text-danger">{{ $errors->first('product_cost') }}</span>
-                                                    @endif
+                                                    <label class="form-label fw-bolder text-dark">Result Action</label>
+                                                    <select class=" form-control form-control-sm form-control-solid" id="result_action_id" name="result_action_id"
+                                                            aria-label="Default select example">
+                                                        <option value=''>Select</option>
+                                                        @foreach($result_action as $action)
+                                                            <option value="{{$action->id}}" {{ old('result_action_id', $result_code->result_action_id) == $action->id ? 'selected' : '' }}>{{ $action->rule_description }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    {{-- @if ($errors->has('result_action_id'))
+                                                        <span class="text-danger">{{ $errors->first('result_action_id') }}</span>
+                                                    @endif --}}
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Value</label>
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="product_value" autocomplete="off" value="{{ $product->product_value }}" />
-                                                     @if ($errors->has('product_value'))
-                                                        <span class="text-danger">{{ $errors->first('product_value') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-
-                                           <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="form-label fw-bolder text-dark" for="textarea">Description</label>
-                                                    <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3">{{ $product->description }}</textarea>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Image</label>
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="file" name="img_path" autocomplete="off" />
+                                                    <label class="form-label fw-bolder text-dark">Lead Status</label>
+                                                    <select class=" form-control form-control-sm form-control-solid" id="lead_status_id" name="lead_status_id"
+                                                            aria-label="Default select example">
+                                                        <option value=''>Select</option>
+                                                        @foreach($lead_status as $status)
+                                                            <option value="{{$status->id}}" {{ old('lead_status_id', $result_code->lead_status_id) == $status->id ? 'selected' : '' }}>{{ $status->status_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    {{-- @if ($errors->has('lead_status_id'))
+                                                        <span class="text-danger">{{ $errors->first('lead_status_id') }}</span>
+                                                    @endif --}}
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Status</label>
-                                                    <select class="form-control form-control-sm form-control-solid" name="status" aria-label="Default select example">
-                                                        <option value="1" {{ $product->status == 1 ? 'selected' : '' }}>Active</option>
-                                                        <option value="0" {{ $product->status == 0 ? 'selected' : '' }}>Inactive</option>
+                                                    <label class="form-label fw-bolder text-dark">Comment Required</label>
+                                                    <select class=" form-control form-control-sm form-control-solid" name="comment_required"
+                                                            aria-label="Default select example">
+                                                        <option value=''>Select</option>
+                                                        <option value="Yes" {{ old('comment_required', $result_code->comment_required) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ old('comment_required', $result_code->comment_required) == 'No' ? 'selected' : '' }}>No</option>
                                                     </select>
                                                 </div>
                                             </div>
 
-                                      <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Selectable</label>
+                                                    <select class=" form-control form-control-sm form-control-solid" name="selectable"
+                                                            aria-label="Default select example">
+                                                        <option value=''>Select</option>
+                                                        <option value="Yes" {{ old('comment_required', $result_code->selectable) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ old('comment_required', $result_code->selectable) == 'No' ? 'selected' : '' }}>No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Active</label>
+                                                    <select class=" form-control form-control-sm form-control-solid" name="status" aria-label="Default select example">
+                                                        <option value="1" {{ old('status', $result_code->status) == 1 ? 'selected' : '' }}>Active</option>
+                                                        <option value="0" {{ old('status', $result_code->status) == 0 ? 'selected' : '' }}>Inactive</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                            
+                                        <div class="card-footer d-flex justify-content-end py-6 px-9">
                                             <input type="reset" value="Reset" class="btn btn-light me-2">
                                             <button type="submit" class="btn btn-primary"
                                                     id="kt_account_profile_details_submit">Save Changes

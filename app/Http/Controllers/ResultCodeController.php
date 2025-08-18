@@ -44,8 +44,28 @@ class ResultCodeController extends Controller {
 
     public function resultCodeShow($id)
     {
-        $country = $this->resultCodeService->getresultCodeById($id);
-        return view('countries.country-show', compact('resultCode'));
+        $code = $this->resultCodeService->getresultCodeById($id);
+        return view('result-code.show', compact('code'));
+    }
+
+    public function resultCodeEdit($id)
+    {
+        $data = Helper::resultCodeDropDownData();
+        $data["result_code"] = $this->resultCodeService->getresultCodeById($id);
+        return view('result-code.edit', $data);
+    }
+
+    public function resultCodeUpdate(Request $request, $id)
+    { 
+        $result = $this->resultCodeService->resultCodeUpdate($request, $id);
+        if($result->status == 200){
+            Helper::storeLog("Result code updated successfully", "Result code", "Update Result code");
+            return redirect()->route('result-code-list')->with('success', 'Result code updated successfully.');
+
+        }else{
+            session()->flash('error', 'Can not Update!');
+        }
+
     }
 
     public function resultCodeDelete($id)
