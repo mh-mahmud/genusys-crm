@@ -26,7 +26,7 @@ use App\Http\Controllers\ProductSpecificationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FormFeatureController;
 use App\Http\Controllers\ResultCodeController;
-
+use App\Http\Controllers\ResultGroupController;
 
 use App\Models\Promotion;
 
@@ -404,6 +404,13 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('result-code-show/{id?}', [ResultCodeController::class, 'resultCodeShow'])->name('result-code-show');
 	Route::get('result-code-edit/{id?}', [ResultCodeController::class, 'resultCodeEdit'])->name('result-code-edit');
 	Route::put('result-code-update-pro/{id}', [ResultCodeController::class, 'resultCodeUpdate'])->name('result-code-update-pro');
+
+
+	Route::get('result-group-list', [ResultGroupController::class, 'resultGroupList'])->name('result-group-list');
+	Route::get('add-result-group', [ResultGroupController::class, 'resultGroupCreate'])->name('add-result-group');
+	Route::post('add-result-group-pro', [ResultGroupController::class, 'resultGroupStore'])->name('add-result-group-pro');
+	Route::get('result-group-edit/{id?}', [ResultGroupController::class, 'resultGroupEdit'])->name('result-group-edit');
+	Route::put('result-group-update-pro/{id}', [ResultGroupController::class, 'resultGroupUpdate'])->name('result-group-update-pro');
 
 
 });
