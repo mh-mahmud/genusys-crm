@@ -405,6 +405,12 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('result-code-edit/{id?}', [ResultCodeController::class, 'resultCodeEdit'])->name('result-code-edit');
 	Route::put('result-code-update-pro/{id}', [ResultCodeController::class, 'resultCodeUpdate'])->name('result-code-update-pro');
 
+	Route::get('lead-status-list', [LeadController::class, 'lead_status_list'])->name('lead-status-list');
+	Route::get('add-status-code', [LeadController::class, 'add_status_code'])->name('add-status-code');
+	Route::post('add-status-code-pro', [LeadController::class, 'save_status_code'])->name('add-status-code-pro');
+	Route::get('status-code-edit/{id?}', [LeadController::class, 'edit_status_code'])->name('status-code-edit');
+	Route::put('status-code-update-pro/{id}', [LeadController::class, 'update_status_code'])->name('status-code-update-pro');
+
 
 	Route::get('result-group-list', [ResultGroupController::class, 'resultGroupList'])->name('result-group-list');
 	Route::get('add-result-group', [ResultGroupController::class, 'resultGroupCreate'])->name('add-result-group');

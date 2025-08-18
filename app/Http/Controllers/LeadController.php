@@ -41,6 +41,7 @@ use App\Models\DriverInformation;
 use App\Models\RateAnalysisData;
 use App\Models\ResultCode;
 use App\Models\LeadResultCode;
+use App\Models\LeadStatus;
 
 class LeadController  extends Controller
 {
@@ -1250,8 +1251,10 @@ class LeadController  extends Controller
         $driver1 = [];
         $cardata1 = [];
 
+
         foreach($lines as $line) {
             $parts = str_getcsv($line);
+
             if(isset($parts[0], $parts[2]) && $parts[1]=="pol0") {
                 $result[$parts[0]] = $parts[2];
             }
@@ -1262,6 +1265,8 @@ class LeadController  extends Controller
                 $cardata1[$parts[0]] = $parts[2];
             }
         }
+
+
 
         // check for dublication
         $chk_data = Lead::where('email', $result['emailaddress'])->first();
@@ -1536,6 +1541,11 @@ class LeadController  extends Controller
         }
     
         return response()->json(['success' => false, 'message' => 'No profile image found']);
+    }
+
+    public function lead_status_list() {
+        $data = LeadStatus::all();
+        return view('leads.lead_status_list', compact('data'));
     }
 
   

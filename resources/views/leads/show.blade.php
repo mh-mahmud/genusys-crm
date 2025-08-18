@@ -1114,11 +1114,11 @@
                                                             
                                                             <tr>
                                                                 <td>Created by</td>
-                                                                <td>{{ $lead->created_name->username }}</td>
+                                                                <td>{{ @$lead->created_name->username }}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Last modified</td>
-                                                                <td>{{ $lead->updated_name->username }}</td>
+                                                                <td>{{ @$lead->updated_name->username }}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Created at</td>
