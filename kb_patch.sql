@@ -133,3 +133,7 @@ INSERT INTO `lead_result_code` (`id`, `lead_id`, `result_codes_id`, `lead_notes`
 
 ALTER TABLE `lead_result_code` CHANGE `result_codes_id` `result_codes_id` INT NULL DEFAULT NULL;
 ALTER TABLE `lead_result_code` CHANGE `created_by` `created_by` INT NULL DEFAULT NULL;
+
+
+-- 18th Aug 2025
+ALTER TABLE `leads` ADD `updated_by` INT NULL DEFAULT NULL AFTER `created_by`;

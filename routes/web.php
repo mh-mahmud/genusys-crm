@@ -77,6 +77,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('/lead', [LeadController::class, 'store'])->name('lead-store');
     Route::post('/lead/save/note', [LeadController::class, 'save_lead_note'])->name('save-lead-note');
+    Route::post('/lead/save/assign', [LeadController::class, 'save_assign_lead'])->name('save-assign-lead');
 	Route::post('/lead/quick-lead-store', [LeadController::class, 'quickLeadStore'])->name('quick-lead-store');
 	Route::get('/lead/{id?}', [LeadController::class, 'show'])->name('lead-show')->middleware(['check-permission']);
 	Route::get('/lead/{id?}/edit', [LeadController::class, 'edit'])->name('lead-edit')->middleware(['check-permission']);
