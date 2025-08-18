@@ -59,7 +59,9 @@ class LeadService
     }
     public function getLeadById($id)
     {
-        return Lead::findOrFail($id);
+        return Lead::with('created_name')
+               ->where('id', $id)
+               ->firstOrFail();
     }
 
 

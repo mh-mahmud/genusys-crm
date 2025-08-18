@@ -146,6 +146,24 @@ class LeadController  extends Controller
         }
     }
 
+    public function save_assign_lead(Request $request) {
+        $request->validate([
+            'assigned_to' => 'required'
+        ]);
+
+        try {
+            // update lead table
+            $res_code = Lead::findOrFail($request->lead_id);
+            $res_code->assigned_to = $request->assigned_to;
+            $res_code->updated_by = Auth::user()->id;
+            $res_code->updated_at = date("Y-m-d H:i:s");
+            $res_code->save();
+            return redirect()->back()->with('success', 'Lead assigned successfully.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error occurred while retrieving data.']);
+        }
+    }
+
     public function store(Request $request)
     {
 
@@ -325,8 +343,11 @@ class LeadController  extends Controller
         ->first();
         $latestMeeting = Meeting::where('lead_id', $id)->orderBy('created_at', 'desc')->first();
         $notelogs = LeadResultCode::with('lead_res_code')->where('lead_id', $id)->get();
+        $users = User::where('user_type', 'user')->where('status', 1)->get(['id', 'user_id', 'first_name', 'last_name', 'email', 'phone_number']);
         // dd($notelogs[0]->lead_res_code->title);
-        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates', 'products', 'customers','lead_data_id','lead_customer','latestMeeting', 'menu_access', 'rate_api_data', 'lead_result_codes', 'notelogs'));
+
+        // dd($lead->created_name->first_name);
+        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates', 'products', 'customers','lead_data_id','lead_customer','latestMeeting', 'menu_access', 'rate_api_data', 'lead_result_codes', 'notelogs', 'users'));
     }
 
 

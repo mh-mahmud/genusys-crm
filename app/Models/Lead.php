@@ -60,4 +60,14 @@ class Lead extends Model
     {
         return $this->hasOne(Customer::class);
     }
+
+    public function created_name(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'created_by');
+    }
+
+    public function updated_name(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'updated_by');
+    }
 }

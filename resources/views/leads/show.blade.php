@@ -1069,7 +1069,88 @@
                                                 </table>
                                             </div>
                                         </div>
+
+                                        <!-- action information -->
+                                        <div class="mb-10 bg-light p-5 rounded-3">
+
+                                            <h5 class="mb-3" style="border:1px solid #DDD;padding:7px;background-color:#54B4D3;color:#f7f7f7">Action Information</h5>
+
+                                            {{--<div class="mb-5">
+                                                <h5 class="custom-bottom-border">Dates</h5>
+                                                <table class="custom-table">
+                                                        <tr>
+                                                            <td>Created</td>
+                                                            <td>{{ date("Y-m-d") }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Last modified</td>
+                                                            <td>Not yet quoted</td>
+                                                        </tr>
+                                                </table>
+                                            </div>--}}
+
+                                             <div class="mb-9">
+                                                <h5 class="custom-bottom-border">Producer Info</h5>
+                                                <form class="g-form w-100" action="{{ route('save-assign-lead') }}" enctype="multipart/form-data" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="lead_id" value="{{ $lead->id }}">
+                                                    <table class="custom-table">
+                                                            <tr>
+                                                                <td>Assigned To</td>
+                                                                <td>
+                                                                    <select class="form-control form-control-sm form-control-solid" name="assigned_to">
+                                                                        <option value="" {{ old('assigned_to') == '' ? 'selected' : '' }}>-- Select Lead --</option>
+                                                                        @foreach($users as $value)
+                                                                        <option value="{{ $value->id }}" {{ $lead->assigned_to == $value->id ? 'selected' : '' }}>
+                                                                            {{ $value->first_name . " " . $value->last_name }}
+                                                                        </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    @if ($errors->has('assigned_to'))
+                                                                    <span class="text-danger">{{ $errors->first('assigned_to') }}</span>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                            
+                                                            <tr>
+                                                                <td>Created by</td>
+                                                                <td>{{ $lead->created_name->username }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Last modified</td>
+                                                                <td>{{ $lead->updated_name->username }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Created at</td>
+                                                                <td>{{ $lead->created_at }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Updated at</td>
+                                                                <td>{{ $lead->updated_at }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Language</td>
+                                                                <td>{{ $lead->language }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Bound</td>
+                                                                <td></td>
+                                                            </tr>
+                                                                <td>Region</td>
+                                                                <td>None</td>
+                                                            </tr>
+                                                    </table>
+                                                    <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                                        <button type="submit" class="btn btn-primary" id="">Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+
+                                        </div>
                                     </div>
+
+
                                 </div>
 
 
