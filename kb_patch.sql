@@ -137,3 +137,13 @@ ALTER TABLE `lead_result_code` CHANGE `created_by` `created_by` INT NULL DEFAULT
 
 -- 18th Aug 2025
 ALTER TABLE `leads` ADD `updated_by` INT NULL DEFAULT NULL AFTER `created_by`;
+
+
+
+
+--18th aug 2025
+ALTER TABLE `result_action`
+ADD `created_by` INT(11) NOT NULL AFTER `status`;
+
+ALTER TABLE `result_action`
+ADD `updated_by` INT(11) NOT NULL AFTER `created_by`;

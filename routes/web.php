@@ -26,6 +26,7 @@ use App\Http\Controllers\ProductSpecificationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FormFeatureController;
 use App\Http\Controllers\ResultCodeController;
+use App\Http\Controllers\ResultActionController;
 
 
 use App\Models\Promotion;
@@ -404,6 +405,14 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('result-code-show/{id?}', [ResultCodeController::class, 'resultCodeShow'])->name('result-code-show');
 	Route::get('result-code-edit/{id?}', [ResultCodeController::class, 'resultCodeEdit'])->name('result-code-edit');
 	Route::put('result-code-update-pro/{id}', [ResultCodeController::class, 'resultCodeUpdate'])->name('result-code-update-pro');
+
+    Route::get('result-action-list', [ResultActionController::class, 'resultActionList'])->name('result-action-list');
+    Route::get('add-result-action', [ResultActionController::class, 'resultActionCreate'])->name('add-result-action');
+    Route::post('add-result-action-pro', [ResultActionController::class, 'resultActionStore'])->name('add-result-action-pro');
+    Route::delete('result-action-delete/{id?}', [ResultActionController::class, 'resultActionDelete'])->name('result-action-delete');
+    Route::get('result-action-show/{id?}', [ResultActionController::class, 'resultActionShow'])->name('result-action-show');
+    Route::get('result-action-edit/{id?}', [ResultActionController::class, 'resultActionEdit'])->name('result-action-edit');
+    Route::put('result-action-update-pro/{id}', [ResultActionController::class, 'resultActionUpdate'])->name('result-action-update-pro');
 
 
 });

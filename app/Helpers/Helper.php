@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use App\Models\GroupCode;
 use App\Models\LeadStatus;
 use App\Models\ResultAction;
+use App\Models\ResultCode;
 class Helper
 {
     public static function generateTableId() 
@@ -300,6 +301,23 @@ class Helper
                                         ->get();   
         $data["result_action"] = ResultAction::where('status', 1)
                                             ->select('id', 'rule_code', 'rule_description')
+                                            ->get(); 
+
+         $data["result_code"] = ResultCode::where('status', 1)
+                                            ->select('id', 'code', 'title')
+                                            ->get(); 
+        return $data;
+    }
+
+
+       public static function resultActionDropDownData()
+     {
+        $data["lead_status"] = LeadStatus::where('status', 1)
+                                        ->select('id', 'status_name')
+                                        ->get(); 
+
+         $data["result_code"] = ResultCode::where('status', 1)
+                                            ->select('id', 'code', 'title')
                                             ->get(); 
         return $data;
     }
