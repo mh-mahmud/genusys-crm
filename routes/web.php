@@ -26,12 +26,9 @@ use App\Http\Controllers\ProductSpecificationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FormFeatureController;
 use App\Http\Controllers\ResultCodeController;
-<<<<<<< HEAD
 use App\Http\Controllers\ResultActionController;
 
-=======
 use App\Http\Controllers\ResultGroupController;
->>>>>>> 4deefbab61e0b2a2d1dd6d48914c387170289e0a
 
 use App\Models\Promotion;
 
@@ -410,7 +407,6 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('result-code-edit/{id?}', [ResultCodeController::class, 'resultCodeEdit'])->name('result-code-edit');
 	Route::put('result-code-update-pro/{id}', [ResultCodeController::class, 'resultCodeUpdate'])->name('result-code-update-pro');
 
-<<<<<<< HEAD
     Route::get('result-action-list', [ResultActionController::class, 'resultActionList'])->name('result-action-list');
     Route::get('add-result-action', [ResultActionController::class, 'resultActionCreate'])->name('add-result-action');
     Route::post('add-result-action-pro', [ResultActionController::class, 'resultActionStore'])->name('add-result-action-pro');
@@ -418,7 +414,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('result-action-show/{id?}', [ResultActionController::class, 'resultActionShow'])->name('result-action-show');
     Route::get('result-action-edit/{id?}', [ResultActionController::class, 'resultActionEdit'])->name('result-action-edit');
     Route::put('result-action-update-pro/{id}', [ResultActionController::class, 'resultActionUpdate'])->name('result-action-update-pro');
-=======
 	Route::get('lead-status-list', [LeadController::class, 'lead_status_list'])->name('lead-status-list');
 	Route::get('add-status-code', [LeadController::class, 'add_status_code'])->name('add-status-code');
 	Route::post('add-status-code-pro', [LeadController::class, 'save_status_code'])->name('add-status-code-pro');
@@ -431,7 +426,6 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('add-result-group-pro', [ResultGroupController::class, 'resultGroupStore'])->name('add-result-group-pro');
 	Route::get('result-group-edit/{id?}', [ResultGroupController::class, 'resultGroupEdit'])->name('result-group-edit');
 	Route::put('result-group-update-pro/{id}', [ResultGroupController::class, 'resultGroupUpdate'])->name('result-group-update-pro');
->>>>>>> 4deefbab61e0b2a2d1dd6d48914c387170289e0a
 
 
 });
