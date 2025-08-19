@@ -37,7 +37,7 @@
 <!--**********************************
                                 Forms
     ***********************************-->
-<div class="container-xxl">
+<div class="container-xxl container">
     @if (session('success'))
     <script>
         Swal.fire({
@@ -62,7 +62,7 @@
     </script>
     @endif
     <div class="row">
-        <div class="col-xxl-12">
+        <div class="col-xxl-12 col-md-10 mx-md-auto">
             <div class="card card-xxl-stretch mt-4">
                 <div class="card-header bg-light bd-cyan">
                     <!--begin::Card title-->
@@ -88,7 +88,7 @@
                                     <h5 class="mb-2" style="border:1px solid #DDD;padding:7px;background-color:#54B4D3;color:#f7f7f7">Client Contact Information</h5>
 
                                     <div class="col-md-4">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">First Name</label>
                                             <!--end::Label-->
@@ -102,7 +102,7 @@
                                     </div>
 
                                     <div class="col-md-4">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Middle Name</label>
                                             <!--end::Label-->
@@ -116,7 +116,7 @@
                                     </div>
 
                                     <div class="col-md-4">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Last Name</label>
                                             <!--end::Label-->
@@ -130,7 +130,7 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Address</label>
                                             <!--end::Label-->
@@ -145,7 +145,7 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Zip</label>
                                             <!--end::Label-->
@@ -159,7 +159,7 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Country</label>
                                             <!--end::Label-->
@@ -173,7 +173,7 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">City</label>
                                             <!--end::Label-->
@@ -187,7 +187,7 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">State</label>
                                             <!--end::Label-->
@@ -201,7 +201,7 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Time at Residence</label>
                                             <!--end::Label-->
@@ -215,7 +215,7 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Prior Address</label>
                                             <!--end::Label-->
@@ -230,7 +230,7 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Cell Phone</label>
                                             <!--end::Label-->
@@ -244,7 +244,7 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Home Phone</label>
                                             <!--end::Label-->
@@ -258,7 +258,7 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Work Phone</label>
                                             <!--end::Label-->
@@ -272,7 +272,7 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Email</label>
                                             <!--end::Label-->
@@ -287,7 +287,7 @@
 
                                     {{--
                                     <div class="col-md-3">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Alternative Number</label>
                                             <!--end::Label-->
@@ -301,7 +301,7 @@
                                     </div>
 
                                     <div class="col-md-3">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Contact Person Name</label>
                                             <!--end::Label-->
@@ -315,7 +315,7 @@
                                     </div>
 
                                     <div class="col-md-3">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Company</label>
                                             <!--end::Label-->
@@ -329,7 +329,7 @@
                                     </div>--}}
 
                                     <div class="col-md-6">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <label class="form-label fw-bolder text-dark">Lead Status</label>
                                             <select class="form-control form-control-sm form-control-solid" name="lead_status">
                                                 <option value="">-- Select Status --</option>
@@ -349,7 +349,7 @@
 
 
                                     <div class="col-md-6">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <label class="form-label fw-bolder text-dark">Lead Source</label>
                                             <select class="form-control form-control-sm form-control-solid" name="lead_source">
                                                 <option value="" disabled {{ old('lead_source') == '' ? 'selected' : '' }}>Select Lead Source</option>
@@ -369,7 +369,7 @@
 
 
                                     <div class="col-md-6">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Lead Notes</label>
                                             <!--end::Label-->
@@ -397,7 +397,7 @@
                                     <h5 class="mb-2" style="border:1px solid #DDD;padding:7px;background-color:#54B4D3;color:#f7f7f7">Note Section</h5>
 
                                     <div class="col-md-12">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Write a Note</label>
                                             <!--end::Label-->
@@ -411,7 +411,7 @@
                                     </div>
 
                                     <div class="col-md-12">
-                                        <div class="fv-row mb-3">
+                                        <div class="fv-row mb-1">
                                             <label class="form-label fw-bolder text-dark">Result Code</label>
                                             <select class="form-control form-control-sm form-control-solid" name="result_codes_id">
                                                 <option value="" disabled {{ old('result_codes_id') == '' ? 'selected' : '' }}>Select Code</option>

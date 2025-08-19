@@ -56,7 +56,7 @@
     <!--**********************************
                    Tables View
          ***********************************-->
-    <div class="container-fluid">
+    <div class="container-fluid container">
         @if (session('success'))
             <script>
                 Swal.fire({
