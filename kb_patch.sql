@@ -147,3 +147,19 @@ ADD `created_by` INT(11) NOT NULL AFTER `status`;
 
 ALTER TABLE `result_action`
 ADD `updated_by` INT(11) NOT NULL AFTER `created_by`;
+
+
+-- cycle table
+CREATE TABLE IF NOT EXISTS `lead_cycle` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `lead_id` int DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
+  `priority` tinyint DEFAULT NULL,
+  `no_of_attempt` tinyint DEFAULT NULL,
+  `feedback` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cycle_time` datetime DEFAULT NULL,
+  `status` tinyint DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
