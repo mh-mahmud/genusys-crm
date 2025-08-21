@@ -235,7 +235,8 @@ class LeadController  extends Controller
         // dd($menu_access);
 
         $lead = $this->leadService->getLeadById($id);
-        $lead_result_codes = ResultCode::select('id', 'code', 'title')->get();
+        $lead_result_codes = ResultCode::where('selectable', 'Yes')->get(['id', 'code', 'title']);
+        //dd($lead_result_codes);
         $lead_data_id = $id;
         $is_customer = Customer::where('lead_id', $id)->first();
         $customer_id = null;
