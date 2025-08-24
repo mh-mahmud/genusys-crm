@@ -345,7 +345,7 @@
     }
 
     ruleType.addEventListener('change', toggleFields);
-    toggleFields(); // run on page load in case old value is selected
+    toggleFields(); // run on page load if old value is selected
   });
 </script>
 
