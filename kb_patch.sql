@@ -163,3 +163,37 @@ CREATE TABLE IF NOT EXISTS `lead_cycle` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+-- Result Action Table 24-08-2025
+CREATE TABLE `result_action` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rule_code` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rule_description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rule_type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `distribution_priority` tinyint(4) DEFAULT NULL,
+  `after_1st_park_priority` tinyint(4) DEFAULT NULL,
+  `after_2nd_park_priority` tinyint(4) DEFAULT NULL,
+  `distribution_time` int(11) DEFAULT NULL,
+  `after_1st_park_time` int(11) DEFAULT NULL,
+  `after_2nd_park_time` int(11) DEFAULT NULL,
+  `attempts_general` int(11) DEFAULT NULL,
+  `after_1st_park_priority_general` int(11) DEFAULT NULL,
+  `after_2nd_park_priority_general` int(11) DEFAULT NULL,
+  `apply_condition` tinyint(1) DEFAULT 0,
+  `rule_based` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `num_attempts` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `callback` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dead` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lead_status_id` int(11) DEFAULT NULL,
+  `next_dist` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `result_code` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `park_cycle_before_dead` int(11) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
