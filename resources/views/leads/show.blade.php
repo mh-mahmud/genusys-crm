@@ -870,7 +870,8 @@
                                                                     <td class="ps-5 text-dark fs-6">{{ $row->created_by }}</td>
                                                                     <td class="d-flex align-items-center justify-content-end gap-1">
 
-                                                                    <a href="{{ route('lead-show-table-details', ['tableName' => $tableName, 'leadId' => $row->id]) }}" class="btn btn-icon btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#showViewModal">
+                                                                    {{-- <a href="{{ route('lead-show-table-details', ['tableName' => $tableName, 'leadId' => $row->id]) }}" class="btn btn-icon btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#showViewModal"> --}}
+                                                                    <a class="btn btn-icon btn-sm btn-success"  onclick='viewDetailsModal(@json($tableName),@json($row),@json($tableData))'>
 
                                                                        <span class="svg-icon svg-icon-3">
                                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
@@ -3742,191 +3743,32 @@
                         <!--begin::Heading-->
                         <!--begin::Textarea-->
                         <div class="row">
-
-
-<div class="col-xxl-12">
-
-    <div class="card card-xxl-stretch mt-4">
-      <div class="card-header bg-light bd-cyan">
-        <div class="card-title m-0">
-          <h3 class="fw-bolder m-0">Driver Information</h3>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="g-lead-details-area mb-5">
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Driver Type </span>
-            <span> Rated </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Full Name </span>
-            <span> 3424e2 </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Dob </span>
-            <span> 2025-08-18 </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Age </span>
-            <span> 23 </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Gender </span>
-            <span> Male </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Marital </span>
-            <span> Single </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Relationship </span>
-            <span>
-              <em class="text-muted"></em>
-            </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Dl Number </span>
-            <span>
-              <em class="text-muted"></em>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card card-xxl-stretch mt-4">
-      <div class="card-header bg-light bd-cyan">
-        <div class="card-title m-0">
-          <h3 class="fw-bolder m-0">Driver Attributes</h3>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="g-lead-details-area mb-5">
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Driver Info Id </span>
-            <span> 3 </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Prior Insurance </span>
-            <span> No </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Reason For No Insurance </span>
-            <span> 32144324 </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Time Licensed Us </span>
-            <span> gvdsfgsdf </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Time Licensed Texas </span>
-            <span> fxcvfxdgvbdf </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Foreign Licensed </span>
-            <span> None </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Foreign Licensed Experience </span>
-            <span>
-              <em class="text-muted"></em>
-            </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Sr 22 Reason Filling </span>
-            <span>
-              <em class="text-muted"></em>
-            </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Suspended License </span>
-            <span>
-              <em class="text-muted"></em>
-            </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Time Since Suspension </span>
-            <span>
-              <em class="text-muted"></em>
-            </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Industry </span>
-            <span>
-              <em class="text-muted"></em>
-            </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Occupation </span>
-            <span>
-              <em class="text-muted"></em>
-            </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Time Employed </span>
-            <span>
-              <em class="text-muted"></em>
-            </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Education Level </span>
-            <span>
-              <em class="text-muted"></em>
-            </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Residence Type </span>
-            <span>
-              <em class="text-muted"></em>
-            </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Residence Status </span>
-            <span>
-              <em class="text-muted"></em>
-            </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Property Insurance </span>
-            <span>
-              <em class="text-muted"></em>
-            </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Companion Home </span>
-            <span>
-              <em class="text-muted"></em>
-            </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Driver Training </span>
-            <span>
-              <em class="text-muted"></em>
-            </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Defensive Driving </span>
-            <span>
-              <em class="text-muted"></em>
-            </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Sr22 </span>
-            <span> No </span>
-          </div>
-          <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Sr22a </span>
-            <span> No </span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
-</div>
-
-
+                            <div class="col-xxl-12">
+                                <div class="card card-xxl-stretch mt-4">
+                                    <div class="card-header bg-light bd-cyan">
+                                        <div class="card-title m-0">
+                                        <h3 class="fw-bolder m-0" id="modalTableName"></h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                         <div class="g-lead-details-area mb-5" id="modalBody">
+                                         </div>                                        
+                                    </div>
+                                </div>
+                                 <div class="card card-xxl-stretch mt-4">
+                                    <div class="card-header bg-light bd-cyan">
+                                        <div class="card-title m-0">
+                                        <h3 class="fw-bolder m-0" id="modalTableName2"></h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                         <div class="g-lead-details-area mb-5" id="modalBody2">
+                                         </div>                                        
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
 
                         
                         <!--end::Textarea-->
@@ -3937,6 +3779,224 @@
             </div>
             <!--end::Modal dialog-->
         </div>
+        {{-- <div class="modal fade" id="showViewModal" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog mt-5" style="max-width: 85%; width: 100%; margin: auto;">
+                <!--begin::Modal content-->
+                <div class="modal-content">
+                    <!--begin::Modal header-->
+                    <div class="modal-header pb-0 border-0 justify-content-end">
+                        <!--begin::Close-->
+                        <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                            <span class="svg-icon svg-icon-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                    <!--begin::Modal header-->
+                    <!--begin::Modal body-->
+                    <div class="modal-body  pt-0 ">
+                        <!--begin::Heading-->
+                        <!--begin::Textarea-->
+                        <div class="row">
+                            <div class="col-xxl-12">
+
+                                <div class="card card-xxl-stretch mt-4">
+                                    <div class="card-header bg-light bd-cyan">
+                                        <div class="card-title m-0">
+                                        <h3 class="fw-bolder m-0">Driver Information</h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="g-lead-details-area mb-5">
+                                        <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Driver Type </span>
+                                            <span> Rated </span>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Full Name </span>
+                                            <span> 3424e2 </span>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Dob </span>
+                                            <span> 2025-08-18 </span>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Age </span>
+                                            <span> 23 </span>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Gender </span>
+                                            <span> Male </span>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Marital </span>
+                                            <span> Single </span>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Relationship </span>
+                                            <span>
+                                            <em class="text-muted"></em>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Dl Number </span>
+                                            <span>
+                                            <em class="text-muted"></em>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="card card-xxl-stretch mt-4">
+                                <div class="card-header bg-light bd-cyan">
+                                    <div class="card-title m-0">
+                                    <h3 class="fw-bolder m-0">Driver Attributes</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="g-lead-details-area mb-5">
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Driver Info Id </span>
+                                        <span> 3 </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Prior Insurance </span>
+                                        <span> No </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Reason For No Insurance </span>
+                                        <span> 32144324 </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Time Licensed Us </span>
+                                        <span> gvdsfgsdf </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Time Licensed Texas </span>
+                                        <span> fxcvfxdgvbdf </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Foreign Licensed </span>
+                                        <span> None </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Foreign Licensed Experience </span>
+                                        <span>
+                                        <em class="text-muted"></em>
+                                        </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Sr 22 Reason Filling </span>
+                                        <span>
+                                        <em class="text-muted"></em>
+                                        </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Suspended License </span>
+                                        <span>
+                                        <em class="text-muted"></em>
+                                        </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Time Since Suspension </span>
+                                        <span>
+                                        <em class="text-muted"></em>
+                                        </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Industry </span>
+                                        <span>
+                                        <em class="text-muted"></em>
+                                        </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Occupation </span>
+                                        <span>
+                                        <em class="text-muted"></em>
+                                        </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Time Employed </span>
+                                        <span>
+                                        <em class="text-muted"></em>
+                                        </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Education Level </span>
+                                        <span>
+                                        <em class="text-muted"></em>
+                                        </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Residence Type </span>
+                                        <span>
+                                        <em class="text-muted"></em>
+                                        </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Residence Status </span>
+                                        <span>
+                                        <em class="text-muted"></em>
+                                        </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Property Insurance </span>
+                                        <span>
+                                        <em class="text-muted"></em>
+                                        </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Companion Home </span>
+                                        <span>
+                                        <em class="text-muted"></em>
+                                        </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Driver Training </span>
+                                        <span>
+                                        <em class="text-muted"></em>
+                                        </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Defensive Driving </span>
+                                        <span>
+                                        <em class="text-muted"></em>
+                                        </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Sr22 </span>
+                                        <span> No </span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                        <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> Sr22a </span>
+                                        <span> No </span>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+                        
+                        <!--end::Textarea-->
+                    </div>
+                    <!--end::Modal body-->
+                </div>
+                <!--end::Modal content-->
+            </div>
+            <!--end::Modal dialog-->
+        </div> --}}
+
         <!-- end modal code -->
     </div>
 
@@ -5447,111 +5507,6 @@
 
         });
     </script>
-    <script>
-        var phone_no = @json($lead->phone);
-        const ticketUrl = "http://192.168.11.220/";
-        document.getElementById("ticketListBtn").style.display = 'none';
-
-        function showLoader() {
-            document.getElementById('loader').style.display = 'flex';
-        }
-
-        // Hide the full-page loader
-        function hideLoader() {
-            document.getElementById('loader').style.display = 'none';
-        }
-
-        function getTickets(phone_no) {
-            showLoader();
-            const ticketListUrl = ticketUrl + "ticket_crm/ticket_crm_api.php?TYPE=TICKET_LIST_BY_MOBILE&CLI=" + phone_no;
-
-            fetch(ticketListUrl)
-                .then(response => response.json())
-                .then(data => {
-                    populateTable(data);
-                    hideLoader();
-                })
-                .catch(error => {
-                    //console.error('Error fetching data:', error);
-                    //alert('Failed to load the ticket creation form. Please try again.');
-                });
-        }
-
-        function populateTable(data) {
-            const tableBody = document.getElementById('ticketTable').getElementsByTagName('tbody')[0];
-
-            tableBody.innerHTML = '';
-
-            data.forEach(ticket => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                <td><a href="#" onclick="getTicketReplyFrame(${ticket.ticket_id})">${ticket.ticket_id || 'N/A'}</a></td>
-                <td>${ticket.subject || 'N/A'}</td>
-                <td>${ticket.group_name || 'N/A'}</td>
-                <td>${ticket.status_name || 'N/A'}</td>
-                `;
-
-                tableBody.appendChild(row);
-            });
-        }
-
-        // document.getElementById('g_lead_tickets_tab').addEventListener('click', function() {
-        // getTickets(phone_no);
-
-        // });
-
-        function getTicketReplyFrame(ticket_id) {
-            const ticketReplyUrl = ticketUrl + "ticket_crm/ticket_crm_api.php?TYPE=TICKET_REPLY&TICKET_ID=" + ticket_id;
-            showLoader();
-            document.getElementById("ticketListBtn").style.display = '';
-            document.getElementById("createTicketButton").style.display = '';
-            document.getElementById("ticketTable").style.display = 'none';
-            fetch(ticketReplyUrl)
-                .then(response => response.json())
-                .then(data => {
-                    const iframeHtml = data[0].iframe;
-                    const iframeContainer = document.getElementById('ticketIframeContainer');
-                    iframeContainer.innerHTML = iframeHtml;
-                    iframeContainer.style.display = 'block';
-                    hideLoader();
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    alert('Failed to load the ticket creation form. Please try again.');
-                });
-        }
-
-        document.getElementById('createTicketButton').addEventListener('click', function () {
-            document.getElementById("ticketListBtn").style.display = '';
-            document.getElementById("createTicketButton").style.display = 'none';
-            document.getElementById("ticketTable").style.display = 'none';
-            const ticketListUrl = ticketUrl + "ticket_crm/ticket_crm_api.php?TYPE=TICKET_CREATE&CLI=" + phone_no;
-            showLoader();
-
-            fetch(ticketListUrl)
-                .then(response => response.json())
-                .then(data => {
-                    const iframeHtml = data[0].iframe;
-                    const iframeContainer = document.getElementById('ticketIframeContainer');
-                    iframeContainer.innerHTML = iframeHtml;
-                    iframeContainer.style.display = 'block';
-                    hideLoader();
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    alert('Failed to load the ticket creation form. Please try again.');
-                });
-        });
-
-        document.getElementById('ticketListBtn').addEventListener('click', function () {
-            document.getElementById("ticketIframeContainer").style.display = 'none';
-            document.getElementById("ticketListBtn").style.display = 'none';
-            document.getElementById("createTicketButton").style.display = '';
-            document.getElementById("ticketTable").style.display = '';
-            getTickets(phone_no);
-        });
-
-    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -5589,6 +5544,86 @@
                 });
             });
         });
+
+        function viewDetailsModal(table_name,data,table_data)
+        {
+            let skipKeys = ["id", "form_id", "driver_info_id", "lead_id", "vehicle_info_id"];
+            let formattedName = table_name
+                                .replaceAll("_", " ")                              
+                                .split(" ")                                         
+                                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) 
+                                .join(" ");  
+            document.getElementById("modalTableName").innerText = formattedName;
+            let table2_name = '';
+            let attribute_data =  {};
+                console.log(table_name)
+
+            if(table_name == 'driver_information') {
+                attribute_data = table_data["driver_attributes"].find(attribute => attribute.driver_info_id == data.id);
+                table2_name = "Driver Attributes";
+
+            } else if(table_name == 'vehicle_information') {
+                attribute_data = table_data["vehicle_attributes"].find(attribute => attribute.vehicle_info_id == data.id);
+                table2_name = "Vehicle Attributes";
+
+            }
+
+            
+            document.getElementById("modalTableName2").innerText = table2_name;
+
+
+            // console.log('attr', table_data["vehicle_attributes"]);
+            // console.log('id', attribute_data);
+
+
+            let html = "";
+            let html2 = "";
+            for (let key in data) {
+                if (data.hasOwnProperty(key)) {
+                    if (skipKeys.includes(key)) {
+                        continue; 
+                    }
+                    html += `
+                        <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> 
+                               ${key.replaceAll("_", " ")
+                                    .split(" ")
+                                    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                                    .join(" ")}
+
+                            </span>
+                            <span>${data[key] ?? ''}</span>
+                        </div>
+                    `;
+                }
+            }
+
+             for (let key in attribute_data) {
+                if (attribute_data.hasOwnProperty(key)) {
+                    if (skipKeys.includes(key)) {
+                        continue; 
+                    }
+                    html2 += `
+                        <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                            <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0"> 
+                                 ${key.replaceAll("_", " ")
+                                    .split(" ")
+                                    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                                    .join(" ")}
+                            </span>
+                            <span>${attribute_data[key] ?? ''}</span>
+                        </div>
+                    `;
+                }
+            }
+
+            document.getElementById("modalBody").innerHTML = html;
+            document.getElementById("modalBody2").innerHTML = html2;
+
+            var myModal = new bootstrap.Modal(document.getElementById('showViewModal'));
+            myModal.show();
+
+        }
     </script>
 
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
