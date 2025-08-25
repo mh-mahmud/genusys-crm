@@ -85,14 +85,14 @@
                                     <th class="ps-4 rounded-start min-w-40px">SL</th>
                                     <th class="min-w-120px">Rule Code</th>
                                     <th class="min-w-150px">Rule Description</th>
-                                    <th class="min-w-120px">Rule Based</th>
-                                    <th class="min-w-120px">Attempts</th>
-                                    <th class="min-w-120px">Lead Status</th>
-                                    <th class="min-w-120px">Result Code</th>
-                                    <th class="min-w-120px">Callback</th>
-                                    <th class="min-w-120px">Dead</th>
-                                    <th class="min-w-120px">Next Dist</th>
-                                    <th class="min-w-120px">Active</th>
+                                    <th class="min-w-120px text-center">Rule Based</th>
+                                    <th class="min-w-120px text-center">Attempts</th>
+                                    <th class="min-w-120px text-center">Callback</th>
+                                    <th class="min-w-120px text-center">Dead</th>
+                                    <th class="min-w-120px text-center">Result Status</th>
+                                    <th class="min-w-120px text-center">Next Dist</th>
+                                    <th class="min-w-120px text-center">Result Code</th>
+                                    <th class="min-w-120px text-center">Active</th>
                                     <th class="min-w-100px text-end-new">Actions</th>
                                 </tr>
                                 </thead>
@@ -102,14 +102,14 @@
                                         <td class="ps-5 text-dark fs-6">{{($actions->currentPage() - 1) * $actions->perPage() + $loop->iteration}}</td>
                                         <td class="text-dark fs-6">{{ $action->rule_code }}</td>
                                         <td class="text-dark fs-6">{{ $action->rule_description }}</td>
-                                        <td class="text-dark fs-6">{{ $action->rule_based }}</td>
-                                        <td class="text-dark fs-6">{{ $action->num_attempts }}</td>
-                                        <td class="text-dark fs-6">{{ $action->leadStatus?->status_name }}</td>
-                                        <td class="text-dark fs-6">{{ $action->resultCode?->code }}</td>
-                                        <td class="text-dark fs-6">{{ $action->callback }}</td>
-                                        <td class="text-dark fs-6">{{ $action->dead }}</td>
-                                        <td class="text-dark fs-6">{{ $action->next_dist }}</td>
-                                        <td>
+                                        <td class="text-dark fs-6 text-center">{{ $action->rule_type == 'General' ? 'Yes' : 'No' }}</td>
+                                        <td class="text-dark fs-6 text-center">{{ $action->attempts_general }}</td>
+                                        <td class="text-dark fs-6 text-center">{{ $action->rule_type == 'Callback' ? 'Yes' : 'No' }}</td>
+                                        <td class="text-dark fs-6 text-center">{{ $action->rule_type == 'Dead' ? 'Yes' : 'No' }}</td>
+                                        <td class="text-dark fs-6 text-center">{{ $action->leadStatus?->status_name }}</td>
+                                        <td class="text-dark fs-6 text-center">{{ $action->distribution_time }}</td>
+                                        <td class="text-dark fs-6 text-center">{{ $action->resultCode?->code }}</td>
+                                        <td class="text-dark fs-6 text-center">
                                             @if ($action->status == 1)
                                                 <span class="badge badge-light-success">Active</span>
                                             @else
