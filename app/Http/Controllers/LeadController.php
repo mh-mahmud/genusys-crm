@@ -42,6 +42,7 @@ use App\Models\RateAnalysisData;
 use App\Models\ResultCode;
 use App\Models\LeadResultCode;
 use App\Models\LeadStatus;
+use App\Models\LeadCycle;
 
 class LeadController  extends Controller
 {
@@ -140,7 +141,27 @@ class LeadController  extends Controller
             $res_code->result_codes_id = $request->result_codes_id;
             $res_code->lead_notes = $request->lead_notes;
             $res_code->created_by = Auth::user()->id;
-            $res_code->save();
+            //$res_code->save();
+
+
+            // update in the cycle table
+
+            # check rule in action => result_action
+            
+            dd($request->result_codes_id);
+            $chk_action = 
+
+            $cycle = new LeadCycle();
+            $cycle->lead_id = $request->lead_id;
+            $cycle->user_id = $request->lead_id;
+            $cycle->priority = $request->lead_id;
+            $cycle->no_of_attempt = $request->lead_id;
+            $cycle->feedback = $request->lead_id;
+            $cycle->cycle_time = $request->lead_id;
+            $cycle->status = $request->lead_id;
+            $cycle->save();
+
+
             return redirect()->back()->with('success', 'Note created successfully.');
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Error occurred while retrieving data.']);
