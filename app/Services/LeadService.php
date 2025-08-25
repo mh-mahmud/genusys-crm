@@ -32,10 +32,10 @@ class LeadService
         $query = Lead::with('leadsForm:form_id,form_name')->where('lead_rating', '=', null);
         if (!Auth::user()->hasPermission('can-see-leads')) {
             $query->where('created_by', Auth::id());
-
+            $query->orwhere('assigned_to', Auth::id());
         }
 
-         return $query->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
+        return $query->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
 
     }
 

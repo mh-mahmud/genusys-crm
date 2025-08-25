@@ -8,9 +8,9 @@
         <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
              data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
              class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Result Action
+            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Edit Result Action
                 <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
-                <small class="text-muted fs-7 fw-bold my-1 ms-1">Edit Result Action</small>
+                <small class="text-muted fs-7 fw-bold my-1 ms-1">Update the Result Action</small>
             </h1>
         </div>
 
@@ -27,17 +27,14 @@
             <div class="card card-xxl-stretch mt-4">
                 <div class="card-header bg-light bd-cyan">
                     <div class="card-title m-0">
-                        <h3 class="fw-bolder m-0">Result Action Edit</h3>
+                        <h3 class="fw-bolder m-0">Edit Result Action</h3>
                     </div>
                 </div>
 
                 <div class="card-body pb-2">
-                    <form class="g-form w-100" 
-                          action="{{ route('result-action-update-pro', $result_action->id) }}" 
-                          method="POST">
+                    <form class="g-form w-100" action="{{ route('result-action-update-pro', $result_action->id) }}" method="POST">
                         @csrf
                         @method('PUT')
-
                         <div class="row">
 
                             <!-- Rule Code -->
@@ -45,7 +42,7 @@
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Rule Code<span class="text-danger">*</span></label>
                                     <input class="form-control form-control-sm form-control-solid"
-                                           type="text" name="rule_code"
+                                           type="text" name="rule_code" 
                                            value="{{ old('rule_code', $result_action->rule_code) }}" />
                                     @if ($errors->has('rule_code'))
                                         <span class="text-danger">{{ $errors->first('rule_code') }}</span>
@@ -58,7 +55,7 @@
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Rule Description<span class="text-danger">*</span></label>
                                     <input class="form-control form-control-sm form-control-solid"
-                                           type="text" name="rule_description"
+                                           type="text" name="rule_description" 
                                            value="{{ old('rule_description', $result_action->rule_description) }}" />
                                     @if ($errors->has('rule_description'))
                                         <span class="text-danger">{{ $errors->first('rule_description') }}</span>
@@ -66,63 +63,21 @@
                                 </div>
                             </div>
 
-                            <!-- Rule Based -->
-                            <div class="col-md-4">
-                                <div class="fv-row mb-3">
-                                    <label class="form-label fw-bolder text-dark">Rule Based</label>
-                                    <select class="form-control form-control-sm form-control-solid" name="rule_based">
-                                        <option value="">Select</option>
-                                        <option value="Yes" {{ old('rule_based', $result_action->rule_based) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                        <option value="No" {{ old('rule_based', $result_action->rule_based) == 'No' ? 'selected' : '' }}>No</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- Callback -->
-                            <div class="col-md-4">
-                                <div class="fv-row mb-3">
-                                    <label class="form-label fw-bolder text-dark">Callback</label>
-                                    <select class="form-control form-control-sm form-control-solid" name="callback">
-                                        <option value="">Select</option>
-                                        <option value="Yes" {{ old('callback', $result_action->callback) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                        <option value="No" {{ old('callback', $result_action->callback) == 'No' ? 'selected' : '' }}>No</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- Dead -->
-                            <div class="col-md-4">
-                                <div class="fv-row mb-3">
-                                    <label class="form-label fw-bolder text-dark">Dead</label>
-                                    <select class="form-control form-control-sm form-control-solid" name="dead">
-                                        <option value="">Select</option>
-                                        <option value="Yes" {{ old('dead', $result_action->dead) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                        <option value="No" {{ old('dead', $result_action->dead) == 'No' ? 'selected' : '' }}>No</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- Number of Attempts -->
+                            <!-- Rule Type -->
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
-                                    <label class="form-label fw-bolder text-dark">Attempts</label>
-                                    <input class="form-control form-control-sm form-control-solid"
-                                           type="number" name="num_attempts"
-                                           value="{{ old('num_attempts', $result_action->num_attempts) }}" />
+                                    <label class="form-label fw-bolder text-dark">Type</label>
+                                    <select class="form-control form-control-sm form-control-solid" name="rule_type" id="rule_type">
+                                        <option value="">Select</option>
+                                        <option value="Callback" {{ old('rule_type', $result_action->rule_type) == 'Callback' ? 'selected' : '' }}>Callback</option>
+                                        <option value="Dead" {{ old('rule_type', $result_action->rule_type) == 'Dead' ? 'selected' : '' }}>Dead</option>
+                                        <option value="PARK" {{ old('rule_type', $result_action->rule_type) == 'PARK' ? 'selected' : '' }}>PARK</option>
+                                        <option value="General" {{ old('rule_type', $result_action->rule_type) == 'General' ? 'selected' : '' }}>General</option>
+                                    </select>
                                 </div>
                             </div>
 
-                            <!-- Next Dist -->
-                            <div class="col-md-6">
-                                <div class="fv-row mb-3">
-                                    <label class="form-label fw-bolder text-dark">Next Dist</label>
-                                    <input class="form-control form-control-sm form-control-solid"
-                                           type="text" name="next_dist"
-                                           value="{{ old('next_dist', $result_action->next_dist) }}" />
-                                </div>
-                            </div>
-
-                            <!-- Lead Status -->
+                            <!-- Result Status -->
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Result Status</label>
@@ -137,37 +92,221 @@
                                 </div>
                             </div>
 
-                            <!-- Result Code -->
-                            <div class="col-md-6">
-                                <div class="fv-row mb-3">
-                                    <label class="form-label fw-bolder text-dark">Result Code</label>
-                                    <select class="form-control form-control-sm form-control-solid" name="result_code">
-                                        <option value="">Select</option>
-                                        @foreach($result_code as $code)
-                                            <option value="{{ $code->id }}" {{ old('result_code', $result_action->result_code) == $code->id ? 'selected' : '' }}>
-                                                {{ $code->code }} - {{ $code->title }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
                             <!-- Active Status -->
                             <div class="col-md-6">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Active</label>
                                     <select class="form-control form-control-sm form-control-solid" name="status">
-                                        <option value="1" {{ old('status', $result_action->status) == 1 ? 'selected' : '' }}>Active</option>
-                                        <option value="0" {{ old('status', $result_action->status) == 0 ? 'selected' : '' }}>Inactive</option>
+                                        <option value="Yes" {{ old('status', $result_action->status) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                        <option value="No" {{ old('status', $result_action->status) == 'No' ? 'selected' : '' }}>No</option>
                                     </select>
                                 </div>
                             </div>
 
-                        </div>
+                            <!-- Callback Fields -->
+                            <div class="col-md-6" id="callback_fields" style="display: none;">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="fv-row mb-3">
+                                                <label class="form-label fw-bolder text-dark">Distribution Priority (1-9)</label>
+                                                <input type="number" class="form-control form-control-sm form-control-solid" 
+                                                    name="distribution_priority" min="1" max="9" 
+                                                    value="{{ old('distribution_priority', $result_action->distribution_priority) }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="fv-row mb-3">
+                                                <label class="form-label fw-bolder text-dark">After 1st Park (1-9)</label>
+                                                <input type="number" class="form-control form-control-sm form-control-solid" 
+                                                    name="after_1st_park_priority" min="1" max="9" 
+                                                    value="{{ old('after_1st_park_priority', $result_action->after_1st_park_priority) }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="fv-row mb-3">
+                                                <label class="form-label fw-bolder text-dark">After 2nd Park (1-9)</label>
+                                                <input type="number" class="form-control form-control-sm form-control-solid" 
+                                                    name="after_2nd_park_priority" min="1" max="9" 
+                                                    value="{{ old('after_2nd_park_priority', $result_action->after_2nd_park_priority) }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div class="card-footer d-flex justify-content-end">
-                            <input type="reset" value="Reset" class="btn btn-sm btn-light me-2">
-                            <button type="submit" class="btn btn-sm btn-primary">Save Changes</button>
+                            <!-- Park Fields -->
+                            <div class="col-md-12" id="park_fields" style="display: none;">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">Distribution Time (min)</label>
+                                            <input type="number" class="form-control form-control-sm form-control-solid"
+                                                name="distribution_time" value="{{ old('distribution_time', $result_action->distribution_time) }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">After 1st Park (min)</label>
+                                            <input type="number" class="form-control form-control-sm form-control-solid"
+                                                name="after_1st_park_min" value="{{ old('after_1st_park_min', $result_action->after_1st_park_min) }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">After 2nd Park (min)</label>
+                                            <input type="number" class="form-control form-control-sm form-control-solid"
+                                                name="after_2nd_park_min" value="{{ old('after_2nd_park_min', $result_action->after_2nd_park_min) }}">
+                                        </div>
+                                    </div>
+
+                                    <!-- Priorities -->
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">Distribution Priority (1-9)</label>
+                                            <input type="number" class="form-control form-control-sm form-control-solid"
+                                                name="distribution_priority" min="1" max="9" 
+                                                value="{{ old('distribution_priority', $result_action->distribution_priority) }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">After 1st Park (1-9)</label>
+                                            <input type="number" class="form-control form-control-sm form-control-solid"
+                                                name="after_1st_park_priority" min="1" max="9"
+                                                value="{{ old('after_1st_park_priority', $result_action->after_1st_park_priority) }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">After 2nd Park (1-9)</label>
+                                            <input type="number" class="form-control form-control-sm form-control-solid"
+                                                name="after_2nd_park_priority" min="1" max="9"
+                                                value="{{ old('after_2nd_park_priority', $result_action->after_2nd_park_priority) }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- General Fields -->
+                            <div class="col-md-12" id="general_fields" style="display: none;">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">Distribution Time (min)</label>
+                                            <input type="number" class="form-control form-control-sm form-control-solid"
+                                                name="distribution_time" value="{{ old('distribution_time', $result_action->distribution_time) }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">After 1st Park (min)</label>
+                                            <input type="number" class="form-control form-control-sm form-control-solid"
+                                                name="after_1st_park_time" value="{{ old('after_1st_park_time', $result_action->after_1st_park_time) }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">After 2nd Park (min)</label>
+                                            <input type="number" class="form-control form-control-sm form-control-solid"
+                                                name="after_2nd_park_time" value="{{ old('after_2nd_park_time', $result_action->after_2nd_park_time) }}">
+                                        </div>
+                                    </div>
+
+                                    <!-- Priorities -->
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">Distribution Priority (1-9)</label>
+                                            <input type="number" class="form-control form-control-sm form-control-solid"
+                                                name="distribution_priority" min="1" max="9"
+                                                value="{{ old('distribution_priority', $result_action->distribution_priority) }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">After 1st Park (1-9)</label>
+                                            <input type="number" class="form-control form-control-sm form-control-solid"
+                                                name="after_1st_park_priority" min="1" max="9"
+                                                value="{{ old('after_1st_park_priority', $result_action->after_1st_park_priority) }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">After 2nd Park (1-9)</label>
+                                            <input type="number" class="form-control form-control-sm form-control-solid"
+                                                name="after_2nd_park_priority" min="1" max="9"
+                                                value="{{ old('after_2nd_park_priority', $result_action->after_2nd_park_priority) }}">
+                                        </div>
+                                    </div>
+
+                                    <!-- Condition Checkbox -->
+                                    <div class="col-md-12 d-flex align-items-center">
+                                        <div class="form-check form-check-custom form-check-solid mt-2 mb-2">
+                                            <input class="form-check-input" type="checkbox" name="apply_condition_general"
+                                                {{ old('apply_condition_general', $result_action->apply_condition_general) ? 'checked' : '' }}>
+                                            <label class="form-check-label">Apply Condition (Park/Dead)</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Attempts -->
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">No. of Attempts (1-99)</label>
+                                            <input type="number" class="form-control form-control-sm form-control-solid"
+                                                name="attempts_general" min="1" max="99"
+                                                value="{{ old('attempts_general', $result_action->attempts_general) }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">After 1st Park (0-99)</label>
+                                            <input type="number" class="form-control form-control-sm form-control-solid"
+                                                name="after_1st_park_priority_general" min="0" max="99"
+                                                value="{{ old('after_1st_park_priority_general', $result_action->after_1st_park_priority_general) }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">After 2nd Park (0-99)</label>
+                                            <input type="number" class="form-control form-control-sm form-control-solid"
+                                                name="after_2nd_park_priority_general" min="0" max="99"
+                                                value="{{ old('after_2nd_park_priority_general', $result_action->after_2nd_park_priority_general) }}">
+                                        </div>
+                                    </div>
+
+                                    <!-- Result Code -->
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">Result Code</label>
+                                            <select class="form-control form-control-sm form-control-solid" name="result_code">
+                                                <option value="">Select</option>
+                                                @foreach($result_code as $code)
+                                                    <option value="{{ $code->id }}" {{ old('result_code', $result_action->result_code) == $code->id ? 'selected' : '' }}>
+                                                        {{ $code->code }} - {{ $code->title }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="fv-row mb-3">
+                                            <label class="form-label fw-bolder text-dark">Park Cycle Before Dead (0-99)</label>
+                                            <input type="number" class="form-control form-control-sm form-control-solid"
+                                                name="park_cycle_before_dead" min="0" max="99"
+                                                value="{{ old('park_cycle_before_dead', $result_action->park_cycle_before_dead) }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Footer -->
+                            <div class="card-footer d-flex justify-content-end">
+                                <a href="{{ route('result-action-list') }}" class="btn btn-sm btn-light me-2">Cancel</a>
+                                <button type="submit" class="btn btn-sm btn-primary">Update Changes</button>
+                            </div>
+
                         </div>
                     </form>
                 </div>
@@ -175,5 +314,47 @@
         </div>
     </div>
 </div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const ruleType = document.getElementById('rule_type');
+    const callbackFields = document.getElementById('callback_fields');
+    const parkFields = document.getElementById('park_fields');
+    const generalFields = document.getElementById('general_fields');
+
+    function toggleFields() {
+        // Hide all first
+        callbackFields.style.display = 'none';
+        parkFields.style.display = 'none';
+        generalFields.style.display = 'none';
+
+        // Show based on selection
+          if (ruleType.value === 'Callback') {
+            callbackFields.style.display = 'flex';
+            parkFields.style.display = 'none';
+            generalFields.style.display = 'none';
+        } else if (ruleType.value === 'PARK') {
+            parkFields.style.display = 'block';
+            callbackFields.style.display = 'none';
+            generalFields.style.display = 'none';
+        } else if (ruleType.value === 'General') {
+            generalFields.style.display = 'block';
+            parkFields.style.display = 'none';
+            callbackFields.style.display = 'none';
+        } else {
+            callbackFields.style.display = 'none';
+            parkFields.style.display = 'none';
+            generalFields.style.display = 'none';
+        }
+    }
+
+    //run once on page load edit page preselected value
+    toggleFields();
+
+    ///run on page load if old value is selected
+    ruleType.addEventListener('change', toggleFields);
+  });
+</script>
 
 @endsection

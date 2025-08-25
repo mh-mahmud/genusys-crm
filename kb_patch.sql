@@ -197,3 +197,10 @@ CREATE TABLE `result_action` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+
+
+
+ALTER TABLE `result_action` CHANGE `result_code` `result_code` INT(11) NULL;
+
+-- 25-08-2025
+ALTER TABLE `lead_result_code` CHANGE `result_codes_id` `result_codes_id` VARCHAR(255) NULL DEFAULT NULL; 
