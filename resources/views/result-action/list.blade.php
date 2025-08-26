@@ -103,11 +103,11 @@
                                         <td class="text-dark fs-6">{{ $action->rule_code }}</td>
                                         <td class="text-dark fs-6">{{ $action->rule_description }}</td>
                                         <td class="text-dark fs-6 text-center">{{ $action->rule_type == 'General' ? 'Yes' : 'No' }}</td>
-                                        <td class="text-dark fs-6 text-center">{{ $action->attempts_general }}</td>
+                                        <td class="text-dark fs-6 text-center">{{ $action->attempts_general ?: 0 }}</td>
                                         <td class="text-dark fs-6 text-center">{{ $action->rule_type == 'Callback' ? 'Yes' : 'No' }}</td>
                                         <td class="text-dark fs-6 text-center">{{ $action->rule_type == 'Dead' ? 'Yes' : 'No' }}</td>
                                         <td class="text-dark fs-6 text-center">{{ $action->leadStatus?->status_name }}</td>
-                                        <td class="text-dark fs-6 text-center">{{ $action->distribution_time }}</td>
+                                        <td class="text-dark fs-6 text-center">{{ $action->distribution_time ?: 0 }}</td>
                                         <td class="text-dark fs-6 text-center">{{ $action->resultCode?->code }}</td>
                                         <td class="text-dark fs-6 text-center">
                                             @if ($action->status == 1)

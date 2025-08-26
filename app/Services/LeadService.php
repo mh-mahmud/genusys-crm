@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\DriverInformation;
 use App\Models\Lead;
+use App\Models\LeadCycle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\LeadFormDetail;
@@ -930,6 +931,19 @@ class LeadService
         });
 
         return $query->paginate(config('constants.ROW_PER_PAGE'));
+    }
+
+    public function leadCycleBroadcast()
+    {
+        $leads = LeadCycle::where('status', 1)->get();
+        foreach ($leads as $lead) {
+            $lead->update(['status' => 2]);
+            Lead::where('id', $lead->lead_id)
+                ->update(['assigned_to' => $lead->lead_id]);
+
+
+        }
+
     }
 
 }
