@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\LeadFormDetail;
 use App\Models\LeadResultCode;
 use App\Models\VehicleInformation;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
@@ -937,7 +938,10 @@ class LeadService
     public function leadCycleBroadcast()
     {
         DB::transaction(function () {
-            $leads = LeadCycle::where('status', 1)->get();
+            $now = Carbon::now();
+            $leads = LeadCycle::where('status', 1)
+                            ->where('cycle_time', '<=', $now)
+                            ->get();
             foreach ($leads as $lead) {
                 $lead->update(['status' => 2]);
                 Lead::where('id', $lead->lead_id)
