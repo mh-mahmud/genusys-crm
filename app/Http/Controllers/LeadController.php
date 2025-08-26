@@ -40,6 +40,7 @@ use App\Models\DriverAttributes;
 use App\Models\DriverInformation;
 use App\Models\RateAnalysisData;
 use App\Models\ResultCode;
+use App\Models\ResultAction;
 use App\Models\LeadResultCode;
 use App\Models\LeadStatus;
 use App\Models\LeadCycle;
@@ -148,21 +149,54 @@ class LeadController  extends Controller
 
             # check rule in action => result_action
             
-            dd($request->result_codes_id);
-            $chk_action = 
+            $res_code = ResultCode::where('id', $request->result_codes_id)->first();
+            $res_action = ResultAction::where('id', $res_code->result_action_id)->first();
+            $user_list = User::where('user_type', '!=', 'admin')->pluck('id')->toArray();
 
-            $cycle = new LeadCycle();
-            $cycle->lead_id = $request->lead_id;
-            $cycle->user_id = $request->lead_id;
-            $cycle->priority = $request->lead_id;
-            $cycle->no_of_attempt = $request->lead_id;
-            $cycle->feedback = $request->lead_id;
-            $cycle->cycle_time = $request->lead_id;
-            $cycle->status = $request->lead_id;
-            $cycle->save();
+            if($res_action->rule_type=="Dead") {
+                // remove from lead list and sent to archive
+            }
+            else if($res_action->rule_type=="PARK" || $res_action->rule_type=="General") {
 
+                for($i=0; $i<3; $i++) {
+                    shuffle($user_list);
+                    try {
+                        $cycle = new LeadCycle();
+                        if($i==0) {
+                            $cycle->priority = $res_action->distribution_priority;
+                            $cycle->cycle_time = date("Y-m-d H:i:s", time() + ($res_action->distribution_time*60));
+                        }
 
+                        if($i==1) {
+                            $cycle->priority = $res_action->after_1st_park_priority;
+                            $cycle->cycle_time = date("Y-m-d H:i:s", time() + ($res_action->after_1st_park_time*60));
+                        }
+
+                        if($i==2) {
+                            $cycle->priority = $res_action->after_2nd_park_priority;
+                            $cycle->cycle_time = date("Y-m-d H:i:s", time() + ($res_action->after_2nd_park_time*60));
+                        }
+
+                        
+                        $cycle->lead_id = $request->lead_id;
+                        $cycle->user_id = $user_list[0];
+                        $cycle->no_of_attempt = $res_action->num_attempts;
+                        $cycle->feedback = $res_action->rule_description;
+                        $cycle->save();
+                        // dd($cycle);
+                    } catch (\Exception $e) {
+                        // return back()->withErrors(['error' => $e->getMessage()]);
+                        return back()->withErrors(['error' => $e->getMessage()]);
+                        dd($e->getMessage());
+                    }
+
+                }
+            }
+            else if($res_action->rule_type=="Callback") {
+                // add data to schedule callback data
+            }
             return redirect()->back()->with('success', 'Note created successfully.');
+
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Error occurred while retrieving data.']);
         }
