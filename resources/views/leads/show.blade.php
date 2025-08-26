@@ -5342,7 +5342,7 @@
             let table2_name = '';
             let attribute_data =  {};
             if(table_name == 'driver_information') {
-                attribute_data = table_data["driver_attributes"].find(attribute => attribute.driver_info_id == data.id);
+                attribute_data = table_data["driver_attributes"].find(attribute => attribute.id == data.id);
                 table2_name = "Driver Attributes";
 
             } else if(table_name == 'vehicle_information') {
