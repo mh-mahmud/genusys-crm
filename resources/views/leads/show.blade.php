@@ -998,7 +998,7 @@
                                                     <label class="form-label fw-bolder text-dark">Write a Note</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <textarea class="form-control form-control-sm form-control-solid" name="lead_notes" rows="3">{{ old('lead_notes') }}</textarea>
+                                                    <textarea min="10" class="form-control form-control-sm form-control-solid" name="lead_notes" rows="3">{{ old('lead_notes') }}</textarea>
                                                     <!--end::Input-->
                                                     @if ($errors->has('lead_notes'))
                                                     <span class="text-danger">{{ $errors->first('lead_notes') }}</span>

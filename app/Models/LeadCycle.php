@@ -10,4 +10,5 @@ class LeadCycle extends Model
     use HasFactory;
 
     protected $table = "lead_cycle";
+    protected $guarded = [];
 }
