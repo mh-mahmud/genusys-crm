@@ -484,7 +484,7 @@ class LeadController  extends Controller
 
             // remove unwanted fields
             $filteredColumns = array_filter($columns, function ($col) {
-                return !in_array($col, ['id', 'created_at', 'updated_at']);
+                return !in_array($col, ['id', 'created_at', 'updated_at', 'driver_info_id', 'vehicle_info_id']);
             });
 
             $tableData[$table] = [
@@ -534,66 +534,66 @@ class LeadController  extends Controller
     }
 
     public function storeTableData(Request $request)
-{
-    $tableName = $request->input('tableName');
-    $lead_id   = $request->input('lead_id');
-    $form_id   = $request->input('form_id');
+    {
+        $tableName = $request->input('tableName');
+        $lead_id   = $request->input('lead_id');
+        $form_id   = $request->input('form_id');
 
-    //mapping main table to related tables
-    $tablesMap = [
-        'driver_information'  => ['driver_information', 'driver_attributes'],
-        'vehicle_information' => ['vehicle_information', 'vehicle_attributes']
-    ];
+        //mapping main table to related tables
+        $tablesMap = [
+            'driver_information'  => ['driver_information', 'driver_attributes'],
+            'vehicle_information' => ['vehicle_information', 'vehicle_attributes']
+        ];
 
-    // get list of tables to insert into
-    $tablesToInsert = $tablesMap[$tableName] ?? [$tableName];
+        // get list of tables to insert into
+        $tablesToInsert = $tablesMap[$tableName] ?? [$tableName];
 
-    foreach ($tablesToInsert as $table) {
-        //only this table input data
-        $tableInputs = $request->input($table, []);
+        foreach ($tablesToInsert as $table) {
+            //only this table input data
+            $tableInputs = $request->input($table, []);
 
-        //add common fields
-        $tableInputs['lead_id'] = $lead_id;
-        $tableInputs['form_id'] = $form_id;
-        
-        $fields = LeadFormDetail::where('table_name', $table)->get();
-        foreach ($fields as $field) {
-            $columnName = $field->field_name;
+            //add common fields
+            $tableInputs['lead_id'] = $lead_id;
+            $tableInputs['form_id'] = $form_id;
+            
+            $fields = LeadFormDetail::where('table_name', $table)->get();
+            foreach ($fields as $field) {
+                $columnName = $field->field_name;
 
-            if ($field->field_value === 'file' && $request->hasFile($table . '.' . $columnName)) {
-                $uploadedFile = $request->file($table . '.' . $columnName);
-                $fileNameWithExt = $uploadedFile->getClientOriginalName();
-                $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-                $extension = $uploadedFile->getClientOriginalExtension();
-                $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+                if ($field->field_value === 'file' && $request->hasFile($table . '.' . $columnName)) {
+                    $uploadedFile = $request->file($table . '.' . $columnName);
+                    $fileNameWithExt = $uploadedFile->getClientOriginalName();
+                    $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                    $extension = $uploadedFile->getClientOriginalExtension();
+                    $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
 
-                $uploadedFile->move(getcwd() . '/uploads/files', $fileNameToStore);
-                $tableInputs[$columnName] = $fileNameToStore;
+                    $uploadedFile->move(getcwd() . '/uploads/files', $fileNameToStore);
+                    $tableInputs[$columnName] = $fileNameToStore;
+                }
             }
+
+            // add creator
+            if (Schema::hasColumns($table, ['created_by','created_at', 'updated_at'])) {
+                $tableInputs['created_by'] = Auth::user()->username;
+                $tableInputs['created_at'] = now();
+                $tableInputs['updated_at'] = now();
+            }
+
+            //insert
+            DB::table($table)->insert($tableInputs);
+
+            Helper::storeLog(
+                "Lead $table table data created successfully",
+                "Lead",
+                "Create Lead Table Data",
+                $lead_id
+            );
         }
 
-        // add creator
-        if (Schema::hasColumns($table, ['created_by','created_at', 'updated_at'])) {
-            $tableInputs['created_by'] = Auth::user()->username;
-            $tableInputs['created_at'] = now();
-            $tableInputs['updated_at'] = now();
-        }
-
-        //insert
-        DB::table($table)->insert($tableInputs);
-
-        Helper::storeLog(
-            "Lead $table table data created successfully",
-            "Lead",
-            "Create Lead Table Data",
-            $lead_id
-        );
-    }
-
-    return redirect()
-        ->route('lead-show', ['id' => $lead_id])
-        ->with('success', 'Data inserted successfully');
-}
+        return redirect()
+            ->route('lead-show', ['id' => $lead_id])
+            ->with('success', 'Data inserted successfully');
+   }
 
 
 

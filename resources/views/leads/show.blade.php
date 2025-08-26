@@ -3744,6 +3744,7 @@
                         <!--begin::Textarea-->
                         <div class="row">
                             <div class="col-xxl-12">
+
                                 <div class="card card-xxl-stretch mt-4">
                                     <div class="card-header bg-light bd-cyan">
                                         <div class="card-title m-0">
@@ -3751,24 +3752,25 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                         <div class="g-lead-details-area mb-5" id="modalBody">
-                                         </div>                                        
+                                        <div class="g-lead-details-area mb-5" id="modalBody">
+                                        
+                                        </div>
                                     </div>
                                 </div>
-                                 <div class="card card-xxl-stretch mt-4">
+                                <div class="card card-xxl-stretch mt-4">
                                     <div class="card-header bg-light bd-cyan">
                                         <div class="card-title m-0">
                                         <h3 class="fw-bolder m-0" id="modalTableName2"></h3>
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                         <div class="g-lead-details-area mb-5" id="modalBody2">
-                                         </div>                                        
+                                        <div class="g-lead-details-area mb-5" id="modalBody2">
+                                        
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
                         
                         <!--end::Textarea-->
@@ -5556,8 +5558,6 @@
             document.getElementById("modalTableName").innerText = formattedName;
             let table2_name = '';
             let attribute_data =  {};
-                console.log(table_name)
-
             if(table_name == 'driver_information') {
                 attribute_data = table_data["driver_attributes"].find(attribute => attribute.driver_info_id == data.id);
                 table2_name = "Driver Attributes";
