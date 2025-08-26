@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Models\DriverInformation;
 use App\Models\Lead;
 use App\Models\LeadCycle;
@@ -935,15 +936,19 @@ class LeadService
 
     public function leadCycleBroadcast()
     {
-        $leads = LeadCycle::where('status', 1)->get();
-        foreach ($leads as $lead) {
-            $lead->update(['status' => 2]);
-            Lead::where('id', $lead->lead_id)
-                ->update(['assigned_to' => $lead->lead_id]);
-
-
-        }
-
+        DB::transaction(function () {
+            $leads = LeadCycle::where('status', 1)->get();
+            foreach ($leads as $lead) {
+                $lead->update(['status' => 2]);
+                Lead::where('id', $lead->lead_id)
+                    ->update(['assigned_to' => $lead->user_id]);
+                $notificationArr =  [
+                                        "notify_msg" => "New lead Assigned",
+                                        "notify_by"    => $lead->user_id
+                                    ];
+                Helper::storeNotification($notificationArr);
+            }
+        });
     }
 
 }
