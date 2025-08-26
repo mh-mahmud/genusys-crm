@@ -719,7 +719,8 @@ class LeadController  extends Controller
             $previousUrl = url()->previous();
             $lastFourDigits = substr($previousUrl, -4);
             //dd($lastSixDigits);die();
-            return view('leads.show_table_details', $data, array_merge($data, ['lastFourDigits' => $lastFourDigits]));
+            //return view('leads.show_table_details', $data, array_merge($data, ['lastFourDigits' => $lastFourDigits]));
+            return view('leads.show_table_details_modal', $data, array_merge($data, ['lastFourDigits' => $lastFourDigits]));
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Error occurred while retrieving data.']);
         }
