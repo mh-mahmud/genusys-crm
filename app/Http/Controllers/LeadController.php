@@ -1599,7 +1599,10 @@ class LeadController  extends Controller
         return redirect()->route('lead-status-list')->with('success', 'Status updated successfully.');
     }
 
-  
+   public function leadCycleBroadcast()
+   {
+     $this->leadService->leadCycleBroadcast();
+   }
 
     
 }

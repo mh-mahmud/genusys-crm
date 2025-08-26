@@ -29,7 +29,6 @@ use App\Http\Controllers\ResultCodeController;
 use App\Http\Controllers\ResultActionController;
 
 use App\Http\Controllers\ResultGroupController;
-
 use App\Models\Promotion;
 
 /*
@@ -48,6 +47,8 @@ Route::get('/', [AuthController::class, 'index'])->name('login_index');
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/post_login', [AuthController::class, 'postLogin'])->name('login.post');
 Route::get('send-pending-email', [EmailController::class, 'sendPendingEmail'])->name('send-pending-email');
+Route::get('lead-cycle-brodcast', [LeadController::class, 'leadCycleBroadcast'])->name('lead-cycle-brodcast');
+
 
 Route::group(['middleware' => ['auth']], function () {
 	Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

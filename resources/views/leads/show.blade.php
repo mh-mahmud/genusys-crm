@@ -5332,6 +5332,7 @@
 
         function viewDetailsModal(table_name,data,table_data)
         {
+            console.log('data', data)
             let skipKeys = ["id", "form_id", "driver_info_id", "lead_id", "vehicle_info_id"];
             let formattedName = table_name
                                 .replaceAll("_", " ")                              
