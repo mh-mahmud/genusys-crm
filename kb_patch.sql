@@ -201,3 +201,6 @@ CREATE TABLE `result_action` (
 
 
 ALTER TABLE `result_action` CHANGE `result_code` `result_code` INT(11) NULL;
+
+-- 25-08-2025
+ALTER TABLE `lead_result_code` CHANGE `result_codes_id` `result_codes_id` VARCHAR(255) NULL DEFAULT NULL; 
