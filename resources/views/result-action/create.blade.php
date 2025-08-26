@@ -72,6 +72,9 @@
                                         <option value="PARK" {{ old('rule_type') == 'PARK' ? 'selected' : '' }}>PARK</option>
                                         <option value="General" {{ old('rule_type') == 'General' ? 'selected' : '' }}>General</option>
                                     </select>
+                                    @if ($errors->has('rule_type'))
+                                        <span class="text-danger">{{ $errors->first('rule_type') }}</span>
+                                    @endif
                                 </div>
                             </div>
                              <!-- Result Status -->
@@ -86,6 +89,9 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    @if ($errors->has('lead_status_id'))
+                                        <span class="text-danger">{{ $errors->first('lead_status_id') }}</span>
+                                    @endif
                                 </div>
                             </div>
 
@@ -95,9 +101,12 @@
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Active</label>
                                     <select class="form-control form-control-sm form-control-solid" name="status">
-                                        <option value="Yes" selected>Yes</option>
-                                        <option value="No">No</option>
+                                        <option value="1" selected>Yes</option>
+                                        <option value="0">No</option>
                                     </select>
+                                    @if ($errors->has('status'))
+                                        <span class="text-danger">{{ $errors->first('status') }}</span>
+                                    @endif
                                 </div>
                             </div>
 
@@ -108,24 +117,24 @@
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">Distribution Priority (1-9)</label>
                                         <input type="number" class="form-control form-control-sm form-control-solid" 
-                                            name="distribution_priority" min="1" max="9" 
-                                            value="{{ old('distribution_priority') }}">
+                                            name="distribution_priority_callback" min="1" max="9" 
+                                            value="{{ old('distribution_priority_callback') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">After 1st Park (1-9)</label>
                                         <input type="number" class="form-control form-control-sm form-control-solid" 
-                                            name="after_1st_park_priority" min="1" max="9" 
-                                            value="{{ old('after_1st_park_priority') }}">
+                                            name="after_1st_park_priority_callback" min="1" max="9" 
+                                            value="{{ old('after_1st_park_priority_callback') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">After 2nd Park (1-9)</label>
                                         <input type="number" class="form-control form-control-sm form-control-solid" 
-                                            name="after_2nd_park_priority" min="1" max="9" 
-                                            value="{{ old('after_2nd_park_priority') }}">
+                                            name="after_2nd_park_priority_callback" min="1" max="9" 
+                                            value="{{ old('after_2nd_park_priority_callback') }}">
                                     </div>
                                 </div>
                             </div>
@@ -139,21 +148,21 @@
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">Distribution Time (min)</label>
                                         <input type="number" class="form-control form-control-sm form-control-solid"
-                                            name="distribution_time" value="{{ old('distribution_time') }}">
+                                            name="distribution_time_park" value="{{ old('distribution_time_park') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">After 1st Park (min)</label>
                                         <input type="number" class="form-control form-control-sm form-control-solid"
-                                            name="after_1st_park_min" value="{{ old('after_1st_park_min') }}">
+                                            name="after_1st_park_min_park" value="{{ old('after_1st_park_min_park') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">After 2nd Park (min)</label>
                                         <input type="number" class="form-control form-control-sm form-control-solid"
-                                            name="after_2nd_park_min" value="{{ old('after_2nd_park_min') }}">
+                                            name="after_2nd_park_min_park" value="{{ old('after_2nd_park_min_park') }}">
                                     </div>
                                 </div>
 
@@ -161,24 +170,24 @@
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">Distribution Priority (1-9)</label>
                                         <input type="number" class="form-control form-control-sm form-control-solid"
-                                            name="distribution_priority" min="1" max="9" 
-                                            value="{{ old('distribution_priority') }}">
+                                            name="distribution_priority_park" min="1" max="9"
+                                            value="{{ old('distribution_priority_park') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">After 1st Park (1-9)</label>
                                         <input type="number" class="form-control form-control-sm form-control-solid"
-                                            name="after_1st_park_priority" min="1" max="9"
-                                            value="{{ old('after_1st_park_priority') }}">
+                                            name="after_1st_park_priority_park" min="1" max="9"
+                                            value="{{ old('after_1st_park_priority_park') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">After 2nd Park (1-9)</label>
                                         <input type="number" class="form-control form-control-sm form-control-solid"
-                                            name="after_2nd_park_priority" min="1" max="9"
-                                            value="{{ old('after_2nd_park_priority') }}">
+                                            name="after_2nd_park_priority_park" min="1" max="9"
+                                            value="{{ old('after_2nd_park_priority_park') }}">
                                     </div>
                                 </div>
                             </div>
@@ -190,21 +199,21 @@
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">Distribution Time (min)</label>
                                         <input type="number" class="form-control form-control-sm form-control-solid"
-                                            name="distribution_time" value="{{ old('distribution_time') }}">
+                                            name="distribution_time_general" value="{{ old('distribution_time_general') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">After 1st Park (min)</label>
                                         <input type="number" class="form-control form-control-sm form-control-solid"
-                                            name="after_1st_park_time" value="{{ old('after_1st_park_time') }}">
+                                            name="after_1st_park_min_general" value="{{ old('after_1st_park_time_general') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">After 2nd Park (min)</label>
                                         <input type="number" class="form-control form-control-sm form-control-solid"
-                                            name="after_2nd_park_time" value="{{ old('after_2nd_park_time') }}">
+                                            name="after_2nd_park_min_general" value="{{ old('after_2nd_park_time_general') }}">
                                     </div>
                                 </div>
 
@@ -212,24 +221,24 @@
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">Distribution Priority (1-9)</label>
                                         <input type="number" class="form-control form-control-sm form-control-solid"
-                                            name="distribution_priority" min="1" max="9"
-                                            value="{{ old('distribution_priority') }}">
+                                            name="distribution_priority_general" min="1" max="9"
+                                            value="{{ old('distribution_priority_general') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">After 1st Park (1-9)</label>
                                         <input type="number" class="form-control form-control-sm form-control-solid"
-                                            name="after_1st_park_priority" min="1" max="9"
-                                            value="{{ old('after_1st_park_priority') }}">
+                                            name="after_1st_park_priority_general" min="1" max="9"
+                                            value="{{ old('after_1st_park_priority_general') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">After 2nd Park (1-9)</label>
                                         <input type="number" class="form-control form-control-sm form-control-solid"
-                                            name="after_2nd_park_priority" min="1" max="9"
-                                            value="{{ old('after_2nd_park_priority') }}">
+                                            name="after_2nd_park_priority_general" min="1" max="9"
+                                            value="{{ old('after_2nd_park_priority_general') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-12 d-flex align-items-center">
@@ -255,16 +264,16 @@
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">After 1st Park (0-99)</label>
                                         <input type="number" class="form-control form-control-sm form-control-solid"
-                                            name="after_1st_park_priority_general" min="0" max="99"
-                                            value="{{ old('after_1st_park_priority_general') }}">
+                                            name="after_1st_park_priority_99" min="0" max="99"
+                                            value="{{ old('after_1st_park_priority_99') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">After 2nd Park (0-99)</label>
                                         <input type="number" class="form-control form-control-sm form-control-solid"
-                                            name="after_2nd_park_priority_general" min="0" max="99"
-                                            value="{{ old('after_2nd_park_priority_general') }}">
+                                            name="after_2nd_park_priority_99" min="0" max="99"
+                                            value="{{ old('after_2nd_park_priority_99') }}">
                                     </div>
                                 </div>
 
