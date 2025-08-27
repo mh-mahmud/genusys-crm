@@ -142,7 +142,7 @@ class LeadController  extends Controller
             $res_code->result_codes_id = $request->result_codes_id;
             $res_code->lead_notes = $request->lead_notes;
             $res_code->created_by = Auth::user()->id;
-            //$res_code->save();
+            $res_code->save();
 
 
             // update in the cycle table

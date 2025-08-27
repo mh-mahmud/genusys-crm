@@ -206,14 +206,14 @@
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">After 1st Park (min)</label>
                                         <input type="number" class="form-control form-control-sm form-control-solid"
-                                            name="after_1st_park_min_general" value="{{ old('after_1st_park_time_general') }}">
+                                            name="after_1st_park_min_general" value="{{ old('after_1st_park_min_general') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="fv-row mb-3">
                                         <label class="form-label fw-bolder text-dark">After 2nd Park (min)</label>
                                         <input type="number" class="form-control form-control-sm form-control-solid"
-                                            name="after_2nd_park_min_general" value="{{ old('after_2nd_park_time_general') }}">
+                                            name="after_2nd_park_min_general" value="{{ old('after_2nd_park_min_general') }}">
                                     </div>
                                 </div>
 
