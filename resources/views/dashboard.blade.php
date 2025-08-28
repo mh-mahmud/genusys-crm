@@ -1014,7 +1014,7 @@
                                                                 Active
                                                             @elseif($val->status==0)
                                                                 Pending
-                                                            @elseif($val->status==2)
+                                                            @elseif($val->status==3)
                                                                 Failed
                                                             @endif
                                                         </span>
