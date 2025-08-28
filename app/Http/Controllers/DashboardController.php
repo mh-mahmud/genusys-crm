@@ -60,6 +60,7 @@ class DashboardController extends Controller
             'leads.last_name',
             'users.username',
         )
+        ->whereIn('lead_cycle.status', [0,1,3])
         ->orderBy('cycle_time', 'asc')
         ->limit(5)
         ->get();
