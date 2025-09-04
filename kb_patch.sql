@@ -213,9 +213,11 @@ CREATE TABLE IF NOT EXISTS `schedule_call` (
   `lead_id` int DEFAULT NULL,
   `user_id` int DEFAULT NULL,
   `phone_number` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `call_note` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `home_phone` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `work_phone` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `call_note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
