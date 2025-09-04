@@ -204,3 +204,18 @@ ALTER TABLE `result_action` CHANGE `result_code` `result_code` INT(11) NULL;
 
 -- 25-08-2025
 ALTER TABLE `lead_result_code` CHANGE `result_codes_id` `result_codes_id` VARCHAR(255) NULL DEFAULT NULL; 
+
+-- 31-08-2025
+ALTER TABLE `lead_cycle` CHANGE `status` `status` TINYINT NULL DEFAULT '1' COMMENT '1=active,0=pending,2=done,3=failed distribution, 4=disabled';
+
+CREATE TABLE IF NOT EXISTS `schedule_call` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `lead_id` int DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
+  `phone_number` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `call_note` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `status` tinyint NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
