@@ -19,6 +19,7 @@ use App\Models\ProductSpecification;
 use App\Models\Customer;
 use App\Models\Notification;
 use App\Models\Invoice;
+use App\Models\LeadCycle;
 
 class DashboardController extends Controller
 {
@@ -51,6 +52,18 @@ class DashboardController extends Controller
         }
 
         $data['invoice_list'] = $invoice_query->limit(5)->get();
+        $data['dist_list'] = LeadCycle::leftJoin('leads', 'lead_cycle.lead_id', '=', 'leads.id')
+        ->leftJoin('users', 'lead_cycle.user_id', '=', 'users.id')
+        ->select(
+            'lead_cycle.*',
+            'leads.first_name',
+            'leads.last_name',
+            'users.username',
+        )
+        ->whereIn('lead_cycle.status', [0,1,3])
+        ->orderBy('cycle_time', 'asc')
+        ->limit(5)
+        ->get();
 
         if (Auth()->user()->user_type == 'admin') {
             $data['camp_list'] = Campaign::where('status', 1)->orderBy('id', 'desc')->limit(5)->get(['id', 'campaign_title', 'start_date', 'end_date', 'campaign_type', 'campaign_limit']);

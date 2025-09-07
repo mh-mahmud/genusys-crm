@@ -933,7 +933,7 @@
                             <!--begin::Header-->
                             <div class="card-header card-header-dashboard border-0 bd-cyan-2">
                                 <h3 class="card-title align-items-start flex-column text-dark">
-                                    <span class="card-label fw-bolder fs-3">New Invoices</span>
+                                    <span class="card-label fw-bolder fs-3">Lead Distribution</span>
                                 </h3>
                                 <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top"
                                      data-bs-trigger="hover" title="">                                 
@@ -956,112 +956,69 @@
                                                            data-kt-check="true" data-kt-check-target=".widget-9-check"/>
                                                 </div>
                                             </th>
-                                            <th class="min-w-150px th-data">Invoice No</th>
-                                            <th class="min-w-140px th-data">Amount</th>
-                                            <th class="min-w-120px th-data">Customer</th>
-                                            <th class="min-w-150px th-data">Due Date</th>
+                                            <th class="min-w-150px th-data">Full Name</th>
+                                            <th class="min-w-140px th-data">Assigned To</th>
+                                            <th class="min-w-120px th-data">Priority</th>
+                                            <th class="min-w-120px th-data">No of Attempt</th>
+                                            <th class="min-w-150px th-data">Cycle Time</th>
                                             <th class="min-w-120px th-data">Status</th>
-                                            <th class="min-w-120px th-data">Payment</th>
 
                                         </tr>
                                         </thead>
-                                        <!--end::Table head-->
-                                        <!--begin::Table body-->
+
                                         <tbody>
-                                        @foreach($invoice_list as $key=>$val)
+                                        @foreach($dist_list as $key=>$val)
                                             <tr>
                                                 <td>
-                                                    <div
-                                                        class="form-check form-check-sm form-check-custom form-check-solid">
-                                                        <input class="form-check-input widget-9-check" type="checkbox"
-                                                               value="1"/>
+                                                    <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                        <input class="form-check-input widget-9-check" type="checkbox" value="1"/>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="d-flex align-items-left">
-                                                        <!-- <div class="symbol symbol-45px me-5">
-                                                            <img src="assets/media/avatars/150-3.jpg" alt="" />
-                                                        </div> -->
                                                         <div class="d-flex justify-content-start flex-column">
-                                                            <a href="{{ URL::to("invoice/$val->id") }}"
-                                                               class="text-dark fw-bolder text-hover-primary fs-6">{{ $val->invoice_number }}</a>
+                                                            <span class="text-dark fw-bold fs-6">{{ $val->first_name }} {{ $val->last_name }}</span>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="text-end">
-                                                    <span class="text-dark fw-bold fs-6">
-                                                        {{ number_format($val->total_amount, 2) }}
-                                                    </span>
-                                                </td>
-                                                <td class="text-left">
-                                                    <div class="d-flex flex-column w-100 me-2">
-                                                        <div class="d-flex flex-stack mb-2">
-                                                            <span
-                                                                class="text-muted me-2 fs-7 fw-bold">
-                                                                {{$val->first_name}} {{$val->last_name}}
-                                                            </span>
-                                                        </div>
+
+                                                <td>
+                                                    <div class="d-flex justify-content-start flex-column">
+                                                        <span class="text-dark fw-bold fs-6">{{ $val->username }}</span>
                                                     </div>
                                                 </td>
+                                                <td>
+                                                    <div class="d-flex justify-content-start flex-column">
+                                                        <span class="text-dark fw-bold fs-6">{{$val->priority}}</span>
+                                                    </div>
+                                                </td>
+
                                                 <td class="text-center">
-                                                    <div class="d-flex flex-column w-100 me-2">
-                                                        <div class="d-flex flex-stack mb-2">
-                                                            <span
-                                                                class="text-muted me-2 fs-7 fw-bold">
-                                                                 @if($val->due_date)
-                                                                {{ \Carbon\Carbon::parse($val->due_date)->format('d-m-Y') }}
-                                                                @endif
-                                                            </span>
-                                                        </div>
+                                                    <div class="d-flex justify-content-start flex-column">
+                                                        <span class="text-dark fw-bold fs-6">{{ $val->no_of_attempt }}</span>
                                                     </div>
                                                 </td>
-                                                @php
-                                                $paymentDetails = collect($val->payment_details);
-                                                //$totalPayments = $paymentDetails->sum('payment');
-                                                // Filter payments where deposit_status is 'Success'
-                                                $successfulPayments = $paymentDetails->filter(function ($payment) {
-                                                    return isset($payment['deposit_status']) && $payment['deposit_status'] === 'Success';
-                                                });
 
-                                                // Sum only the successful payments
-                                                $totalPayments = $successfulPayments->sum('payment');
-
-                                                $lastPayment = $paymentDetails->last();
-                                                $paymentAmount = $lastPayment['payment'] ?? '0.00';
-                                                //$dueAmount = $lastPayment['due'] ?? $invoice->total_amount;
-                                                $dueAmount = max(0, $val->total_amount - $totalPayments) ?? $val->total_amount;
-                                            
-
-                                                if ($totalPayments == $val->total_amount) {
-                                                $status = 'Paid';
-                                                $statusClass = 'badge-light-success';
-                                                } elseif ($totalPayments == 0) {
-                                                $status = 'Unpaid';
-                                                $statusClass = 'badge-light-danger';
-                                                } elseif ($totalPayments > 0 && $totalPayments < $val->total_amount) {
-                                                    $status = 'Partial Paid';
-                                                    $statusClass = 'badge-light-warning';
-                                                    }else {
-                                                    //fallback if amount exceeds total or any unexpected case
-                                                    $status = 'Check Payment';
-                                                    $statusClass = 'badge-light-info';
-                                                }
-
-                                                @endphp
                                                  <td class="text-center">
                                                     <div class="d-flex flex-column w-100 me-2">
                                                         <div class="d-flex flex-stack mb-2">
-                                                            <span
-                                                                class="text-muted me-2 fs-7 fw-bold badge {{ $statusClass }}">
-                                                                {{$status}} 
-                                                            </span>
+                                                            <span class="text-muted me-2 fs-7 fw-bold">{{ $val->cycle_time }}</span>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="text-end">
-                                                    <span class="text-muted fs-7 fw-bold">
-                                                        {{ number_format($totalPayments, 2) }}
-                                                    </span>
+
+                                                <td class="text-center">
+                                                    <div class="d-flex justify-content-start flex-column">
+                                                        <span class="text-dark fw-bold fs-6">
+                                                            @if($val->status==1)
+                                                                Active
+                                                            @elseif($val->status==0)
+                                                                Pending
+                                                            @elseif($val->status==3)
+                                                                Failed
+                                                            @endif
+                                                        </span>
+                                                    </div>
                                                 </td>
 
 
@@ -1168,12 +1125,7 @@
                         --}}
 
                     </div>
-                    
-                    <!--end::Row-->
 
-                    <!--begin::Row-->
-                    <!-- calender design is here -->
-                    <!--end::Row-->
                 </div>
             <!--end::Container-->
         </div>

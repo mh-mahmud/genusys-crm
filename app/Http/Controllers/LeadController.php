@@ -23,6 +23,7 @@ use App\Models\Proposal;
 use App\Models\Logs;
 use App\Models\Invoice;
 use App\Models\ProductSpecification;
+use App\Models\ScheduleCall;
 use App\Services\LeadService;
 use App\Services\UserService;
 use App\Services\EmailService;
@@ -153,8 +154,24 @@ class LeadController  extends Controller
             $res_action = ResultAction::where('id', $res_code->result_action_id)->first();
             $user_list = User::where('user_type', '!=', 'admin')->pluck('id')->toArray();
 
+            
+
             if($res_action->rule_type=="Dead") {
+
                 // remove from lead list and sent to archive
+                $cycle = LeadCycle::where('lead_id', $request->lead_id)->where('status', 1)->get();
+                if(!$cycle->isEmpty()) {
+                        try{
+                            DB::select("UPDATE lead_cycle SET status='4' WHERE lead_id='{$request->lead_id}' AND status='1'");
+                            $lead = Lead::findOrFail($request->lead_id);
+                            $lead->lead_status = "Lost";
+                            $lead->update();
+                        } catch(\Exception $e) {
+                            return redirect()->back()->with('error', $e->getMessage());
+                        }
+
+                }
+                return redirect()->back()->with('success', 'Status changed successfully.');
             }
             else if($res_action->rule_type=="PARK" || $res_action->rule_type=="General") {
 
@@ -194,6 +211,19 @@ class LeadController  extends Controller
             }
             else if($res_action->rule_type=="Callback") {
                 // add data to schedule callback data
+                try {
+                    $lead_data = Lead::where('id', $request->lead_id)->first();
+                    $schedule = new ScheduleCall();
+                    $schedule->lead_id = $request->lead_id;
+                    $schedule->user_id = Auth::user()->id;
+                    $schedule->phone_number = $lead_data->phone;
+                    $schedule->home_phone = $lead_data->home_phone;
+                    $schedule->work_phone = $lead_data->work_phone;
+                    $schedule->save();
+                    return redirect()->back()->with('success', 'A schedule call added successfully.');
+                } catch(\Exception $e) {
+                    return redirect()->back()->with('error', $e->getMessage());
+                }
             }
             return redirect()->back()->with('success', 'Note created successfully.');
 
