@@ -221,3 +221,5 @@ CREATE TABLE IF NOT EXISTS `schedule_call` (
   `status` tinyint NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE schedule_call ADD schedule_time DATETIME NULL DEFAULT NULL AFTER user_id;
