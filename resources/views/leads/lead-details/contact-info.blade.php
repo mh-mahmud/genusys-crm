@@ -68,19 +68,17 @@
                 </div>
                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                     <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Status</span>
-                    @if ($lead->lead_status == "New")
-                    <span class="badge badge-light-primary">New</span>
-                    @elseif ($lead->lead_status == "Qualified")
-                    <span class="badge badge-light-primary">Qualified</span>
-                    @elseif ($lead->lead_status == "Proposition")
-                    <span class="badge badge-light-warning">Proposition</span>
-                    @elseif ($lead->lead_status == "Ongoing")
-                    <span class="badge badge-light-warning">Ongoing</span>
-                    @elseif ($lead->lead_status == "Won")
-                    <span class="badge badge-light-success">Won</span>
-                    @elseif ($lead->lead_status == "Lost")
-                    <span class="badge badge-light-danger">Lost</span>
-                    @endif
+                        @if ($lead->lead_status == "Warm")
+                          <span class="badge badge-light-primary">Warm</span>
+                        @elseif ($lead->lead_status == "Qualified")
+                          <span class="badge badge-light-primary">Qualified</span>
+                        @elseif ($lead->lead_status == "Hot")
+                          <span class="badge badge-light-warning">Hot</span>
+                        @elseif ($lead->lead_status == "Won")
+                          <span class="badge badge-light-success">Won</span>
+                        @elseif ($lead->lead_status == "Dead")
+                          <span class="badge badge-light-danger">Dead</span>
+                        @endif
                 </div>
                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                     <span
