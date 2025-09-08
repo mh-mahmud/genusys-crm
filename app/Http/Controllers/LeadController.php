@@ -132,7 +132,7 @@ class LeadController  extends Controller
 
     public function save_lead_note(Request $request) {
         $request->validate([
-            'lead_notes' => 'required|string|max:191',
+            //'lead_notes' => 'required|string|max:191',
             'result_codes_id' => 'required'
         ]);
 
@@ -215,6 +215,7 @@ class LeadController  extends Controller
                     $lead_data = Lead::where('id', $request->lead_id)->first();
                     $schedule = new ScheduleCall();
                     $schedule->lead_id = $request->lead_id;
+                    $schedule->schedule_time = $request->schedule_time;
                     $schedule->user_id = Auth::user()->id;
                     $schedule->phone_number = $lead_data->phone;
                     $schedule->home_phone = $lead_data->home_phone;
@@ -321,6 +322,9 @@ class LeadController  extends Controller
 
         $lead = $this->leadService->getLeadById($id);
         $lead_result_codes = ResultCode::where('selectable', 'Yes')->get(['id', 'code', 'title']);
+        $lead_result_codes_note = ResultCode::where('selectable', 'Yes')
+        ->with('resultAction')
+        ->get(['id', 'code', 'title', 'result_action_id']);
         //dd($lead_result_codes);
         $lead_data_id = $id;
         $is_customer = Customer::where('lead_id', $id)->first();
@@ -434,7 +438,7 @@ class LeadController  extends Controller
         // dd($notelogs[0]->lead_res_code->title);
 
         // dd($lead->created_name->first_name);
-        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates', 'products', 'customers','lead_data_id','lead_customer','latestMeeting', 'menu_access', 'rate_api_data', 'lead_result_codes', 'notelogs', 'users'));
+        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates', 'products', 'customers','lead_data_id','lead_customer','latestMeeting', 'menu_access', 'rate_api_data', 'lead_result_codes', 'notelogs', 'users', 'lead_result_codes_note'));
     }
 
 

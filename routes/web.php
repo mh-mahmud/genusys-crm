@@ -27,6 +27,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FormFeatureController;
 use App\Http\Controllers\ResultCodeController;
 use App\Http\Controllers\ResultActionController;
+use App\Http\Controllers\ScheduleCallController;
 
 use App\Http\Controllers\ResultGroupController;
 use App\Models\Promotion;
@@ -415,6 +416,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('result-action-show/{id?}', [ResultActionController::class, 'resultActionShow'])->name('result-action-show');
     Route::get('result-action-edit/{id?}', [ResultActionController::class, 'resultActionEdit'])->name('result-action-edit');
     Route::put('result-action-update-pro/{id}', [ResultActionController::class, 'resultActionUpdate'])->name('result-action-update-pro');
+
+   //schedule call routes
+	Route::get('schedule-call-list', [ScheduleCallController::class, 'index'])->name('schedule-call-list');
+	Route::get('add-schedule-call', [ScheduleCallController::class, 'create'])->name('add-schedule-call');
+	Route::post('add-schedule-call-pro', [ScheduleCallController::class, 'store'])->name('add-schedule-call-pro');
+	Route::get('schedule-call-show/{id?}', [ScheduleCallController::class, 'show'])->name('schedule-call-show');
+	Route::get('schedule-call-edit/{id?}', [ScheduleCallController::class, 'edit'])->name('schedule-call-edit');
+	Route::put('schedule-call-update-pro/{id}', [ScheduleCallController::class, 'update'])->name('schedule-call-update-pro');
+	Route::delete('schedule-call-delete/{id?}', [ScheduleCallController::class, 'destroy'])->name('schedule-call-delete');
 
 	//notification routes
 
