@@ -126,8 +126,9 @@ class LeadController  extends Controller
         }
         $users = User::where('user_type', 'user')->where('status', 1)->get(['id', 'user_id', 'first_name', 'last_name', 'email', 'phone_number']);
         $lead_result_codes = ResultCode::select('id', 'code', 'title')->get();
+        $status_list = LeadStatus::where('status', 1)->get(['status_name']);
 
-        return view('leads.create', compact('formName', 'fieldsByTable', 'old_phone', 'users', 'lead_result_codes'));
+        return view('leads.create', compact('formName', 'fieldsByTable', 'old_phone', 'users', 'lead_result_codes', 'status_list'));
     }
 
     public function save_lead_note(Request $request) {
@@ -713,9 +714,10 @@ class LeadController  extends Controller
             $tableName = $field->table_name;
             $tableData[$tableName] = DB::table($tableName)->where('lead_id', $lead->id)->get();
         }
+        $status_list = LeadStatus::where('status', 1)->get(['status_name']);
 
 
-        return view('leads.edit', compact('lead', 'formName', 'tableData'));
+        return view('leads.edit', compact('lead', 'formName', 'tableData', 'status_list'));
     }
 
 

@@ -333,12 +333,14 @@
                                             <label class="form-label fw-bolder text-dark">Lead Status</label>
                                             <select class="form-control form-control-sm form-control-solid" name="lead_status">
                                                 <option value="">-- Select Status --</option>
-                                                <option value="New">New</option>
-                                                <option value="Qualified">Qualified</option>
+                                                @foreach($status_list as $status)
+                                                    <option value="{{ $status->status_name }}">{{ $status->status_name }}</option>
+                                                @endforeach
+                                                <!-- <option value="Qualified">Qualified</option>
                                                 <option value="Proposition">Proposition</option>
                                                 <option value="Ongoing">Ongoing</option>
                                                 <option value="Won">Won</option>
-                                                <option value="Lost">Lost</option>
+                                                <option value="Lost">Lost</option> -->
                                             </select>
                                             @if ($errors->has('lead_status'))
                                             <span class="text-danger">{{ $errors->first('lead_status') }}</span>
