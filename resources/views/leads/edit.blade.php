@@ -307,13 +307,10 @@
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Lead Status</label>
                                     <select class="form-control form-control-sm form-control-solid" name="lead_status">
-                                        <option value="">-- Select Status --</option>
-                                        <option value="New" {{$lead->lead_status == 'New' ? 'selected' : '' }}>New</option>
-                                        <option value="Qualified" {{$lead->lead_status== 'Qualified' ? 'selected' : '' }}>Qualified</option>
-                                        <option value="Proposition" {{$lead->lead_status== 'Proposition' ? 'selected' : '' }}>Proposition</option>
-                                        <option value="Ongoing" {{$lead->lead_status== 'Ongoing' ? 'selected' : '' }}>Ongoing</option>
-                                        <option value="Won" {{$lead->lead_status== 'Won' ? 'selected' : '' }}>Won</option>
-                                        <option value="Lost" {{$lead->lead_status== 'Lost' ? 'selected' : '' }}>Lost</option>
+
+                                        @foreach($status_list as $status)
+                                            <option {{$lead->lead_status == $status->status_name ? 'selected' : '' }} value="{{ $status->status_name }}">{{ $status->status_name }}</option>
+                                        @endforeach
                                     </select>
                                     @if ($errors->has('lead_status'))
                                     <span class="text-danger">{{ $errors->first('lead_status') }}</span>
