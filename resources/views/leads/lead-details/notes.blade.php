@@ -26,7 +26,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <!-- <div class="col-md-12">
                                 <div class="fv-row mb-3">
                                     <label class="form-label fw-bolder text-dark">Result Code</label>
                                     <select class="form-control form-control-sm form-control-solid"
@@ -44,7 +44,41 @@
                                         <span class="text-danger">{{ $errors->first('result_codes_id') }}</span>
                                     @endif
                                 </div>
+                            </div> -->
+                            <div class="col-md-12">
+                            <div class="fv-row mb-3">
+                                <label class="form-label fw-bolder text-dark">Result Code</label>
+                                <select id="result_code_select"
+                                    class="form-control form-control-sm form-control-solid"
+                                    name="result_codes_id">
+                                    <option value="" disabled {{ old('result_codes_id') == '' ? 'selected' : '' }}>Select Code</option>
+                                    @foreach ($lead_result_codes_note as $result_code)
+                                        <option value="{{ $result_code->id }}"
+                                            data-rule-type="{{ $result_code->resultAction->rule_type ?? '' }}"
+                                            {{ old('result_codes_id') == $result_code->id ? 'selected' : '' }}>
+                                            {{ $result_code->title }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('result_codes_id'))
+                                    <span class="text-danger">{{ $errors->first('result_codes_id') }}</span>
+                                @endif
                             </div>
+                        </div>
+
+                      
+                        <div class="col-md-12" id="schedule_field" style="display:none;">
+                            <div class="fv-row mb-3">
+                                <label class="form-label fw-bolder text-dark">Schedule Date & Time</label>
+                                <input type="text"
+                                    class="form-control form-control-sm form-control-solid flatpickr"
+                                    name="schedule_time"
+                                    value="{{ old('schedule_time') }}">
+                                @if ($errors->has('schedule_time'))
+                                    <span class="text-danger">{{ $errors->first('schedule_time') }}</span>
+                                @endif
+                            </div>
+                        </div>
 
                             <div class="card-footer d-flex justify-content-end py-6 px-9">
                                 <button type="submit" class="btn btn-primary" id="">Submit</button>
@@ -187,3 +221,41 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        $('[name="schedule_time"]').flatpickr({
+            enableTime: true, 
+            dateFormat: "Y-m-d H:i",
+            time_24hr: true,  
+            onOpen: function(selectedDates, dateStr, instance) {
+                if (!dateStr) { 
+                    instance.setDate(new Date());
+                }
+            }
+        });
+    });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const select = document.getElementById('result_code_select');
+    const scheduleField = document.getElementById('schedule_field');
+
+    function toggleScheduleField() {
+        const selectedOption = select.options[select.selectedIndex];
+        const ruleType = selectedOption.getAttribute('data-rule-type');
+        if (ruleType === 'Callback') {
+            scheduleField.style.display = 'block';
+        } else {
+            scheduleField.style.display = 'none';
+        }
+    }
+
+    // on page load
+    toggleScheduleField();
+
+    //on change
+    select.addEventListener('change', toggleScheduleField);
+});
+</script>
