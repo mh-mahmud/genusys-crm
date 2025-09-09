@@ -578,7 +578,7 @@ class LeadService
 
             // remove unwanted columns
             $filteredColumns = array_filter($columns, function ($col) {
-                return !in_array($col, ['id','created_by', 'created_at', 'updated_at']);
+                return !in_array($col, ['id','created_by', 'created_at', 'updated_at', 'driver_info_id', 'vehicle_info_id']);
             });
             
 
@@ -656,7 +656,7 @@ class LeadService
 
             // remove unwanted columns
             $filteredColumns = array_filter($columns, function ($col) {
-                return !in_array($col, ['id','created_by', 'created_at', 'updated_at']);
+                return !in_array($col, ['id','created_by', 'created_at', 'updated_at','driver_info_id', 'vehicle_info_id']);
             });
             
 
