@@ -323,8 +323,8 @@ use Carbon\Carbon;
 										  <span class="badge badge-light-primary">Qualified</span>
 										@elseif ($lead->lead_status == "Hot")
 										  <span class="badge badge-light-warning">Hot</span>
-										@elseif ($lead->lead_status == "Won")
-										  <span class="badge badge-light-success">Won</span>
+										@elseif ($lead->lead_status == "Sold")
+										  <span class="badge badge-light-success">Sold</span>
 										@elseif ($lead->lead_status == "Dead")
 										  <span class="badge badge-light-danger">Dead</span>
 										@endif

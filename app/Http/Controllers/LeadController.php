@@ -45,6 +45,7 @@ use App\Models\ResultAction;
 use App\Models\LeadResultCode;
 use App\Models\LeadStatus;
 use App\Models\LeadCycle;
+use App\Http\Controllers\CustomerController;
 
 class LeadController  extends Controller
 {
@@ -52,13 +53,15 @@ class LeadController  extends Controller
     protected $emailService;
     protected $smsService;
     protected $user_service;
+    protected $cs_controller;
 
-    public function __construct(LeadService  $leadService, EmailService $emailService, SmsService $smsService, UserService $user_service)
+    public function __construct(LeadService  $leadService, EmailService $emailService, SmsService $smsService, UserService $user_service, CustomerController $cs_controller)
     {
         $this->leadService = $leadService;
         $this->user_service = $user_service;
         $this->emailService = $emailService;
         $this->smsService = $smsService;
+        $this->cs_controller = $cs_controller;
     }
 
 
@@ -146,16 +149,40 @@ class LeadController  extends Controller
             $res_code->created_by = Auth::user()->id;
             $res_code->save();
 
-
-            // update in the cycle table
-
             # check rule in action => result_action
             
             $res_code = ResultCode::where('id', $request->result_codes_id)->first();
             $res_action = ResultAction::where('id', $res_code->result_action_id)->first();
             $user_list = User::where('user_type', '!=', 'admin')->pluck('id')->toArray();
 
-            
+            if($res_code->code=="SOLD") {
+                try{
+                    $lead = Lead::findOrFail($request->lead_id);
+                    $leadData = $lead;
+                    $lead->lead_status = "Sold";
+                    $lead->lead_rating = 10;
+                    $lead->update();
+                    
+
+                    ########## Add as customer ##########
+                    $customer_id = $this->cs_controller->generateRandomString();
+                    $data = new Customer();
+                    $data->lead_id = $request->lead_id;
+                    $data->customer_id = $customer_id;
+                    $data->first_name = $leadData->first_name;
+                    $data->last_name = $leadData->last_name;
+                    $data->phone = $leadData->phone;
+                    $data->email = $leadData->email;
+                    $data->product_id = null;
+                    $data->customer_listing_date = date("Y-m-d h:i:s");
+                    if($data->save()) {
+                        Helper::storeLog("Listed as a Customer ", "Customers", "Create Customer", $request->lead_id);
+                    }
+                    return redirect()->back()->with('success', 'Status changed successfully and listed as customer');
+                } catch(\Exception $e) {
+                    return redirect()->back()->with('error', $e->getMessage());
+                }
+            }
 
             if($res_action->rule_type=="Dead") {
 
@@ -165,7 +192,7 @@ class LeadController  extends Controller
                         try{
                             DB::select("UPDATE lead_cycle SET status='4' WHERE lead_id='{$request->lead_id}' AND status='1'");
                             $lead = Lead::findOrFail($request->lead_id);
-                            $lead->lead_status = "Lost";
+                            $lead->lead_status = "Dead";
                             $lead->update();
                         } catch(\Exception $e) {
                             return redirect()->back()->with('error', $e->getMessage());
@@ -1670,10 +1697,24 @@ class LeadController  extends Controller
         return redirect()->route('lead-status-list')->with('success', 'Status updated successfully.');
     }
 
-   public function leadCycleBroadcast()
-   {
-     $this->leadService->leadCycleBroadcast();
-   }
+    public function leadCycleBroadcast() {
+        $this->leadService->leadCycleBroadcast();
+    }
+
+    public function lead_distribution() {
+        $data['dist_list'] = LeadCycle::leftJoin('leads', 'lead_cycle.lead_id', '=', 'leads.id')
+        ->leftJoin('users', 'lead_cycle.user_id', '=', 'users.id')
+        ->select(
+            'lead_cycle.*',
+            'leads.first_name',
+            'leads.last_name',
+            'users.username',
+        )
+        ->whereIn('lead_cycle.status', [0,1,3])
+        ->orderBy('cycle_time', 'asc')
+        ->get();
+        return view('leads.lead_distribution', $data);
+    }
 
     
 }

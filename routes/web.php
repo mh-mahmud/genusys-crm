@@ -99,6 +99,8 @@ Route::group(['middleware' => ['auth']], function () {
 	// search lead on url
 	Route::get('/leads/phone/{phone?}', [LeadController::class, 'search_phone'])->name('search-by-phone');
 	Route::put('/leads/{id}/update-lead-profile-image', [LeadController::class, 'updateLeadProfileImage'])->name('update-lead-profile-image');
+	Route::get('/lead-distribution', [LeadController::class, 'lead_distribution'])->name('lead-distribution');
+	Route::get('/accept-distribution-lead/{id}', [LeadController::class, 'accept_distribution_lead'])->name('accept-distribution-lead');
 	
 
 	//Route::get('/leads/add', 'LeadController@add')->name('leads.add');
