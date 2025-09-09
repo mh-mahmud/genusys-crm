@@ -32,15 +32,16 @@ class LeadService
 	
 	public function getAllLeads() {
         //  return Lead::with('leadsForm:form_id,form_name')->where('lead_rating', '=', null)->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
-        $query = Lead::where('lead_rating', '!=', '10');
+        //$query = Lead::with('leadsForm:form_id,form_name')->where('lead_rating', '=', null);
+        $query = Lead::with('leadsForm:form_id,form_name')
+                 ->where(function($q) {
+                     $q->whereNull('lead_rating')
+                       ->orWhere('lead_rating', '!=', 10);
+                 });
         if (!Auth::user()->hasPermission('can-see-leads')) {
-            // $query->where('created_by', Auth::id());
-            $query->where('assigned_to', Auth::id());
+            $query->where('created_by', Auth::id());
+            $query->orwhere('assigned_to', Auth::id());
         }
-
-        // $sql = $query->toSql();
-
-        // dd($sql);
 
         return $query->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
 
