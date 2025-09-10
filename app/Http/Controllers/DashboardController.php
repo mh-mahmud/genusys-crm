@@ -36,10 +36,12 @@ class DashboardController extends Controller
         $data['invoice_count'] = Invoice::where('invoice_status', 'Unpaid')->count();
         $user_id = Auth::user()->id;
         if (Auth()->user()->user_type == 'admin') {
-            $data['lead_list'] = Lead::orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'email', 'phone', 'gender', 'age', 'lead_source']);
+            $data['lead_list'] = Lead::with('assigned_name')->orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'middlename', 'last_name', 'email', 'phone', 'gender', 'age', 'lead_source', 'lead_status', 'assigned_to']);
         } else {
-            $data['lead_list'] = Lead::where('created_by', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'email', 'phone', 'gender', 'age', 'lead_source']);
+            $data['lead_list'] = Lead::with('assigned_name')->where('created_by', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get(['id', 'first_name', 'middlename', 'last_name', 'email', 'phone', 'gender', 'age', 'lead_source', 'lead_status', 'assigned_to']);
         }
+
+        // dd($data);
 
         $invoice_query = Invoice::join('customers', 'invoices.customer_id', '=', 'customers.id')
             ->join('leads', 'customers.lead_id', '=', 'leads.id')
