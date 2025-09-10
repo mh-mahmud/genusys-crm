@@ -66,6 +66,11 @@ class Lead extends Model
         return $this->hasOne(User::class, 'id', 'created_by');
     }
 
+    public function assigned_name(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'assigned_to');
+    }
+
     public function updated_name(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'updated_by');
