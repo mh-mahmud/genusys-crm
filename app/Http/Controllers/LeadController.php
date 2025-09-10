@@ -273,6 +273,7 @@ class LeadController  extends Controller
             $res_code->updated_by = Auth::user()->id;
             $res_code->updated_at = date("Y-m-d H:i:s");
             $res_code->save();
+            Helper::storeLog("Lead assigned successfully", "Lead", "Assign Lead",$res_code->id);
             return redirect()->back()->with('success', 'Lead assigned successfully.');
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Error occurred while retrieving data.']);
