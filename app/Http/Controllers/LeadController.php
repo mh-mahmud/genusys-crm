@@ -224,7 +224,7 @@ class LeadController  extends Controller
 
                         
                         $cycle->lead_id = $request->lead_id;
-                        $cycle->user_id = $user_list[0];
+                        // $cycle->user_id = $user_list[0];
                         $cycle->no_of_attempt = $res_action->num_attempts;
                         $cycle->feedback = $res_action->rule_description;
                         $cycle->save();
@@ -1715,6 +1715,35 @@ class LeadController  extends Controller
         ->get();
         return view('leads.lead_distribution', $data);
     }
+
+
+    public function accept_distribution_lead($id) {
+
+        if(Auth::user()->user_type=='admin') {
+            return redirect()->back()->with('error', 'Admin can not take any lead');
+        }
+
+        // chk current status. if any agent take this lead, send to back route
+        $chk_data = LeadCycle::findOrFail($id);
+        // dd($chk_data->lead_id);
+        if($chk_data->user_id) {
+            return redirect()->back()->with('error', 'This lead already taken by another user. Please try another lead');
+        }
+
+        // updtae cycle table
+        $cycle = LeadCycle::findOrFail($id);
+        $cycle->user_id = Auth::user()->id;
+        $cycle->status = 4;
+        $cycle->no_of_attempt = $cycle->no_of_attempt - 1;
+        $cycle->save();
+
+        // update lead table and then redirect to the lead details
+        $lead = Lead::findOrFail($cycle->lead_id);
+        $lead->assigned_to = Auth::user()->id;
+        $lead->save();
+        return redirect()->route('lead-show', ['id' => $cycle->lead_id])->with('success', 'This lead already taken by another user. Please try another lead');
+        
+    } 
 
     
 }

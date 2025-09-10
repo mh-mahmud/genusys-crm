@@ -949,8 +949,11 @@ class LeadService
                             ->get();
             foreach ($leads as $lead) {
                 $lead->update(['status' => 2]);
-                Lead::where('id', $lead->lead_id)
-                    ->update(['assigned_to' => $lead->user_id]);
+
+                # As per Masud vai, from `leads` table `assigned_to` field will be blanked
+                // Lead::where('id', $lead->lead_id)->update(['assigned_to' => $lead->user_id]);
+                Lead::where('id', $lead->lead_id)->update(['assigned_to' => null]);
+
                 $notificationArr =  [
                                         "notify_msg" => "New lead Assigned",
                                         "notify_by"    => $lead->user_id

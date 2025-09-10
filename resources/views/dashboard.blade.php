@@ -937,7 +937,8 @@
                                             {{--<th class="min-w-120px th-data">Priority</th>
                                             <th class="min-w-120px th-data">No of Attempt</th>--}}
                                             <th class="min-w-150px th-data">Cycle Time</th>
-                                            <th class="min-w-120px th-data">Status</th>
+                                            <!-- <th class="min-w-120px th-data">Status</th> -->
+                                            <th class="min-w-120px th-data">Action</th>
 
                                         </tr>
                                         </thead>
@@ -969,14 +970,6 @@
                                                     <div class="d-flex justify-content-start flex-column">
                                                         <span class="text-dark fw-bold fs-6">{{ $val->no_of_attempt }}</span>
                                                     </div>
-                                                </td>--}}
-
-                                                 <td class="text-center">
-                                                    <div class="d-flex flex-column w-100 me-2">
-                                                        <div class="d-flex flex-stack mb-2">
-                                                            <span class="text-muted me-2 fs-7 fw-bold">{{ $val->cycle_time }}</span>
-                                                        </div>
-                                                    </div>
                                                 </td>
 
                                                 <td class="text-center">
@@ -991,8 +984,25 @@
                                                             @endif
                                                         </span>
                                                     </div>
+                                                </td>--}}
+
+                                                 <td class="text-center">
+                                                    <div class="d-flex flex-column w-100 me-2">
+                                                        <div class="d-flex flex-stack mb-2">
+                                                            <span class=" me-2 fs-7 fw-bold">{{ $val->cycle_time }}</span>
+                                                        </div>
+                                                    </div>
                                                 </td>
 
+                                                
+                                                <td>
+                                                    <div class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
+                                                            
+                                                        <a title="Take This Lead?" href="{{ route('accept-distribution-lead', $val->id) }}" class="btn btn-success btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                            <i class="fa fa-check"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
 
                                             </tr>
                                         @endforeach
