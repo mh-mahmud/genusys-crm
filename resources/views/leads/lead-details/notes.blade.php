@@ -18,7 +18,7 @@
                                     <label class="form-label fw-bolder text-dark">Write a Note</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <textarea min="10" class="form-control form-control-sm form-control-solid" name="lead_notes" rows="3">{{ old('lead_notes') }}</textarea>
+                                    <textarea min="10" class="form-control form-control-sm form-control-solid" name="lead_notes" rows="3"  @if($lead->lead_status === 'Sold') disabled @endif>{{ old('lead_notes') }}</textarea>
                                     <!--end::Input-->
                                     @if ($errors->has('lead_notes'))
                                         <span class="text-danger">{{ $errors->first('lead_notes') }}</span>
@@ -45,7 +45,7 @@
                                     @endif
                                 </div>
                             </div> -->
-                            <div class="col-md-12">
+                            <!-- <div class="col-md-12">
                             <div class="fv-row mb-3">
                                 <label class="form-label fw-bolder text-dark">Result Code</label>
                                 <select id="result_code_select"
@@ -64,7 +64,30 @@
                                     <span class="text-danger">{{ $errors->first('result_codes_id') }}</span>
                                 @endif
                             </div>
+                        </div> -->
+
+                        <div class="col-md-12">
+                            <div class="fv-row mb-3">
+                                <label class="form-label fw-bolder text-dark">Result Code</label>
+                                <select id="result_code_select"
+                                    class="form-control form-control-sm form-control-solid"
+                                    name="result_codes_id"
+                                    @if($lead->lead_status === 'Sold') disabled @endif>
+                                    <option value="" disabled {{ old('result_codes_id') == '' ? 'selected' : '' }}>Select Code</option>
+                                    @foreach ($lead_result_codes_note as $result_code)
+                                        <option value="{{ $result_code->id }}"
+                                            data-rule-type="{{ $result_code->resultAction->rule_type ?? '' }}"
+                                            {{ old('result_codes_id') == $result_code->id ? 'selected' : '' }}>
+                                            {{ $result_code->title }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('result_codes_id'))
+                                    <span class="text-danger">{{ $errors->first('result_codes_id') }}</span>
+                                @endif
+                            </div>
                         </div>
+                        
 
                       
                         <div class="col-md-12" id="schedule_field" style="display:none;">
@@ -81,7 +104,7 @@
                         </div>
 
                             <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                <button type="submit" class="btn btn-primary" id="">Submit</button>
+                                <button type="submit" class="btn btn-primary"  @if($lead->lead_status === 'Sold') disabled @endif id="">Submit</button>
                             </div>
                         </form>
 

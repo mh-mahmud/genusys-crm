@@ -29,23 +29,26 @@ class LeadService
             return Lead::with('leadsForm:form_id,form_name')->where('lead_rating', '!=', 10)->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
         }
     }
-	
-	public function getAllLeads() {
-        //  return Lead::with('leadsForm:form_id,form_name')->where('lead_rating', '=', null)->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
-        //$query = Lead::with('leadsForm:form_id,form_name')->where('lead_rating', '=', null);
+
+    public function getAllLeads()
+    {
         $query = Lead::with('leadsForm:form_id,form_name')
-                 ->where(function($q) {
-                     $q->whereNull('lead_rating')
-                       ->orWhere('lead_rating', '!=', 10);
-                 });
+            ->where(function ($q) {
+                $q->where('lead_rating', '!=', 10)
+                    ->orWhere('lead_status', '!=', 'Sold');
+            });
         if (!Auth::user()->hasPermission('can-see-leads')) {
-            $query->where('created_by', Auth::id());
-            $query->orwhere('assigned_to', Auth::id());
+            $query->where(function ($q) {
+                $q->where('created_by', Auth::id())
+                    ->orWhere('assigned_to', Auth::id());
+            });
         }
 
-        return $query->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
-
+        return $query->orderBy('id', 'desc')
+            ->paginate(config('constants.ROW_PER_PAGE'));
     }
+
+
 
     public function getTotalLeads()
     {

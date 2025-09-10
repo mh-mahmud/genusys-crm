@@ -23,6 +23,7 @@ class CustomerService
 
         $lead = Lead::findOrFail($request->lead_id);
         $lead->lead_rating = 10;
+        $lead->lead_status = 'Sold';
         $lead->save();
 
 
