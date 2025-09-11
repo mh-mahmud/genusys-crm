@@ -29,18 +29,26 @@ class LeadService
             return Lead::with('leadsForm:form_id,form_name')->where('lead_rating', '!=', 10)->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
         }
     }
-	
-	public function getAllLeads() {
-        //  return Lead::with('leadsForm:form_id,form_name')->where('lead_rating', '=', null)->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
-        $query = Lead::with('leadsForm:form_id,form_name')->where('lead_rating', '=', null);
+
+    public function getAllLeads()
+    {
+        $query = Lead::with('leadsForm:form_id,form_name')
+            ->where(function ($q) {
+                $q->where('lead_rating', '!=', 10)
+                    ->orWhere('lead_status', '!=', 'Sold');
+            });
         if (!Auth::user()->hasPermission('can-see-leads')) {
-            $query->where('created_by', Auth::id());
-            $query->orwhere('assigned_to', Auth::id());
+            $query->where(function ($q) {
+                $q->where('created_by', Auth::id())
+                    ->orWhere('assigned_to', Auth::id());
+            });
         }
 
-        return $query->orderBy('id', 'desc')->paginate(config('constants.ROW_PER_PAGE'));
-
+        return $query->orderBy('id', 'desc')
+            ->paginate(config('constants.ROW_PER_PAGE'));
     }
+
+
 
     public function getTotalLeads()
     {
@@ -578,7 +586,7 @@ class LeadService
 
             // remove unwanted columns
             $filteredColumns = array_filter($columns, function ($col) {
-                return !in_array($col, ['id','created_by', 'created_at', 'updated_at']);
+                return !in_array($col, ['id','created_by', 'created_at', 'updated_at', 'driver_info_id', 'vehicle_info_id']);
             });
             
 
@@ -656,7 +664,7 @@ class LeadService
 
             // remove unwanted columns
             $filteredColumns = array_filter($columns, function ($col) {
-                return !in_array($col, ['id','created_by', 'created_at', 'updated_at']);
+                return !in_array($col, ['id','created_by', 'created_at', 'updated_at','driver_info_id', 'vehicle_info_id']);
             });
             
 
@@ -944,8 +952,11 @@ class LeadService
                             ->get();
             foreach ($leads as $lead) {
                 $lead->update(['status' => 2]);
-                Lead::where('id', $lead->lead_id)
-                    ->update(['assigned_to' => $lead->user_id]);
+
+                # As per Masud vai, from `leads` table `assigned_to` field will be blanked
+                // Lead::where('id', $lead->lead_id)->update(['assigned_to' => $lead->user_id]);
+                Lead::where('id', $lead->lead_id)->update(['assigned_to' => null]);
+
                 $notificationArr =  [
                                         "notify_msg" => "New lead Assigned",
                                         "notify_by"    => $lead->user_id

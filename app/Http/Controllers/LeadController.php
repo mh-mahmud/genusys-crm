@@ -45,6 +45,7 @@ use App\Models\ResultAction;
 use App\Models\LeadResultCode;
 use App\Models\LeadStatus;
 use App\Models\LeadCycle;
+use App\Http\Controllers\CustomerController;
 
 class LeadController  extends Controller
 {
@@ -52,13 +53,15 @@ class LeadController  extends Controller
     protected $emailService;
     protected $smsService;
     protected $user_service;
+    protected $cs_controller;
 
-    public function __construct(LeadService  $leadService, EmailService $emailService, SmsService $smsService, UserService $user_service)
+    public function __construct(LeadService  $leadService, EmailService $emailService, SmsService $smsService, UserService $user_service, CustomerController $cs_controller)
     {
         $this->leadService = $leadService;
         $this->user_service = $user_service;
         $this->emailService = $emailService;
         $this->smsService = $smsService;
+        $this->cs_controller = $cs_controller;
     }
 
 
@@ -126,13 +129,14 @@ class LeadController  extends Controller
         }
         $users = User::where('user_type', 'user')->where('status', 1)->get(['id', 'user_id', 'first_name', 'last_name', 'email', 'phone_number']);
         $lead_result_codes = ResultCode::select('id', 'code', 'title')->get();
+        $status_list = LeadStatus::where('status', 1)->get(['status_name']);
 
-        return view('leads.create', compact('formName', 'fieldsByTable', 'old_phone', 'users', 'lead_result_codes'));
+        return view('leads.create', compact('formName', 'fieldsByTable', 'old_phone', 'users', 'lead_result_codes', 'status_list'));
     }
 
     public function save_lead_note(Request $request) {
         $request->validate([
-            'lead_notes' => 'required|string|max:191',
+            //'lead_notes' => 'required|string|max:191',
             'result_codes_id' => 'required'
         ]);
 
@@ -145,16 +149,40 @@ class LeadController  extends Controller
             $res_code->created_by = Auth::user()->id;
             $res_code->save();
 
-
-            // update in the cycle table
-
             # check rule in action => result_action
             
             $res_code = ResultCode::where('id', $request->result_codes_id)->first();
             $res_action = ResultAction::where('id', $res_code->result_action_id)->first();
             $user_list = User::where('user_type', '!=', 'admin')->pluck('id')->toArray();
 
-            
+            if($res_code->code=="SOLD") {
+                try{
+                    $lead = Lead::findOrFail($request->lead_id);
+                    $leadData = $lead;
+                    $lead->lead_status = "Sold";
+                    $lead->lead_rating = 10;
+                    $lead->update();
+                    
+
+                    ########## Add as customer ##########
+                    $customer_id = $this->cs_controller->generateRandomString();
+                    $data = new Customer();
+                    $data->lead_id = $request->lead_id;
+                    $data->customer_id = $customer_id;
+                    $data->first_name = $leadData->first_name;
+                    $data->last_name = $leadData->last_name;
+                    $data->phone = $leadData->phone;
+                    $data->email = $leadData->email;
+                    $data->product_id = null;
+                    $data->customer_listing_date = date("Y-m-d h:i:s");
+                    if($data->save()) {
+                        Helper::storeLog("Listed as a Customer ", "Customers", "Create Customer", $request->lead_id);
+                    }
+                    return redirect()->back()->with('success', 'Status changed successfully and listed as customer');
+                } catch(\Exception $e) {
+                    return redirect()->back()->with('error', $e->getMessage());
+                }
+            }
 
             if($res_action->rule_type=="Dead") {
 
@@ -164,7 +192,7 @@ class LeadController  extends Controller
                         try{
                             DB::select("UPDATE lead_cycle SET status='4' WHERE lead_id='{$request->lead_id}' AND status='1'");
                             $lead = Lead::findOrFail($request->lead_id);
-                            $lead->lead_status = "Lost";
+                            $lead->lead_status = "Dead";
                             $lead->update();
                         } catch(\Exception $e) {
                             return redirect()->back()->with('error', $e->getMessage());
@@ -196,7 +224,7 @@ class LeadController  extends Controller
 
                         
                         $cycle->lead_id = $request->lead_id;
-                        $cycle->user_id = $user_list[0];
+                        // $cycle->user_id = $user_list[0];
                         $cycle->no_of_attempt = $res_action->num_attempts;
                         $cycle->feedback = $res_action->rule_description;
                         $cycle->save();
@@ -215,6 +243,7 @@ class LeadController  extends Controller
                     $lead_data = Lead::where('id', $request->lead_id)->first();
                     $schedule = new ScheduleCall();
                     $schedule->lead_id = $request->lead_id;
+                    $schedule->schedule_time = $request->schedule_time;
                     $schedule->user_id = Auth::user()->id;
                     $schedule->phone_number = $lead_data->phone;
                     $schedule->home_phone = $lead_data->home_phone;
@@ -244,6 +273,7 @@ class LeadController  extends Controller
             $res_code->updated_by = Auth::user()->id;
             $res_code->updated_at = date("Y-m-d H:i:s");
             $res_code->save();
+            Helper::storeLog("Lead assigned successfully", "Lead", "Assign Lead",$res_code->id);
             return redirect()->back()->with('success', 'Lead assigned successfully.');
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Error occurred while retrieving data.']);
@@ -321,6 +351,9 @@ class LeadController  extends Controller
 
         $lead = $this->leadService->getLeadById($id);
         $lead_result_codes = ResultCode::where('selectable', 'Yes')->get(['id', 'code', 'title']);
+        $lead_result_codes_note = ResultCode::where('selectable', 'Yes')
+        ->with('resultAction')
+        ->get(['id', 'code', 'title', 'result_action_id']);
         //dd($lead_result_codes);
         $lead_data_id = $id;
         $is_customer = Customer::where('lead_id', $id)->first();
@@ -434,7 +467,7 @@ class LeadController  extends Controller
         // dd($notelogs[0]->lead_res_code->title);
 
         // dd($lead->created_name->first_name);
-        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates', 'products', 'customers','lead_data_id','lead_customer','latestMeeting', 'menu_access', 'rate_api_data', 'lead_result_codes', 'notelogs', 'users'));
+        return view('leads.show', compact('lead', 'tableData','fields', 'customer_id', 'emails', 'sms', 'meetings', 'proposals', 'logs', 'invoices', 'productSpecifications','totalWorkOrderNumber','totalWorkOrderValue','totalAmcEffectiveAmount','totalAmcRate','invoicesGroupedByPsId', 'templates', 'sms_templates', 'products', 'customers','lead_data_id','lead_customer','latestMeeting', 'menu_access', 'rate_api_data', 'lead_result_codes', 'notelogs', 'users', 'lead_result_codes_note'));
     }
 
 
@@ -709,9 +742,10 @@ class LeadController  extends Controller
             $tableName = $field->table_name;
             $tableData[$tableName] = DB::table($tableName)->where('lead_id', $lead->id)->get();
         }
+        $status_list = LeadStatus::where('status', 1)->get(['status_name']);
 
 
-        return view('leads.edit', compact('lead', 'formName', 'tableData'));
+        return view('leads.edit', compact('lead', 'formName', 'tableData', 'status_list'));
     }
 
 
@@ -1664,10 +1698,53 @@ class LeadController  extends Controller
         return redirect()->route('lead-status-list')->with('success', 'Status updated successfully.');
     }
 
-   public function leadCycleBroadcast()
-   {
-     $this->leadService->leadCycleBroadcast();
-   }
+    public function leadCycleBroadcast() {
+        $this->leadService->leadCycleBroadcast();
+    }
+
+    public function lead_distribution() {
+        $data['dist_list'] = LeadCycle::leftJoin('leads', 'lead_cycle.lead_id', '=', 'leads.id')
+        ->leftJoin('users', 'lead_cycle.user_id', '=', 'users.id')
+        ->select(
+            'lead_cycle.*',
+            'leads.first_name',
+            'leads.last_name',
+            'users.username',
+        )
+        ->whereIn('lead_cycle.status', [0,1,3])
+        ->orderBy('cycle_time', 'asc')
+        ->get();
+        return view('leads.lead_distribution', $data);
+    }
+
+
+    public function accept_distribution_lead($id) {
+
+        if(Auth::user()->user_type=='admin') {
+            return redirect()->back()->with('error', 'Admin can not take any lead');
+        }
+
+        // chk current status. if any agent take this lead, send to back route
+        $chk_data = LeadCycle::findOrFail($id);
+        // dd($chk_data->lead_id);
+        if($chk_data->user_id) {
+            return redirect()->back()->with('error', 'This lead already taken by another user. Please try another lead');
+        }
+
+        // updtae cycle table
+        $cycle = LeadCycle::findOrFail($id);
+        $cycle->user_id = Auth::user()->id;
+        $cycle->status = 4;
+        $cycle->no_of_attempt = $cycle->no_of_attempt - 1;
+        $cycle->save();
+
+        // update lead table and then redirect to the lead details
+        $lead = Lead::findOrFail($cycle->lead_id);
+        $lead->assigned_to = Auth::user()->id;
+        $lead->save();
+        return redirect()->route('lead-show', ['id' => $cycle->lead_id])->with('success', 'This lead already taken by another user. Please try another lead');
+        
+    } 
 
     
 }

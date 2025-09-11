@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @php
     use Carbon\Carbon;
+    $notShowTable = ["vehicle_attributes", "driver_attributes"]
 @endphp
 
 @section('content')
@@ -55,7 +56,7 @@
     <!--**********************************
                    Tables View
          ***********************************-->
-    <div class="container-fluid">
+    <div class="container-fluid container">
         @if (session('success'))
             <script>
                 Swal.fire({
@@ -326,8 +327,17 @@
                                    data-bs-toggle="tab" href="#g_lead_table" data-tab="g_lead_table"
                                    id="g_lead_table_tab"
                                    data-bs-target="#g_lead_table" role="tab" aria-controls="g_lead_table"
-                                   aria-selected="true">Lead Table</a>
+                                   aria-selected="true">Custom Data</a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link "
+                                   data-bs-toggle="tab" href="#g_RAKIB_lead_table2" data-tab="g_RAKIB_lead_table2"
+                                   id="g_RAKIB_lead_table_tab2"
+                                   data-bs-target="#g_RAKIB_lead_table2" role="tab" aria-controls="g_RAKIB_lead_table2"
+                                   aria-selected="true">Notes/Reminders</a>
+                            </li>
+
                             <!-- <li class="nav-item">
                                 <a class="nav-link @if(session('success') || session('error'))
                                 active
@@ -340,6 +350,7 @@
                                    aria-selected="true">Dashboard</a>
                             </li> -->
 
+                            @if(in_array("email_module", $menu_access))
                             <li class="nav-item">
                                 <a class="nav-link {{ session('active_tab') === 'g_lead_dashboard_tab' ? 'active' : '' }}"
                                    data-bs-toggle="tab" href="#g_lead_dashboard" data-tab="g_lead_dashboard"
@@ -347,6 +358,7 @@
                                    data-bs-target="#g_lead_dashboard" role="tab" aria-controls="g_lead_dashboard"
                                    aria-selected="true">Dashboard</a>
                             </li>
+                            @endif
 
                             @if(in_array("email_module", $menu_access))
                             <li class="nav-item">
@@ -438,7 +450,7 @@
 
                             <div class="card-header bg-light bd-cyan align-items-center">
                                 <div class="card-title">
-                                    <h4>Lead Details</h4>
+                                    <h4>Client Contact Information</h4>
                                 </div>
                                 <a href="{{ route('lead-edit', $lead_data_id) }}" class="btn btn-sm btn-success"
                                    id="kt_toolbar_primary_button">
@@ -465,44 +477,58 @@
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Form Name</span>
-                                        <span>{{ $lead->leadsForm?->form_name ?? '' }}</span>
+                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">FORM NAME</span>
+                                        <span style="font-weight:bold">{{ $lead->leadsForm?->form_name ?? '' }}</span>
                                     </div>
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">First Name</span>
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">First Name</span>
                                         <span>{{ $lead->first_name }}</span>
                                     </div>
+
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Last Name</span>
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Middle Name</span>
+                                        <span>{{ $lead->middlename }}</span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Last Name</span>
                                         <span>{{ $lead->last_name }}</span>
                                     </div>
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Email</span>
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Email</span>
                                         <span>{{ $lead->email }}</span>
                                     </div>
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Phone</span>
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Cell Phone</span>
                                         <span>{{ $lead->phone }}</span>
                                     </div>
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Alternative Number</span>
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Home Phone</span>
+                                        <span>{{ $lead->home_phone }}</span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Work Phone</span>
+                                        <span>{{ $lead->work_phone }}</span>
+                                    </div>
+
+                                    {{--
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Alternative Number</span>
                                         <span>{{ $lead->alternative_number }}</span>
                                     </div>
+
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
                                         class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Contact Person Name</span>
                                         <span>{{ $lead->contact_person_name }}</span>
                                     </div>
+                                    --}}
 
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
@@ -511,11 +537,12 @@
                                         <span>{{ $lead->address }}</span>
                                     </div>
 
+                                    {{--
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
-                                    <span
-                                        class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Company</span>
+                                    <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Company</span>
                                         <span>{{ $lead->company }}</span>
                                     </div>
+                                    --}}
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Status</span>
@@ -534,11 +561,12 @@
                                         @endif
                                     </div>
 
-                                    {{--<div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
+                                    {{--
+                                    <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
                                         class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Rating</span>
                                         <span>{{ $lead->lead_rating }}</span>
-                                    </div>--}}
+                                    </div>
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
@@ -557,6 +585,7 @@
                                         class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Industry</span>
                                         <span>{{ $lead->industry }}</span>
                                     </div>
+                                    --}}
 
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
@@ -571,11 +600,13 @@
                                     </span>
                                     </div>
 
+                                    {{--
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
                                         class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Street</span>
                                         <span>{{ $lead->street }}</span>
                                     </div>
+                                    --}}
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
@@ -601,11 +632,13 @@
                                         <span>{{ $lead->country }}</span>
                                     </div>
 
+                                    {{--
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
                                         class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Lead Start Date</span>
                                         <span>{{ $lead->lead_start_date ? \Carbon\Carbon::parse($lead->lead_start_date)->format('d-m-Y') : '' }}</span>
                                     </div>
+                                    --}}
 
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                     <span
@@ -613,6 +646,7 @@
                                         <span>{{ $lead->lead_notes }}</span>
                                     </div>
 
+                                    {{--
                                     <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                         <span
                                             class="fs-7 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">Profile Image</span>
@@ -621,6 +655,7 @@
                                             <img src="{{ asset('uploads/leads/' . $lead->profile_image) }}" width="150">
                                         @endif
                                     </div>
+                                    --}}
                                 </div>
                             </div>
                         </div>
@@ -631,6 +666,7 @@
                         <div class="card">
                             <div class="card-body">
 
+                                <div class="row mb-1">
                                 @foreach ($tableData as $tableName => $data)
                                     <!-- @if (!empty($data))
                                         -->
@@ -690,14 +726,34 @@
                                                 @endforeach
                                             @endforeach
 
-                                            <div class="row mb-1">
+                                            
                                                 
                                                 @foreach ($columnSizes as $formSize)
                                                     
                                                     <div class="{{ $formSize }}">
-                                                        <div class="fs-3 {{ $formSize }}" style="width:100%;border:1px solid #DDD;padding:7px;margin-bottom:10px;margin-top:30px;background-color:#54B4D3;">{{ ucwords(str_replace('_', ' ', $tableName)) }}</div>
-                                                        <div class="g-lead-details mb-5" style="columns: {{ $columnSize }}">
+                                                        <div class="fs-3 {{ $formSize }}" style="width:100%;border:1px solid #DDD;padding:7px;margin-bottom:10px;margin-top:30px;background-color:#54B4D3;">
+                                                        {{ ucwords(str_replace('_', ' ', $tableName)) }}
 
+                                                        <a href="{{ route('lead-edit-tabledata', ['tableName' => $tableName, 'leadId' => $row->id]) }}"
+                                                        class="btn btn-icon btn-sm btn-success">
+                                                        <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
+                                                        <span class="svg-icon svg-icon-3">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none">
+                                                        <path opacity="0.3"
+                                                        d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z"
+                                                        fill="black"/>
+                                                        <path
+                                                        d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z"
+                                                        fill="black"/>
+                                                        </svg>
+                                                        </span>
+                                                        <!--end::Svg Icon-->
+                                                        </a>
+                                                        </div>
+
+
+                                                        <div class="g-lead-details mb-5" style="columns: {{ $columnSize }}">
                                                             @foreach ($formData[$formSize] as $dataItem)
                                                                 <div class="d-flex align-items-center gap-2 bg-light p-1 mb-1">
                                                                     <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px flex-shrink-0">{{ ucwords(str_replace('_', ' ', $dataItem['key'])) }}</span>
@@ -716,14 +772,15 @@
                                                         </div>
                                                     </div>
                                                 @endforeach
-                                            </div>
+                                            
                                         @endif
                                     @endif
                                 @endforeach
+                                </div>
 
                                 {{-- Display table_view after form_view --}}
                                 @foreach ($tableData as $tableName => $data)
-                                    @if (!empty($data))
+                                    @if (!empty($data) && !in_array($tableName, $notShowTable))
                                         @php
                                             $field = $fields->firstWhere('table_name', $tableName);
                                             $viewType = $field->view_type ?? 'table_view'; // Default to table_view if view_type is not set
@@ -747,11 +804,20 @@
                                                         <tr class="fw-bolder text-muted bg-light bd-cyan">
                                                             @if ($data->isNotEmpty() && $data->first() !== null)
                                                                 <th class="ps-4 min-w-50px">SL</th>
-                                                                @foreach ($data->first() as $key => $value)
+                                                                <!-- @foreach ($data->first() as $key => $value)
                                                                     @if (!in_array($key, ['id', 'lead_id', 'form_id', 'created_by', 'created_at', 'updated_at']))
                                                                         <th class="ps-4 min-w-150px">{{ ucwords(str_replace('_', ' ', $key)) }}</th>
                                                                     @endif
+                                                                @endforeach -->
+                                                                @php $count = 0; @endphp
+                                                                @foreach ($data->first() as $key => $value)
+                                                                    @if (!in_array($key, ['id', 'lead_id', 'form_id', 'created_by', 'created_at', 'updated_at']))
+                                                                        @php $count++; @endphp
+                                                                        @if($count > 5) @break @endif
+                                                                        <th class="ps-4 min-w-150px">{{ ucwords(str_replace('_', ' ', $key)) }}</th>
+                                                                    @endif
                                                                 @endforeach
+
                                                                 <th class="ps-4 min-w-150px">Created By</th>
                                                                 <th class="min-w-50px text-end pe-4">Action</th>
                                                             @else
@@ -761,15 +827,26 @@
                                                         </thead>
                                                         <tbody>
                                                         @if ($data->isNotEmpty())
+
                                                             @foreach ($data as $index => $row)
+                                                            @php
+                                                            $i=1;
+                                                            @endphp
                                                                 <tr>
                                                                     <td class="ps-4 text-dark fs-6">{{ $index + 1 }}</td>
+                                                                    @php $i = 0; @endphp
                                                                     @foreach ($row as $key => $value)
                                                                         @if (!in_array($key, ['id', 'lead_id', 'form_id','created_by', 'created_at', 'updated_at']))
                                                                             @php
+                                                                                //if($i==70) {
+                                                                                    //continue;
+                                                                                //}
+                                                                                 $i++;
+                                                                                if ($i > 5) break; 
                                                                                 $field = $fields->where('field_name', $key)->first();
                                                                                 $isFile = $field && $field->field_value === 'file';
                                                                                 $isDate = $field && $field->field_value === 'date';
+                                                                                //$i++;
                                                                             @endphp
 
                                                                             @if ($isFile)
@@ -792,20 +869,34 @@
                                                                     @endforeach
                                                                     <td class="ps-5 text-dark fs-6">{{ $row->created_by }}</td>
                                                                     <td class="d-flex align-items-center justify-content-end gap-1">
+
+                                                                    <a href="{{ route('lead-show-table-details', ['tableName' => $tableName, 'leadId' => $row->id]) }}" class="btn btn-icon btn-sm btn-success btn-show-details">
+
+                                                                       <span class="svg-icon svg-icon-3">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+                                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                                    <rect x="0" y="0" width="24" height="24" />
+                                                                                    <path d="M3,12 C3,12 5.45454545,6 12,6 C16.9090909,6 21,12 21,12 C21,12 16.9090909,18 12,18 C5.45454545,18 3,12 3,12 Z" fill="black" fill-rule="nonzero" opacity="0.7" />
+                                                                                    <path d="M12,15 C10.3431458,15 9,13.6568542 9,12 C9,10.3431458 10.3431458,9 12,9 C13.6568542,9 15,10.3431458 15,12 C15,13.6568542 13.6568542,15 12,15 Z" fill="black" opacity="0.7" />
+                                                                                </g>
+                                                                            </svg>
+                                                                        </span>
+                                                                        <!--end::Svg Icon-->
+                                                                        </a>
                                                                         <a href="{{ route('lead-edit-tabledata', ['tableName' => $tableName, 'leadId' => $row->id]) }}"
                                                                            class="btn btn-icon btn-sm btn-success">
                                                                             <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
-                                                                            <span class="svg-icon svg-icon-3">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                             viewBox="0 0 24 24" fill="none">
-                                                            <path opacity="0.3"
-                                                                  d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z"
-                                                                  fill="black"/>
-                                                            <path
-                                                                d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z"
-                                                                fill="black"/>
-                                                        </svg>
-                                                    </span>
+                                                                        <span class="svg-icon svg-icon-3">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                                                viewBox="0 0 24 24" fill="none">
+                                                                                <path opacity="0.3"
+                                                                                    d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z"
+                                                                                    fill="black"/>
+                                                                                <path
+                                                                                    d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z"
+                                                                                    fill="black"/>
+                                                                            </svg>
+                                                                        </span>
                                                                             <!--end::Svg Icon-->
                                                                         </a>
                                                                         <form
@@ -819,25 +910,8 @@
                                                                                 <i class="bi bi-x p-0"></i>
                                                                             </button>
                                                                         </form>
-
-
                                                                     </td>
 
-
-                                                                    <!-- <td class="text-end pe-4">
-
-                                                    <a href="{{ route('lead-edit-tabledata', ['tableName' => $tableName, 'leadId' => $row->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-
-                                                        <span class="svg-icon svg-icon-3">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                                <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="black" />
-                                                                <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="black" />
-                                                            </svg>
-                                                        </span>
-
-                                                    </a>
-
-                                                </td> -->
                                                                 </tr>
                                                             @endforeach
                                                         @else
@@ -852,19 +926,238 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        <!--
-
-
-
-
-
-
-                                    @endif -->
+                                        
+                                    @endif
                                 @endforeach
+
+                                <!-- add api data -->
+                                <div class="mb-10 bg-light p-5 rounded-3">
+                                    <div class="d-flex justify-content-between align-items-center py-2">
+                                        <strong class="fs-5">Rate Analysis Data</strong>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table
+                                            class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                                            <thead>
+                                            <tr class="fw-bolder text-muted bg-light bd-cyan">
+                                                <th class="ps-4 min-w-50px">SL</th>
+                                                <th class="ps-4 min-w-150px">Company Name</th>
+                                                <th class="ps-4 min-w-150px">Term</th>
+                                                <th class="ps-4 min-w-150px">Down Payment</th>
+                                                <th class="ps-4 min-w-150px">Payment Amount</th>
+                                                <th class="ps-4 min-w-150px">Total Premium</th>
+                                                <th class="ps-4 min-w-150px">Purchased</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @if (!empty($rate_api_data))
+                                                @foreach ($rate_api_data as $index => $row)
+                                                    <tr>
+                                                        <td class="ps-4 text-dark fs-6">{{ $index + 1 }}</td>
+                                                        <td class="ps-4 text-dark fs-6">{{ $row->CompanyName }}</td>
+                                                        <td class="ps-4 text-dark fs-6">{{ $row->Term }}</td>
+                                                        <td class="ps-4 text-dark fs-6">{{ $row->DownPayment }}</td>
+                                                        <td class="ps-4 text-dark fs-6">{{ $row->PaymentAmount }}</td>
+                                                        <td class="ps-4 text-dark fs-6">{{ $row->TotalPremium }}</td>
+                                                        <td class="ps-4 text-dark fs-6">{{ ($row->Purchased==true) ? "Yes" : "No" }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td colspan="100%" class="text-center">No data available
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
 
                             </div>
                         </div>
                     </div>
+
+                    <!-- Notes/Reminders -->
+
+                    <div class="tab-pane fade" id="g_RAKIB_lead_table2" role="tabpanel" aria-labelledby="g_RAKIB_lead_table_tab2">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="row mb-1">
+                                    <div class="col-md-5" style="border:1px solid #ddd;">
+                                        <div class="row">
+                                            <h5 class="mb-2" style="border:1px solid #DDD;padding:7px;background-color:#54B4D3;color:#f7f7f7">Note Section</h5>
+                                            <form class="g-form w-100" action="{{ route('save-lead-note') }}" enctype="multipart/form-data" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="lead_id" value="{{ $lead->id }}">
+                                            <div class="col-md-12">
+                                                <div class="fv-row mb-3">
+                                                    <!--begin::Label-->
+                                                    <label class="form-label fw-bolder text-dark">Write a Note</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <textarea min="10" class="form-control form-control-sm form-control-solid" name="lead_notes" rows="3">{{ old('lead_notes') }}</textarea>
+                                                    <!--end::Input-->
+                                                    @if ($errors->has('lead_notes'))
+                                                    <span class="text-danger">{{ $errors->first('lead_notes') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Result Code</label>
+                                                    <select class="form-control form-control-sm form-control-solid" name="result_codes_id">
+                                                        <option value="" disabled {{ old('result_codes_id') == '' ? 'selected' : '' }}>Select Code</option>
+                                                        @foreach($lead_result_codes as $result_code)
+                                                        <option value="{{ $result_code->id }}" {{ old('result_codes_id') == $result_code->id ? 'selected' : '' }}>
+                                                            {{ $result_code->title }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @if ($errors->has('result_codes_id'))
+                                                    <span class="text-danger">{{ $errors->first('result_codes_id') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                                <button type="submit" class="btn btn-primary" id="">Submit</button>
+                                            </div>
+                                            </form>
+
+                                        </div>
+
+                                        
+                                    </div>
+
+                                    <div class="col-md-7">
+                                        <div class="mb-10 bg-light p-5 rounded-3">
+                                            <div class="d-flex justify-content-between align-items-center py-2">
+                                                <strong class="fs-5">Note Logs</strong>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table
+                                                    class="table table-sm table-condensed table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                                                    <thead>
+                                                    <tr class="fw-bolder text-muted bg-light bd-cyan">
+                                                        <th class="ps-4 min-w-50px">SL</th>
+                                                        <th class="ps-4 min-w-150px">Result Code</th>
+                                                        <th class="ps-4 min-w-150px">Notes</th>
+                                                        <th class="ps-4 min-w-150px">Created at</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @if (!empty($notelogs))
+                                                        @foreach ($notelogs as $index => $row)
+                                                            <tr>
+                                                                <td class="ps-4 text-dark fs-6">{{ $index + 1 }}</td>
+                                                                <td class="ps-4 text-dark fs-6">{{ $row->lead_res_code->title }}</td>
+                                                                <td class="ps-4 text-dark fs-6">{{ $row->lead_notes }}</td>
+                                                                <td class="ps-4 text-dark fs-6">{{ $row->created_at }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @else
+                                                        <tr>
+                                                            <td colspan="100%" class="text-center">No data available
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <!-- action information -->
+                                        <div class="mb-10 bg-light p-5 rounded-3">
+
+                                            <h5 class="mb-3" style="border:1px solid #DDD;padding:7px;background-color:#54B4D3;color:#f7f7f7">Action Information</h5>
+
+                                            {{--<div class="mb-5">
+                                                <h5 class="custom-bottom-border">Dates</h5>
+                                                <table class="custom-table">
+                                                        <tr>
+                                                            <td>Created</td>
+                                                            <td>{{ date("Y-m-d") }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Last modified</td>
+                                                            <td>Not yet quoted</td>
+                                                        </tr>
+                                                </table>
+                                            </div>--}}
+
+                                             <div class="mb-9">
+                                                <h5 class="custom-bottom-border">Producer Info</h5>
+                                                <form class="g-form w-100" action="{{ route('save-assign-lead') }}" enctype="multipart/form-data" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="lead_id" value="{{ $lead->id }}">
+                                                    <table class="custom-table">
+                                                            <tr>
+                                                                <td>Assigned To</td>
+                                                                <td>
+                                                                    <select class="form-control form-control-sm form-control-solid" name="assigned_to">
+                                                                        <option value="" {{ old('assigned_to') == '' ? 'selected' : '' }}>-- Select Lead --</option>
+                                                                        @foreach($users as $value)
+                                                                        <option value="{{ $value->id }}" {{ $lead->assigned_to == $value->id ? 'selected' : '' }}>
+                                                                            {{ $value->first_name . " " . $value->last_name }}
+                                                                        </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    @if ($errors->has('assigned_to'))
+                                                                    <span class="text-danger">{{ $errors->first('assigned_to') }}</span>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                            
+                                                            <tr>
+                                                                <td>Created by</td>
+                                                                <td>{{ @$lead->created_name->username }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Last modified</td>
+                                                                <td>{{ @$lead->updated_name->username }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Created at</td>
+                                                                <td>{{ $lead->created_at }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Updated at</td>
+                                                                <td>{{ $lead->updated_at }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Language</td>
+                                                                <td>{{ $lead->language }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Bound</td>
+                                                                <td></td>
+                                                            </tr>
+                                                                <td>Region</td>
+                                                                <td>None</td>
+                                                            </tr>
+                                                    </table>
+                                                    <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                                        <button type="submit" class="btn btn-primary" id="">Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- End notes or section -->
 
                     <!-- <div class="tab-pane fade show @if(session('success') || session('error'))
                         active
@@ -1549,7 +1842,7 @@
                                                                                                     <button
                                                                                                         type="submit"
                                                                                                         class="btn btn-primary"
-                                                                                                        id="kt_account_profile_details_submit">
+                                                                                                        id="">
                                                                                                         Save Changes
                                                                                                     </button>
                                                                                                 </div>
@@ -3419,6 +3712,29 @@
 
             </div>
         </div>
+
+
+
+        <!-- modal code add -->
+        <div class="modal fade" id="showViewModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog mt-5" style="max-width: 85%; width: 100%; margin: auto;">
+            <div class="modal-content">
+            <div class="modal-header pb-0 border-0 justify-content-end">
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-xxl-12">
+                <div id="modalContent">Loading...</div>
+                </div>
+             </div>
+            </div>
+            </div>
+        </div>
+        </div>
+
+
+        <!-- end modal code -->
     </div>
 
     <!-- End Tables View-->
@@ -3584,7 +3900,7 @@
                                         <!--End Row-->
                                         <div class="card-footer d-flex justify-content-end py-6 px-9">
                                             <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">Send
+                                                    id="">Send
                                             </button>
                                         </div>
 
@@ -3699,7 +4015,7 @@
 
                                         <!--End Row-->
                                         <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                            <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
+                                            <button type="submit" class="btn btn-primary" id="">Save Changes</button>
                                         </div>
 
                                     </form>
@@ -3920,7 +4236,7 @@
                                         <!--End Row-->
                                         <div class="card-footer d-flex justify-content-end py-6 px-9">
                                             <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">Save Changes
+                                                    id="">Save Changes
                                             </button>
                                         </div>
                                     </form>
@@ -4419,9 +4735,7 @@
 
                                                 <!--begin::Actions-->
                                                 <div class="card-footer d-flex justify-content-end py-4 pe-0">
-                                                    <button type="submit" class="btn btn-primary"
-                                                            id="kt_account_profile_details_submit">Submit
-                                                    </button>
+                                                    <button type="submit" class="btn btn-primary" id="">Submit</button>
                                                 </div>
                                                 <!--end::Actions-->
                                             </div>
@@ -4930,111 +5244,6 @@
 
         });
     </script>
-    <script>
-        var phone_no = @json($lead->phone);
-        const ticketUrl = "http://192.168.11.220/";
-        document.getElementById("ticketListBtn").style.display = 'none';
-
-        function showLoader() {
-            document.getElementById('loader').style.display = 'flex';
-        }
-
-        // Hide the full-page loader
-        function hideLoader() {
-            document.getElementById('loader').style.display = 'none';
-        }
-
-        function getTickets(phone_no) {
-            showLoader();
-            const ticketListUrl = ticketUrl + "ticket_crm/ticket_crm_api.php?TYPE=TICKET_LIST_BY_MOBILE&CLI=" + phone_no;
-
-            fetch(ticketListUrl)
-                .then(response => response.json())
-                .then(data => {
-                    populateTable(data);
-                    hideLoader();
-                })
-                .catch(error => {
-                    //console.error('Error fetching data:', error);
-                    //alert('Failed to load the ticket creation form. Please try again.');
-                });
-        }
-
-        function populateTable(data) {
-            const tableBody = document.getElementById('ticketTable').getElementsByTagName('tbody')[0];
-
-            tableBody.innerHTML = '';
-
-            data.forEach(ticket => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                <td><a href="#" onclick="getTicketReplyFrame(${ticket.ticket_id})">${ticket.ticket_id || 'N/A'}</a></td>
-                <td>${ticket.subject || 'N/A'}</td>
-                <td>${ticket.group_name || 'N/A'}</td>
-                <td>${ticket.status_name || 'N/A'}</td>
-                `;
-
-                tableBody.appendChild(row);
-            });
-        }
-
-        // document.getElementById('g_lead_tickets_tab').addEventListener('click', function() {
-        getTickets(phone_no);
-
-        // });
-
-        function getTicketReplyFrame(ticket_id) {
-            const ticketReplyUrl = ticketUrl + "ticket_crm/ticket_crm_api.php?TYPE=TICKET_REPLY&TICKET_ID=" + ticket_id;
-            showLoader();
-            document.getElementById("ticketListBtn").style.display = '';
-            document.getElementById("createTicketButton").style.display = '';
-            document.getElementById("ticketTable").style.display = 'none';
-            fetch(ticketReplyUrl)
-                .then(response => response.json())
-                .then(data => {
-                    const iframeHtml = data[0].iframe;
-                    const iframeContainer = document.getElementById('ticketIframeContainer');
-                    iframeContainer.innerHTML = iframeHtml;
-                    iframeContainer.style.display = 'block';
-                    hideLoader();
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    alert('Failed to load the ticket creation form. Please try again.');
-                });
-        }
-
-        document.getElementById('createTicketButton').addEventListener('click', function () {
-            document.getElementById("ticketListBtn").style.display = '';
-            document.getElementById("createTicketButton").style.display = 'none';
-            document.getElementById("ticketTable").style.display = 'none';
-            const ticketListUrl = ticketUrl + "ticket_crm/ticket_crm_api.php?TYPE=TICKET_CREATE&CLI=" + phone_no;
-            showLoader();
-
-            fetch(ticketListUrl)
-                .then(response => response.json())
-                .then(data => {
-                    const iframeHtml = data[0].iframe;
-                    const iframeContainer = document.getElementById('ticketIframeContainer');
-                    iframeContainer.innerHTML = iframeHtml;
-                    iframeContainer.style.display = 'block';
-                    hideLoader();
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    alert('Failed to load the ticket creation form. Please try again.');
-                });
-        });
-
-        document.getElementById('ticketListBtn').addEventListener('click', function () {
-            document.getElementById("ticketIframeContainer").style.display = 'none';
-            document.getElementById("ticketListBtn").style.display = 'none';
-            document.getElementById("createTicketButton").style.display = '';
-            document.getElementById("ticketTable").style.display = '';
-            getTickets(phone_no);
-        });
-
-    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -5175,5 +5384,29 @@
         $(".cur-data").text(cur_val);
     });
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".btn-show-details").forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            const url = this.getAttribute("href");
+
+            // load data via AJAX
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById("modalContent").innerHTML = html;
+                    // show modal after loading content
+                    new bootstrap.Modal(document.getElementById("showViewModal")).show();
+                })
+                .catch(err => {
+                    document.getElementById("modalContent").innerHTML = "<p class='text-danger'>Error loading data.</p>";
+                });
+        });
+    });
+});
+</script>
+
 
 @endsection
