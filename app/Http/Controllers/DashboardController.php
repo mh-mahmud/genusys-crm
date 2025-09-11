@@ -60,6 +60,10 @@ class DashboardController extends Controller
             'lead_cycle.*',
             'leads.first_name',
             'leads.last_name',
+            'leads.middlename',
+            'leads.email',
+            'leads.phone',
+            'leads.lead_status',
             'users.username',
         )
         // ->whereIn('lead_cycle.status', [0,1,3])

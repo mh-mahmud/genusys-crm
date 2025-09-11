@@ -933,11 +933,10 @@
                                         <tr class="fw-bolder text-muted">
 
                                             <th class="min-w-150px th-data">Full Name</th>
-                                            <th class="min-w-140px th-data">Assigned To</th>
-                                            {{--<th class="min-w-120px th-data">Priority</th>
-                                            <th class="min-w-120px th-data">No of Attempt</th>--}}
+                                            <th class="min-w-150px th-data">Email</th>
+                                            <th class="min-w-140px th-data">Phone</th>
+                                            <th class="min-w-120px th-data">Status</th>
                                             <th class="min-w-150px th-data">Cycle Time</th>
-                                            <!-- <th class="min-w-120px th-data">Status</th> -->
                                             <th class="min-w-120px th-data">Action</th>
 
                                         </tr>
@@ -957,34 +956,32 @@
 
                                                 <td>
                                                     <div class="d-flex justify-content-start flex-column">
-                                                        <span class="text-dark fw-bold fs-6">{{ $val->username }}</span>
+                                                        <span class="text-dark fw-bold fs-6">{{ $val->email }}</span>
                                                     </div>
                                                 </td>
-                                                {{--<td>
+                                                <td>
                                                     <div class="d-flex justify-content-start flex-column">
-                                                        <span class="text-dark fw-bold fs-6">{{$val->priority}}</span>
-                                                    </div>
-                                                </td>
-
-                                                <td class="text-center">
-                                                    <div class="d-flex justify-content-start flex-column">
-                                                        <span class="text-dark fw-bold fs-6">{{ $val->no_of_attempt }}</span>
+                                                        <span class="text-dark fw-bold fs-6">{{$val->phone}}</span>
                                                     </div>
                                                 </td>
 
                                                 <td class="text-center">
                                                     <div class="d-flex justify-content-start flex-column">
                                                         <span class="text-dark fw-bold fs-6">
-                                                            @if($val->status==1)
-                                                                Active
-                                                            @elseif($val->status==0)
-                                                                Pending
-                                                            @elseif($val->status==3)
-                                                                Failed
-                                                            @endif
+                                                        @if ($val->lead_status == "Warm")
+                                                          <span class="badge badge-light-primary">Warm</span>
+                                                        @elseif ($val->lead_status == "Qualified")
+                                                          <span class="badge badge-light-primary">Qualified</span>
+                                                        @elseif ($val->lead_status == "Hot")
+                                                          <span class="badge badge-light-warning">Hot</span>
+                                                        @elseif ($val->lead_status == "Sold")
+                                                          <span class="badge badge-light-success">Sold</span>
+                                                        @elseif ($val->lead_status == "Dead")
+                                                          <span class="badge badge-light-danger">Dead</span>
+                                                        @endif
                                                         </span>
                                                     </div>
-                                                </td>--}}
+                                                </td>
 
                                                  <td class="text-center">
                                                     <div class="d-flex flex-column w-100 me-2">
