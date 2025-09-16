@@ -225,7 +225,7 @@ class LeadController  extends Controller
                         
                         $cycle->lead_id = $request->lead_id;
                         // $cycle->user_id = $user_list[0];
-                        $cycle->no_of_attempt = $res_action->num_attempts;
+                        $cycle->no_of_attempt = $res_action->attempts_general;
                         $cycle->feedback = $res_action->rule_description;
                         $cycle->save();
                         // dd($cycle);
