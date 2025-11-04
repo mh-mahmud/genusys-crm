@@ -301,7 +301,18 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('product-features-show', [ProductController::class, 'product_features_show'])->name('product.features.show');
 	
 
-	// Product routes end
+	// product custom form
+	Route::get('/product-custom', [ProductController::class, 'indexForm'])->name('product-custom-index')->middleware(['check-permission']);
+	Route::get('/product-custom/create', [ProductController::class, 'createForm'])->name('product-custom-create')->middleware(['check-permission']);
+	Route::post('/product-custom', [ProductController::class, 'storeForm'])->name('product-custom-store');
+	Route::get('/product-custom/{id?}', [ProductController::class, 'showForm'])->name('product-custom-show')->middleware(['check-permission']);
+	Route::get('/product-custom/{id?}/edit', [ProductController::class, 'editForm'])->name('product-custom-edit')->middleware(['check-permission']);
+	Route::put('/product-custom/{id}', [ProductController::class, 'updateForm'])->name('product-custom-update');
+	Route::delete('/product-custom/{id?}', [ProductController::class, 'destroyForm'])->name('product-custom-destroy');
+	Route::post('/product-custom/search', [ProductController::class, 'searchForm'])->name('product-custom-search');
+	Route::get('/product-custom/{productId}/download', [ProductController::class, 'downloadproductForm'])->name('product-custom-download');
+
+	// ===================== end
 
     // Product Specification routes start
 	Route::get('/product-specification', [ProductSpecificationController::class, 'index'])->name('product-specification-index')->middleware(['check-permission']);

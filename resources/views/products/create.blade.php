@@ -62,13 +62,8 @@
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <!--begin::Label-->
                                                     <label class="form-label fw-bolder text-dark">Name<span class="text-danger">*</span></label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="name" autocomplete="off" value="{{ old('name') }}" />
-                                                    <!--end::Input-->
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="name" autocomplete="off" value="{{ old('name') }}" />
                                                     @if ($errors->has('name'))
                                                         <span class="text-danger">{{ $errors->first('name') }}</span>
                                                     @endif
@@ -77,13 +72,8 @@
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Code<span class="text-danger">*</span></label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="product_code" autocomplete="off" value="{{ old('product_code') }}" />
-                                                    <!--end::Input-->
+                                                    <label class="form-label fw-bolder text-dark">Product Code<span class="text-danger">*</span></label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="product_code" autocomplete="off" value="{{ old('product_code') }}" />
                                                     @if ($errors->has('product_code'))
                                                         <span class="text-danger">{{ $errors->first('product_code') }}</span>
                                                     @endif
@@ -92,8 +82,7 @@
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Type<span class="text-danger">*</span></label>
+                                                    <label class="form-label fw-bolder text-dark">Product Type<span class="text-danger">*</span></label>
                                                     <select class="form-control form-control-sm form-control-solid"
                                                             id="assigned_to" name="product_type" aria-label="Default select example">
                                                         <option value='' {{ old('product_type', '') === '' ? 'selected' : '' }}>Select</option>
@@ -122,7 +111,18 @@
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Value</label>
+                                                    <label class="form-label fw-bolder text-dark">Sale Price</label>
+                                                    <input class="form-control form-control-sm form-control-solid"
+                                                           type="text" name="sale_price" autocomplete="off" value="{{ old('sale_price') }}" />
+                                                    @if ($errors->has('sale_price'))
+                                                        <span class="text-danger">{{ $errors->first('sale_price') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Sale Price</label>
                                                     <input class="form-control form-control-sm form-control-solid"
                                                            type="text" name="product_value" autocomplete="off" value="{{ old('product_value') }}" />
                                                     @if ($errors->has('product_value'))
@@ -141,20 +141,16 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Image</label>
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="file" name="img_path" autocomplete="off" />
+                                                    <input class="form-control form-control-sm form-control-solid" type="file" name="img_path" autocomplete="off" />
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Status</label>
-                                                    <select class=" form-control form-control-sm form-control-solid" name="status"
-                                                            aria-label="Default select example">
-
+                                                    <select class=" form-control form-control-sm form-control-solid" name="status" aria-label="Default select example">
                                                         <option value="1" selected>Active</option>
                                                         <option value="0">Inactive</option>
-
                                                     </select>
                                                 </div>
                                             </div>
@@ -163,10 +159,7 @@
 
                                       <div class="card-footer d-flex gap-2 justify-content-end align-items-center p-2">
                                             <input type="reset" value="Reset" class="btn btn-light me-2">
-                                            <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">
-                                                Save Changes
-                                            </button>
+                                            <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
                                         </div>
 
                                     </form>

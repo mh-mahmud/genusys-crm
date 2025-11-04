@@ -89,12 +89,8 @@
 
                                     <div class="col-md-4">
                                         <div class="fv-row mb-1">
-                                            <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">First Name</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
                                             <input class="form-control form-control-sm form-control-solid" type="text" name="first_name" value="{{ old('first_name') }}" autocomplete="off" />
-                                            <!--end::Input-->
                                             @if ($errors->has('first_name'))
                                             <span class="text-danger">{{ $errors->first('first_name') }}</span>
                                             @endif
@@ -103,12 +99,8 @@
 
                                     <div class="col-md-4">
                                         <div class="fv-row mb-1">
-                                            <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Middle Name</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
                                             <input class="form-control form-control-sm form-control-solid" type="text" name="middlename" value="{{ old('middlename') }}" autocomplete="off" />
-                                            <!--end::Input-->
                                             @if ($errors->has('middlename'))
                                             <span class="text-danger">{{ $errors->first('middlename') }}</span>
                                             @endif
@@ -117,12 +109,8 @@
 
                                     <div class="col-md-4">
                                         <div class="fv-row mb-1">
-                                            <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Last Name</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
                                             <input class="form-control form-control-sm form-control-solid" type="text" name="last_name" value="{{ old('last_name') }}" autocomplete="off" />
-                                            <!--end::Input-->
                                             @if ($errors->has('last_name'))
                                             <span class="text-danger">{{ $errors->first('last_name') }}</span>
                                             @endif
@@ -131,27 +119,8 @@
 
                                     <div class="col-md-6">
                                         <div class="fv-row mb-1">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-bolder text-dark">Address</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            {{--<input class="form-control form-control-sm form-control-solid" type="text" name="address" value="{{ old('address') }}" autocomplete="off" />--}}
-                                            <textarea class="form-control form-control-sm form-control-solid" name="address">{{ old('address') }}</textarea>
-                                            <!--end::Input-->
-                                            @if ($errors->has('address'))
-                                            <span class="text-danger">{{ $errors->first('address') }}</span>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="fv-row mb-1">
-                                            <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Zip</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
                                             <input class="form-control form-control-sm form-control-solid" type="text" name="zip" value="{{ old('zip') }}" autocomplete="off" />
-                                            <!--end::Input-->
                                             @if ($errors->has('zip'))
                                             <span class="text-danger">{{ $errors->first('zip') }}</span>
                                             @endif
@@ -160,12 +129,8 @@
 
                                     <div class="col-md-6">
                                         <div class="fv-row mb-1">
-                                            <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Country</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
                                             <input class="form-control form-control-sm form-control-solid" type="text" name="country" value="{{ old('country') }}" autocomplete="off" />
-                                            <!--end::Input-->
                                             @if ($errors->has('country'))
                                             <span class="text-danger">{{ $errors->first('country') }}</span>
                                             @endif
@@ -176,10 +141,7 @@
                                         <div class="fv-row mb-1">
                                             <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">City</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
                                             <input class="form-control form-control-sm form-control-solid" type="text" name="city" value="{{ old('city') }}" autocomplete="off" />
-                                            <!--end::Input-->
                                             @if ($errors->has('city'))
                                             <span class="text-danger">{{ $errors->first('city') }}</span>
                                             @endif
@@ -188,12 +150,8 @@
 
                                     <div class="col-md-6">
                                         <div class="fv-row mb-1">
-                                            <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">State</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
                                             <input class="form-control form-control-sm form-control-solid" type="text" name="state" value="{{ old('state') }}" autocomplete="off" />
-                                            <!--end::Input-->
                                             @if ($errors->has('state'))
                                             <span class="text-danger">{{ $errors->first('state') }}</span>
                                             @endif
@@ -202,41 +160,8 @@
 
                                     <div class="col-md-6">
                                         <div class="fv-row mb-1">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-bolder text-dark">Time at Residence</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <input class="form-control form-control-sm form-control-solid" type="text" name="time_at_residence" value="{{ old('time_at_residence') }}" autocomplete="off" />
-                                            <!--end::Input-->
-                                            @if ($errors->has('time_at_residence'))
-                                            <span class="text-danger">{{ $errors->first('time_at_residence') }}</span>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="fv-row mb-1">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-bolder text-dark">Prior Address</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            {{--<input class="form-control form-control-sm form-control-solid" type="text" name="prior_address" value="{{ old('prior_address') }}" autocomplete="off" />--}}
-                                            <textarea class="form-control form-control-sm form-control-solid" name="prior_address">{{ old('prior_address') }}</textarea>
-                                            <!--end::Input-->
-                                            @if ($errors->has('prior_address'))
-                                            <span class="text-danger">{{ $errors->first('prior_address') }}</span>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="fv-row mb-1">
-                                            <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Cell Phone</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
                                             <input class="form-control form-control-sm form-control-solid" type="text" value="{{ old('phone') }}" name="phone" autocomplete="off" />
-                                            <!--end::Input-->
                                             @if ($errors->has('phone'))
                                             <span class="text-danger">{{ $errors->first('phone') }}</span>
                                             @endif
@@ -245,12 +170,8 @@
 
                                     <div class="col-md-6">
                                         <div class="fv-row mb-1">
-                                            <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Home Phone</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
                                             <input class="form-control form-control-sm form-control-solid" type="text" value="{{ old('home_phone') }}" name="home_phone" autocomplete="off" />
-                                            <!--end::Input-->
                                             @if ($errors->has('home_phone'))
                                             <span class="text-danger">{{ $errors->first('home_phone') }}</span>
                                             @endif
@@ -259,12 +180,8 @@
 
                                     <div class="col-md-6">
                                         <div class="fv-row mb-1">
-                                            <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Work Phone</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
                                             <input class="form-control form-control-sm form-control-solid" type="text" value="{{ old('work_phone') }}" name="work_phone" autocomplete="off" />
-                                            <!--end::Input-->
                                             @if ($errors->has('work_phone'))
                                             <span class="text-danger">{{ $errors->first('work_phone') }}</span>
                                             @endif
@@ -273,60 +190,93 @@
 
                                     <div class="col-md-6">
                                         <div class="fv-row mb-1">
-                                            <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Email</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
                                             <input class="form-control form-control-sm form-control-solid" type="email" name="email" value="{{ old('email') }}" autocomplete="off" />
-                                            <!--end::Input-->
                                             @if ($errors->has('email'))
                                             <span class="text-danger">{{ $errors->first('email') }}</span>
                                             @endif
                                         </div>
                                     </div>
 
+
+
+
+
+                                </div>
+                            </div>
+
+                            <!-- <div class="col-md-1">
+                                <div class="row">&nbsp;</div>
+                            </div> -->
+
+                            <!-- Right Side Placeholder -->
+
+                            <div class="col-md-6">
+                                <div class="row" style="margin-left:10px !important;">
+                                    <h5 class="mb-2" style="border:1px solid #DDD;padding:7px;background-color:#54B4D3;color:#f7f7f7">&nbsp;</h5>
                                     {{--
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <div class="fv-row mb-1">
-                                            <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Alternative Number</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
                                             <input class="form-control form-control-sm form-control-solid" type="text" name="alternative_number" value="{{ old('alternative_number') }}" autocomplete="off" />
-                                            <!--end::Input-->
                                             @if ($errors->has('alternative_number'))
                                             <span class="text-danger">{{ $errors->first('alternative_number') }}</span>
                                             @endif
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <div class="fv-row mb-1">
-                                            <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Contact Person Name</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
                                             <input class="form-control form-control-sm form-control-solid" type="text" name="contact_person_name" value="{{ old('contact_person_name') }}" autocomplete="off" />
-                                            <!--end::Input-->
                                             @if ($errors->has('contact_person_name'))
                                             <span class="text-danger">{{ $errors->first('contact_person_name') }}</span>
                                             @endif
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <div class="fv-row mb-1">
-                                            <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Company</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
                                             <input class="form-control form-control-sm form-control-solid" type="text" name="company" value="{{ old('company') }}" autocomplete="off" />
-                                            <!--end::Input-->
                                             @if ($errors->has('company'))
                                             <span class="text-danger">{{ $errors->first('company') }}</span>
                                             @endif
                                         </div>
-                                    </div>--}}
+                                    </div>
+                                    --}}
+
+                                    <div class="col-md-6">
+                                        <div class="fv-row mb-1">
+                                            <label class="form-label fw-bolder text-dark">Time at Residence</label>
+                                            <input class="form-control form-control-sm form-control-solid" type="text" name="time_at_residence" value="{{ old('time_at_residence') }}" autocomplete="off" />
+
+                                            @if ($errors->has('time_at_residence'))
+                                            <span class="text-danger">{{ $errors->first('time_at_residence') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="fv-row mb-1">
+                                            <label class="form-label fw-bolder text-dark">Address</label>
+                                            {{--<input class="form-control form-control-sm form-control-solid" type="text" name="address" value="{{ old('address') }}" autocomplete="off" />--}}
+                                            <textarea class="form-control form-control-sm form-control-solid" name="address">{{ old('address') }}</textarea>
+                                            @if ($errors->has('address'))
+                                            <span class="text-danger">{{ $errors->first('address') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="fv-row mb-1">
+                                            <label class="form-label fw-bolder text-dark">Prior Address</label>
+                                            <textarea class="form-control form-control-sm form-control-solid" name="prior_address">{{ old('prior_address') }}</textarea>
+                                            @if ($errors->has('prior_address'))
+                                            <span class="text-danger">{{ $errors->first('prior_address') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
 
                                     <div class="col-md-6">
                                         <div class="fv-row mb-1">
@@ -336,19 +286,12 @@
                                                 @foreach($status_list as $status)
                                                     <option value="{{ $status->status_name }}">{{ $status->status_name }}</option>
                                                 @endforeach
-                                                <!-- <option value="Qualified">Qualified</option>
-                                                <option value="Proposition">Proposition</option>
-                                                <option value="Ongoing">Ongoing</option>
-                                                <option value="Won">Won</option>
-                                                <option value="Lost">Lost</option> -->
                                             </select>
                                             @if ($errors->has('lead_status'))
                                             <span class="text-danger">{{ $errors->first('lead_status') }}</span>
                                             @endif
                                         </div>
                                     </div>
-
-
 
                                     <div class="col-md-6">
                                         <div class="fv-row mb-1">
@@ -367,33 +310,21 @@
                                         </div>
                                     </div>
 
-
-
-
                                     <div class="col-md-6">
                                         <div class="fv-row mb-1">
-                                            <!--begin::Label-->
                                             <label class="form-label fw-bolder text-dark">Lead Notes</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
                                             <textarea class="form-control form-control-sm form-control-solid" name="lead_notes" rows="3">{{ old('lead_notes') }}</textarea>
-                                            <!--end::Input-->
                                             @if ($errors->has('lead_notes'))
                                             <span class="text-danger">{{ $errors->first('lead_notes') }}</span>
                                             @endif
                                         </div>
                                     </div>
 
-
-
                                 </div>
+
                             </div>
 
-                            <!-- <div class="col-md-1">
-                                <div class="row">&nbsp;</div>
-                            </div> -->
-
-                            <!-- Right Side Placeholder -->
+                            {{--
                             <div class="col-md-6">
                                 <div class="row" style="margin-left:10px !important;">
                                     <h5 class="mb-2" style="border:1px solid #DDD;padding:7px;background-color:#54B4D3;color:#f7f7f7">Note Section</h5>
@@ -502,36 +433,10 @@
                                         </table>
                                     </div>
 
-                                    {{--
-                                    <div class="mb-5">
-                                        <h5 class="custom-bottom-border">Last Carrier Saved</h5>
-                                        <table class="custom-table">
-                                            <tr>
-                                                <td>Carrier</td>
-                                                <td>Not yet quoted</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Total Premium</td>
-                                                <td>Not yet quoted</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Down Payment</td>
-                                                <td>Not yet quoted</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Payment</td>
-                                                <td>Not yet quoted</td>
-                                            </tr>
-                                             <tr>
-                                                <td>Payment Plan</td>
-                                                <td>Not yet quoted</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    --}}
-
                                 </div>
                             </div>
+                            --}}
+
 
                         </div>
 

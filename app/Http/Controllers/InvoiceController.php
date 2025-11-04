@@ -354,63 +354,62 @@ class InvoiceController extends Controller
         return redirect()->route('invoice-index')->with('success', 'Payment recorded successfully!');
     }
 
-    public function storePayment(Request $request, $invoiceId)
-{
-    $invoice = Invoice::findOrFail($invoiceId);
-    $customerId = $invoice->customer_id;
-    $lead_id = Customer::where('id', $customerId)->value('lead_id');
+    public function storePayment(Request $request, $invoiceId) {
+        $invoice = Invoice::findOrFail($invoiceId);
+        $customerId = $invoice->customer_id;
+        $lead_id = Customer::where('id', $customerId)->value('lead_id');
 
-    $existingPayments = $invoice->payment_details ?? [];
-    $totalPayments = array_sum(array_column($existingPayments, 'payment'));
-    $newDueAmount = max(0, $invoice->total_amount - $totalPayments);
+        $existingPayments = $invoice->payment_details ?? [];
+        $totalPayments = array_sum(array_column($existingPayments, 'payment'));
+        $newDueAmount = max(0, $invoice->total_amount - $totalPayments);
 
-    $request->validate([
-        'payment_amount' => [
-            'required',
-            'numeric',
-            'min:0',
-            function ($attribute, $value, $fail) use ($newDueAmount) {
-                if ($value > $newDueAmount) {
-                    $fail("The payment amount cannot exceed the due amount of $newDueAmount.");
-                }
-            },
-        ],
-        'payment_mode'     => 'required|in:Cheque,Bank Transfer',
-        'cheque_number'    => 'required_if:payment_mode,Cheque',
-        'received_date'    => 'required_if:payment_mode,Cheque',
-        'transfer_mode'    => 'required_if:payment_mode,Bank Transfer',
-        'transfer_date'    => 'required_if:payment_mode,Bank Transfer',
-        'deposit_status'   => 'required|in:Pending,Success,Failed',
-        'deposit_date' => [
-            'required_if:deposit_status,Success',
-            'nullable',
-            'date',
-        ],
+        $request->validate([
+            'payment_amount' => [
+                'required',
+                'numeric',
+                'min:0',
+                function ($attribute, $value, $fail) use ($newDueAmount) {
+                    if ($value > $newDueAmount) {
+                        $fail("The payment amount cannot exceed the due amount of $newDueAmount.");
+                    }
+                },
+            ],
+            'payment_mode'     => 'required|in:Cheque,Bank Transfer',
+            'cheque_number'    => 'required_if:payment_mode,Cheque',
+            'received_date'    => 'required_if:payment_mode,Cheque',
+            'transfer_mode'    => 'required_if:payment_mode,Bank Transfer',
+            'transfer_date'    => 'required_if:payment_mode,Bank Transfer',
+            'deposit_status'   => 'required|in:Pending,Success,Failed',
+            'deposit_date' => [
+                'required_if:deposit_status,Success',
+                'nullable',
+                'date',
+            ],
 
-       
-    ]);
+           
+        ]);
 
-    $paymentDetails = [
-        'invoice_id'     => $invoice->id,
-        'payment'        => $request->input('payment_amount'),
-        'payment_mode'   => $request->input('payment_mode'),
-        'cheque_number'  => $request->input('cheque_number'),
-        'received_date'  => $request->input('received_date'),
-        'transfer_mode'  => $request->input('transfer_mode'),
-        'transfer_date'  => $request->input('transfer_date'),
-        'deposit_status' => $request->input('deposit_status'),
-        'deposit_date'   => $request->input('deposit_date'),
-        'payment_date'   => Carbon::now()->toDateString(),
-        'due'            => max(0, $newDueAmount - $request->input('payment_amount')),
-    ];
+        $paymentDetails = [
+            'invoice_id'     => $invoice->id,
+            'payment'        => $request->input('payment_amount'),
+            'payment_mode'   => $request->input('payment_mode'),
+            'cheque_number'  => $request->input('cheque_number'),
+            'received_date'  => $request->input('received_date'),
+            'transfer_mode'  => $request->input('transfer_mode'),
+            'transfer_date'  => $request->input('transfer_date'),
+            'deposit_status' => $request->input('deposit_status'),
+            'deposit_date'   => $request->input('deposit_date'),
+            'payment_date'   => Carbon::now()->toDateString(),
+            'due'            => max(0, $newDueAmount - $request->input('payment_amount')),
+        ];
 
-    $paymentAmount = $request->input('payment_amount');
-    $this->invoiceService->addPaymentInvoice($invoice, $paymentDetails, $paymentAmount);
+        $paymentAmount = $request->input('payment_amount');
+        $this->invoiceService->addPaymentInvoice($invoice, $paymentDetails, $paymentAmount);
 
-    Helper::storeLog("Payment recorded successfully", "Invoice", "Payment recorded", $lead_id);
+        Helper::storeLog("Payment recorded successfully", "Invoice", "Payment recorded", $lead_id);
 
-    return redirect()->route('invoice-index')->with('success', 'Payment recorded successfully!');
-}
+        return redirect()->route('invoice-index')->with('success', 'Payment recorded successfully!');
+    }
 
 
 
