@@ -5,15 +5,19 @@ use Illuminate\Http\Request;
 use App\Services\ProductService;
 use App\Helpers\Helper;
 use App\Models\ProductFeature;
+use App\Services\InvoiceCustomFormService;
+use App\Models\ProductTemplate;
 
 
 class ProductController extends Controller {
 
     protected $productService;
+    protected $invoiceCustomFormService;
 
-    public function __construct(ProductService $productService)
+    public function __construct(ProductService $productService, InvoiceCustomFormService $invoiceCustomFormService)
     {
         $this->productService = $productService;
+        $this->invoiceCustomFormService = $invoiceCustomFormService;
         $this->middleware('auth');
     }
 
@@ -35,7 +39,7 @@ class ProductController extends Controller {
             Helper::storeLog("Product added successfully", "Product", "Create Product");
             return redirect()->route('product-list')->with('success', 'Product added successfully.');
 
-        }else{
+        } else {
             session()->flash('error', 'Can not Add!');
         }
 
@@ -147,8 +151,8 @@ class ProductController extends Controller {
     // ================= custom form ======================= //
     public function indexForm()
     {
-        $invoices = $this->invoiceCustomFormService->getAllCustomInvoice();
-        return view('invoice_custom.index', compact('invoices'));
+        $forms = ProductTemplate::all();
+        return view('products.formlist', compact('forms'));
     }
     public function createForm()
     {

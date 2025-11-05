@@ -302,15 +302,15 @@ Route::group(['middleware' => ['auth']], function () {
 	
 
 	// product custom form
-	Route::get('/product-custom', [ProductController::class, 'indexForm'])->name('product-custom-index')->middleware(['check-permission']);
-	Route::get('/product-custom/create', [ProductController::class, 'createForm'])->name('product-custom-create')->middleware(['check-permission']);
-	Route::post('/product-custom', [ProductController::class, 'storeForm'])->name('product-custom-store');
-	Route::get('/product-custom/{id?}', [ProductController::class, 'showForm'])->name('product-custom-show')->middleware(['check-permission']);
-	Route::get('/product-custom/{id?}/edit', [ProductController::class, 'editForm'])->name('product-custom-edit')->middleware(['check-permission']);
-	Route::put('/product-custom/{id}', [ProductController::class, 'updateForm'])->name('product-custom-update');
-	Route::delete('/product-custom/{id?}', [ProductController::class, 'destroyForm'])->name('product-custom-destroy');
-	Route::post('/product-custom/search', [ProductController::class, 'searchForm'])->name('product-custom-search');
-	Route::get('/product-custom/{productId}/download', [ProductController::class, 'downloadproductForm'])->name('product-custom-download');
+	Route::get('/product-form', [ProductController::class, 'indexForm'])->name('product-form-index')->middleware(['check-permission']);
+	Route::get('/product-form/create', [ProductController::class, 'createForm'])->name('product-form-create')->middleware(['check-permission']);
+	Route::post('/product-form', [ProductController::class, 'storeForm'])->name('product-form-store');
+	Route::get('/product-form/{id?}', [ProductController::class, 'showForm'])->name('product-form-show')->middleware(['check-permission']);
+	Route::get('/product-form/{id?}/edit', [ProductController::class, 'editForm'])->name('product-form-edit')->middleware(['check-permission']);
+	Route::put('/product-form/{id}', [ProductController::class, 'updateForm'])->name('product-form-update');
+	Route::delete('/product-form/{id?}', [ProductController::class, 'destroyForm'])->name('product-form-destroy');
+	Route::post('/product-form/search', [ProductController::class, 'searchForm'])->name('product-form-search');
+	Route::get('/product-form/{productId}/download', [ProductController::class, 'downloadproductForm'])->name('product-form-download');
 
 	// ===================== end
 
