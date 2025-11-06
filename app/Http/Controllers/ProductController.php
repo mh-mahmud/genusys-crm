@@ -7,6 +7,8 @@ use App\Helpers\Helper;
 use App\Models\ProductFeature;
 use App\Services\InvoiceCustomFormService;
 use App\Models\ProductTemplate;
+use Validator;
+use DB;
 
 
 class ProductController extends Controller {
@@ -151,47 +153,82 @@ class ProductController extends Controller {
     // ================= custom form ======================= //
     public function indexForm()
     {
-        $forms = ProductTemplate::all();
+        $forms = ProductTemplate::select('template_id', 'template_name', 'status')
+            ->where('template_id', '!=', '')
+            ->groupBy('template_id', 'template_name', 'status')
+            ->orderBy('template_id', 'asc')
+            ->paginate(config('constants.ROW_PER_PAGE'));
         return view('products.formlist', compact('forms'));
     }
-    public function createForm()
-    {
-        return view('invoice_custom.create');
+    public function createForm() {
+        return view('products.createform');
     }
 
     public function storeForm(Request $request)
-    {  
-        $data = $request->validate([
-            'invoice_name' => 'required|string|max:255',
-            'field_details' => 'array',
-            'field_details.*.field_name' => 'required|string',
-            'field_details.*.is_sum' => 'required',
-            'field_details.*.is_mandatory' => 'required',
-            'total_in_word' => 'nullable|string|max:255',
-            'bank_details' => 'nullable|string',
-            'issued_by' => 'nullable|string',
-        ], [
-            //custom error messages
-            'field_details.*.field_name.required' => 'Each Item Field Name is required.',
-            'field_details.*.field_value.required' => 'Each Item Field Value is required.',
-            'field_details.*.is_sum.required' => 'Is Sum is required.',
-            'field_details.*.is_mandatory.required' => 'Is Mandatory Field Value is required.',
-            'invoice_name.required' => 'The Invoice Name is required.',
-            'total_in_word.max' => 'The Total in Words field should not exceed 255 characters.',
-        ]);
-        $this->invoiceCustomFormService->createCustomInvoice($data);
+    {
+        // Custom validation rule for snake case
+        Validator::extend('snake_case', function ($attribute, $value, $parameters, $validator) {
+            return preg_match('/^[a-z0-9]+(_[a-z0-9]+)*$/', $value);
+        });
+    
+        Validator::replacer('snake_case', function ($message, $attribute, $rule, $parameters) {
+            $customAttributes = [
+                // 'template_name' => 'Table Name',
+                'fields.*.name' => 'Field Name',
+            ];
 
-        return redirect()->route('invoice-custom-index')->with('success', 'Custom Invoice created successfully.');
+            return str_replace(':attribute', $customAttributes[$attribute] ?? $attribute, ':attribute must be in lowercase and words should be separated by underscores(Ex.template_name).');
+        });
+
+        // Custom validation messages
+        $messages = [
+            'fields.*.name.snake_case' => 'The :attribute must be in lowercase and words should be separated by underscores(Ex.first_name)',
+        ];
+
+        
+
+        // Validate the request inputs
+        $validator = Validator::make($request->all(), [
+            'template_name' => 'required|string|max:255',
+            'fields' => 'required|array',
+            'fields.*.name' => 'required|string|max:255|snake_case',
+            'fields.*.type' => 'required|string|max:255',
+            'fields.*.character_length' => 'nullable|string',
+        ], $messages);
+
+        if ($validator->fails()) {
+            dd($validator);
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $templateName = $request->input('template_name');
+        $templateId = null;
+        $fields = $request->input('fields');
+
+        try {
+            // Service to create the table and insert data
+            $result = $this->productService->createTable($templateName, $templateId, $fields);
+
+            if ($result === 'Table already exists.') {
+                return redirect()->route('product-form-create')->with('error', $result);
+            }
+            Helper::storeLog("Product template created successfully", "Product Form", "Create Product Template");
+    
+            return redirect()->route('product-form-index')->with('success', 'Product template created successfully');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            return redirect()->route('product-form-create')->with('error', 'An error occurred while creating the table: ' . $e->getMessage());
+        }
     }
 
     
+
     public function showForm($id)
     {
-        $invoice = InvoiceCustomForm::findOrFail($id);
-        //directly access field_details as an array and show field name
-        $fieldNames = collect($invoice->field_details)->pluck('field_name')->implode(', ');
-        $footerFieldNames = collect($invoice->footer_details)->pluck('field_name')->implode(', ');
-        return view('invoice_custom.show', compact('invoice','fieldNames','footerFieldNames'));
+        $dynamicTableDetails = $this->dynamicTableService->getDetailsByTableName($tableName);
+        return view('dynamic_table.show', compact('dynamicTableDetails', 'tableName'));
     }
 
 

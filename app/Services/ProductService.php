@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\Helper;
 use App\Models\ProductFeature;
+use App\Models\ProductTemplate;
 use DB;
 
 class ProductService
@@ -206,4 +207,44 @@ class ProductService
         $productFeature = ProductFeature::findOrFail($id);
         $productFeature->delete();
     }
+
+    public function createTable($templateName, $templateId, $fields)
+    {
+        // table already exists show this message
+        $data = ProductTemplate::where('template_name', $templateName)->first();
+        if ($data) {
+            return 'Table already exists.';
+        }
+
+        // get template id
+        $temp = ProductTemplate::select(['id', 'template_id'])
+                ->orderBy('id', 'desc')
+                ->first();
+        if(empty($temp)) {
+            $templateId = 1001;
+        }
+        else {
+            $templateId = $temp->template_id + 1;
+        }
+
+        //insert data in table
+        $data = [];
+        foreach ($fields as $field) {
+            $data[] = [
+                'template_id' => $templateId,
+                'field_name' => $field['name'],
+                'field_value' => $field['type'],
+                'template_name' => $templateName,
+                'character_length' => $field['character_length'] ?? null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        
+        DB::table('product_templates')->insert($data);
+
+        return 'Data inserted successfully.';
+    }
+
 }

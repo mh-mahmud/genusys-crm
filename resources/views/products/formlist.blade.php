@@ -134,8 +134,7 @@
                     <!--begin::Header-->
                     <div class="d-flex justify-content-between align-items-start card-header px-2 border-0 pt-1">
                         <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bolder fs-3 mb-1">Leads Form List</span>
-                            <!-- <span class="text-muted mt-1 fw-bold fs-7">Leads Form data here</span> -->
+                            <span class="card-label fw-bolder fs-3 mb-1">Product Form List</span>
                         </h3>
 
                         <div class="d-flex align-items-center flex-wrap gap-2">
@@ -186,53 +185,36 @@
                                     <thead>
                                     <tr class="fw-bolder text-muted bg-light bd-cyan">
                                         <th class="ps-4 rounded-start min-w-20px">SL</th>
-                                        <!-- <th class="min-w-150px">Form ID</th> -->
-                                        <th class="min-w-150px">Form Name</th>
-                                        <th class="min-w-150px">Tables</th>
-                                        <th class="min-w-150px">Total Leads</th>
-                                        <th class="min-w-140px">Parent Name</th>
-                                        <th class="min-w-120px">Status</th>
+                                        <th class="min-w-150px">Template Name</th>
+                                        <th class="min-w-150px">Template Id</th>
+                                        <th class="min-w-150px">Status</th>
                                         <th class="min-w-100px text-end rounded-end text-end-new">Actions</th>
                                     </tr>
                                     </thead>
                                     <!--end::Table head-->
                                     <!--begin::Table body-->
                                     <tbody>
+                                    @php
+                                    $i=1;
+                                    @endphp
                                     @foreach ($forms as $form)
                                         <tr>
 
-                                            <td class="ps-5 text-dark fs-6">{{($form->currentPage() - 1) * $form->perPage() + $loop->iteration}}</td>
+                                            <td class="ps-5 text-dark fs-6">{{ $i }}</td>
 
-                                            <!-- <td class="text-dark fs-6">{{$form->form_id}}</td> -->
-                                            <td class="text-dark fs-6">{{$form->form_name }}</td>
-                                            <td class="text-dark fs-6 w-400px">{{ $form->table_names }}</td>
-                                            <td class="text-dark fs-6">{{ $totalLeadsCounts[$form->form_id] ?? 0 }}</td>
-                                            <td class="text-dark fs-6">{{$form->parent_name}}</td>
+                                            <td class="text-dark fs-6">{{$form->template_name }}</td>
+                                            <td class="text-dark fs-6 w-400px">{{ $form->template_id }}</td>
                                             <td>
-                                                @if ($form->form_status == 1)
+                                                @if ($form->status == 1)
                                                     <span class="badge badge-light-success">Active</span>
-                                                @elseif ($form->form_status == 0)
+                                                @elseif ($form->status == 0)
                                                     <span class="badge badge-light-danger">Inactive</span>
                                                 @endif
                                             </td>
                                             <td>
-                                                <div
-                                                    class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
-                                                    <a href="{{ route('lead-index', $form->form_id) }}"
-                                                       class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
-                                                        <span class="svg-icon svg-icon-3">
-                                                    <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none"
-                                                         xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M8 6.00067L21 6.00139M8 12.0007L21 12.0015M8 18.0007L21 18.0015M3.5 6H3.51M3.5 12H3.51M3.5 18H3.51M4 6C4 6.27614 3.77614 6.5 3.5 6.5C3.22386 6.5 3 6.27614 3 6C3 5.72386 3.22386 5.5 3.5 5.5C3.77614 5.5 4 5.72386 4 6ZM4 12C4 12.2761 3.77614 12.5 3.5 12.5C3.22386 12.5 3 12.2761 3 12C3 11.7239 3.22386 11.5 3.5 11.5C3.77614 11.5 4 11.7239 4 12ZM4 18C4 18.2761 3.77614 18.5 3.5 18.5C3.22386 18.5 3 18.2761 3 18C3 17.7239 3.22386 17.5 3.5 17.5C3.77614 17.5 4 17.7239 4 18Z"
-                                                            stroke="#000000" stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round"/>
-                                                    </svg>
-                                                </span>
-                                                        <!--end::Svg Icon-->
-                                                    </a>
-                                                    <a href="{{ route('form-show', $form->id) }}"
+                                                <div class="d-inline-flex justify-content-end gap-1 w-100 border-bottom-0">
+                                                    
+                                                    <a href="{{ route('product-form-show', $form->template_id) }}"
                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                                                         <span class="svg-icon svg-icon-3">
@@ -252,7 +234,7 @@
                                                 </span>
                                                         <!--end::Svg Icon-->
                                                     </a>
-                                                    <a href="{{ route('form-edit', $form->id) }}"
+                                                    <a href="{{ route('product-form-edit', $form->template_id) }}"
                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                         <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                                                         <span class="svg-icon svg-icon-3">
@@ -268,7 +250,7 @@
                                                 </span>
                                                         <!--end::Svg Icon-->
                                                     </a>
-                                                    <form action="{{ route('form-destroy', $form->id) }}"
+                                                    <form action="{{ route('product-form-destroy', $form->template_id) }}"
                                                           method="POST" style="display: inline;">
                                                         @csrf
                                                         @method('DELETE')
@@ -296,6 +278,7 @@
                                                 </div>
                                             </td>
                                         </tr>
+                                    @php $i++ @endphp
                                     @endforeach
 
                                     </tbody>
