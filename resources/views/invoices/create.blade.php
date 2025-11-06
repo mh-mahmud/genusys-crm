@@ -95,7 +95,7 @@
 
                                     <div class="fv-row mb-5">
                                         <label class="form-label fw-bolder text-dark">Customer<span class="text-danger">*</span></label>
-                                        <select  class="form-control form-control-sm form-control-solid" id="customerSelect" name="customer_id" data-allow-clear="true"
+                                        <select  class="form-control form-control-sm form-control-solid" id="customer_id" name="customer_id" data-allow-clear="true"
                                         data-kt-select2="select2">
                                             <option value="" {{ old('customer_id') == '' ? 'selected' : '' }}>Select Customer</option>
                                             @foreach($customers as $customer)
@@ -137,10 +137,11 @@
                                                 <input class="form-control form-control-sm"
                                                     type="text" name="invoice_number" id="invoice_number"
                                                     value="{{ old('invoice_number', sprintf('%06d', $nextInvoiceNumber)) }}" />
-                                                @if($errors->has('invoice_number'))
+                                                
+                                            </div>
+                                            @if($errors->has('invoice_number'))
                                                 <span class="text-danger">{{ $errors->first('invoice_number') }}</span>
                                                 @endif
-                                            </div>
                                             <!--end::Input-->
                                         </div>
                                     </div>
@@ -476,6 +477,14 @@
 
 
                                     <div class="table-responsive">
+                                       @if ($errors->has('items_error'))
+                                            <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+                                                <strong><i class="bi bi-exclamation-triangle-fill me-1"></i></strong>
+                                                {{ $errors->first('items_error') }}
+                                                <button type="button" class="btn-close btn-close-sm ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        @endif
+
                                         <!--Invoice Table Preview-->
                                         <table class="table table-rounded table-sm table-striped border align-middle gs-2" id="proposal-table">
                                             <thead>
