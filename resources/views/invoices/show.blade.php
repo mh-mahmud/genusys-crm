@@ -317,7 +317,8 @@
                                 </td>
                                 @endforeach
                                 <td class="border-b py-3 pl-3 text-right">
-                                    {{ $item[count($item) -1]["amount"] }}
+                                  {{--{{ $item[count($item) -1]["amount"] }}--}}
+                                  {{ $item[count($item) - 1]["amount"] ?? '0.00' }}
                                 </td>
                             </tr>
                             @endforeach

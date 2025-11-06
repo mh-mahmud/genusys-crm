@@ -123,13 +123,33 @@ class InvoiceController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'invoice_date' => 'required|date',
+            'invoice_status' => 'required',
+            'due_date' => 'nullable|date|after_or_equal:invoice_date',
+            'invoice_number' => [
+            'required',
+            function ($attribute, $value, $fail) {
+                $normalizedNumber = preg_replace('/^INV-/', '', $value);
+                $exists = \App\Models\Invoice::whereRaw("REPLACE(invoice_number, 'INV-', '') = ?", [$normalizedNumber])->exists();
+
+                if ($exists) {
+                    $fail('The invoice number "' . $value . '" is already in use.');
+                }
+            }
+        ],
+        ], [
+            'customer_id.required' => 'Please select a customer.',
+            'customer_id.exists'   => 'Selected customer not found.'
+        ]);
         if (!$request->filled('custom_invoice_id')) {
             $validatedData = $request->validate([
-                'customer_id' => 'required|exists:customers,id',
+                //'customer_id' => 'required|exists:customers,id',
                 //'invoice_number' => 'required|unique:invoices,invoice_number',
-                'invoice_date' => 'required|date',
-                'invoice_status' => 'required',
-                'due_date' => 'nullable|date|after_or_equal:invoice_date',
+                //'invoice_date' => 'required|date',
+                //'invoice_status' => 'required',
+                //'due_date' => 'nullable|date|after_or_equal:invoice_date',
                 //'product_id' => 'required|exists:products,id',
                 //item validation
                 'items.item_name.*' => 'required|string',
@@ -146,17 +166,43 @@ class InvoiceController extends Controller
                 //'invoice_number.unique' => 'This invoice number is already in use by another invoice',
             ]);
         }
+    
+        $allItemsEmpty = false;
+
+        
+        if (
+            !$request->has('items') || 
+            empty($request->items) ||
+            (isset($request->items['item']) && collect($request->items['item'])->filter()->isEmpty())
+        ) {
+            $allItemsEmpty = true;
+        }
+
+        
+        $allTotalsZero = (
+            $request->input('sub_total') === '0.00' &&
+            $request->input('total_amount') === '0.00' &&
+            $request->input('total_tax') === '0.00' &&
+            $request->input('total_discount') === '0.00'
+        );
+
+        if ($allItemsEmpty || $allTotalsZero) {
+            return back()
+                ->withErrors(['items_error' => 'Item is not selected. Please add at least one item.'])
+                ->withInput();
+        }
         try {
             $customer = Customer::find($request->customer_id);
-            $lead_id  = $customer->lead_id;
+            //$lead_id  = $customer->lead_id;
+            $lead_id  = $customer?->lead_id;
             //dd($request->all());
             $invoice = $this->invoiceService->createInvoice($request->all());
             Helper::storeLog("Invoice created successfully", "Invoice", "Create Invoice",$lead_id);
             return redirect()->route('invoice-index')->with('success', 'Invoice Created Successfully!');
         } catch (\Illuminate\Database\QueryException $e) {
-            if ($e->getCode() === '23000') {
-                return back()->withErrors(['invoice_number' => 'This invoice number exists'])->withInput();
-            }
+           // if ($e->getCode() === '23000') {
+                //return back()->withErrors(['invoice_number' => 'This invoice number exists'])->withInput();
+            //}
 
             // Handle other database errors
             return back()->withErrors(['error' => 'There was an error creating the invoice. Please try again later.'])->withInput();
@@ -224,14 +270,62 @@ class InvoiceController extends Controller
 
     public function update(Request $request, $id)
     {
-
+        
+         $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            //'invoice_date' => 'required|date',
+           // 'invoice_status' => 'required',
+            //'due_date' => 'nullable|date|after_or_equal:invoice_date',
+        ], [
+            'customer_id.required' => 'Please select a customer.',
+            'customer_id.exists'   => 'Selected customer not found.'
+        ]);
         $validatedData = $request->validate([
             'customer_id' => 'required|exists:customers,id',
             //'invoice_number' => 'required|unique:invoices,invoice_number,' . $id, //current invoice number
+            'invoice_number' => [
+            'required',
+            function ($attribute, $value, $fail) use ($id) {
+                $normalizedNumber = preg_replace('/^INV-/', '', $value);
+                $exists = \App\Models\Invoice::whereRaw("REPLACE(invoice_number, 'INV-', '') = ?", [$normalizedNumber])
+                                             ->where('id', '<>', $id)
+                                             ->exists();
+
+                if ($exists) {
+                    $fail('The invoice number "' . $value . '" is already in use.');
+                }
+            }
+        ],
             'invoice_date' => 'required|date',
             'invoice_status' => 'required',
             'due_date' => 'nullable|date|after_or_equal:invoice_date',
         ]);
+
+        
+        $allItemsEmpty = false;
+
+        
+        if (
+            !$request->has('items') || 
+            empty($request->items) ||
+            (isset($request->items['item']) && collect($request->items['item'])->filter()->isEmpty())
+        ) {
+            $allItemsEmpty = true;
+        }
+
+        
+        $allTotalsZero = (
+            $request->input('sub_total') === '0.00' &&
+            $request->input('total_amount') === '0.00' &&
+            $request->input('total_tax') === '0.00' &&
+            $request->input('total_discount') === '0.00'
+        );
+
+        if ($allItemsEmpty || $allTotalsZero) {
+            return back()
+                ->withErrors(['items_error' => 'Item is not selected. Please add at least one item.'])
+                ->withInput();
+        }
 
         try {
             $customer = Customer::find($request->customer_id);
@@ -241,9 +335,9 @@ class InvoiceController extends Controller
             return redirect()->route('invoice-index')->with('success', 'Invoice Updated Successfully!');
         } catch (\Illuminate\Database\QueryException $e) {
 
-            if ($e->getCode() === '23000') {
-                return back()->withErrors(['invoice_number' => 'This invoice number exists'])->withInput();
-            }
+            //if ($e->getCode() === '23000') {
+                //return back()->withErrors(['invoice_number' => 'This invoice number exists'])->withInput();
+            //}
 
             //database errors
             return back()->withErrors(['error' => 'There was an error creating the invoice. Please try again later.'])->withInput();

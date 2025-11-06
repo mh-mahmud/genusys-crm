@@ -118,10 +118,11 @@
                                                     type="text" name="invoice_number" id="invoice_number"
                                                     value="{{ old('invoice_number', str_replace('INV-', '', $invoice->invoice_number)) }}" />
 
-                                                @if ($errors->has('invoice_number'))
-                                                <span class="text-danger">{{ $errors->first('invoice_number') }}</span>
-                                                @endif
+                                               
                                             </div>
+                                             @if ($errors->has('invoice_number'))
+                                                <span class="text-danger">{{ $errors->first('invoice_number') }}</span>
+                                            @endif
                                             <!--end::Input-->
                                         </div>
                                     </div>
@@ -441,6 +442,13 @@
 
                                     @if(is_null($invoiceCustomFormId))
                                     <div class="table-responsive">
+                                         @if ($errors->has('items_error'))
+                                            <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+                                                <strong><i class="bi bi-exclamation-triangle-fill me-1"></i></strong>
+                                                {{ $errors->first('items_error') }}
+                                                <button type="button" class="btn-close btn-close-sm ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        @endif
                                         <!--Invoice Table Preview-->
                                         <table class="table table-rounded table-sm table-striped border align-middle gs-2" id="proposal-table">
                                             <thead>
