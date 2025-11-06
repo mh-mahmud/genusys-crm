@@ -227,8 +227,9 @@ class ProductController extends Controller {
 
     public function showForm($id)
     {
-        $dynamicTableDetails = $this->dynamicTableService->getDetailsByTableName($tableName);
-        return view('dynamic_table.show', compact('dynamicTableDetails', 'tableName'));
+        $dynamicTableDetails = $this->productService->getDetailsByTableName($id);
+        $tableName = $dynamicTableDetails[0]->template_name;
+        return view('products.showform', compact('dynamicTableDetails', 'tableName'));
     }
 
 

@@ -247,4 +247,9 @@ class ProductService
         return 'Data inserted successfully.';
     }
 
+    public function getDetailsByTableName($template_id)
+    {
+        return ProductTemplate::where('template_id', $template_id)->get();
+    }
+
 }
