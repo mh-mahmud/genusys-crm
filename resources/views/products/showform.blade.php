@@ -68,9 +68,7 @@
                                         <!-- <th class="min-w-150px">Form ID</th> -->
                                         <th class="min-w-150px">Field Name</th>
                                         <th class="min-w-140px">Field Value</th>
-                                        <th class="min-w-140px">Is Index</th>
-                                        <th class="min-w-140px">Is Null</th>
-                                        <th class="min-w-140px">Is Unique</th>
+                                        <th class="min-w-140px">Charecter Length</th>
 
                                     </tr>
                                     </thead>
@@ -79,16 +77,10 @@
                                     <tbody>
                                     @foreach ($dynamicTableDetails  as $detail)
                                         <tr>
-
                                             <td class="text-dark fs-6">{{$loop->iteration}}</td>
-
                                             <td class="text-dark fs-6">{{ $detail->field_name }}</td>
                                             <td class="text-dark fs-6">{{ $detail->field_value }}</td>
-                                            <td class="text-dark fs-6">{{ $detail->is_index ? 'Yes' : 'No' }}</td>
-                                            <td class="text-dark fs-6">{{ $detail->is_null ? 'Yes' : 'No' }}</td>
-                                            <td class="text-dark fs-6">{{ $detail->is_unique ? 'Yes' : 'No' }}</td>
-
-
+                                            <td class="text-dark fs-6">{{ $detail->character_length }}</td>
                                         </tr>
                                     @endforeach
 

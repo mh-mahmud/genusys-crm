@@ -235,36 +235,104 @@ class ProductController extends Controller {
 
     public function editForm($id)
     {
-        $invoice = InvoiceCustomForm::findOrFail($id);
-        return view('invoice_custom.edit', compact('invoice'));
+        $tableDetails = ProductTemplate::where('template_id', $id)->get();
+        if ($tableDetails->isEmpty()) {
+            return redirect()->route('dynamictable-index')->with('error', 'Table not found.');
+        }
+
+        return view('products.editform', compact('tableDetails'));
     }
 
 
-    public function updateForm(Request $request, $id)
-    {
-        $request->validate([
-            'invoice_name' => 'required|string|max:255',
-            'field_details' => 'array',
-            'field_details.*.field_name' => 'required|string',
-            'total_in_word' => 'nullable|string|max:255',
-            'bank_details' => 'nullable|string',
-            'issued_by' => 'nullable|string',
-        ], [
-            'field_details.*.field_name.required' => 'Each Item Field Name is required.',
-            'invoice_name.required' => 'The Invoice Name is required.',
-            'total_in_word.max' => 'The Total in Words field should not exceed 255 characters.',
-        ]);
-        //$this->leadsFormService->updateLeadsForm($id, $request->all());
-        $this->invoiceCustomFormService->updateCustomInvoice($id, $request->all());
+    // public function updateForm(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'invoice_name' => 'required|string|max:255',
+    //         'field_details' => 'array',
+    //         'field_details.*.field_name' => 'required|string',
+    //         'total_in_word' => 'nullable|string|max:255',
+    //         'bank_details' => 'nullable|string',
+    //         'issued_by' => 'nullable|string',
+    //     ], [
+    //         'field_details.*.field_name.required' => 'Each Item Field Name is required.',
+    //         'invoice_name.required' => 'The Invoice Name is required.',
+    //         'total_in_word.max' => 'The Total in Words field should not exceed 255 characters.',
+    //     ]);
+    //     $this->invoiceCustomFormService->updateCustomInvoice($id, $request->all());
 
-        return redirect()->route('invoice-custom-index')->with('success', 'Custom Invoice updated successfully.');
+    //     return redirect()->route('invoice-custom-index')->with('success', 'Custom Invoice updated successfully.');
+    // }
+
+    public function updateForm(Request $request)
+    {
+
+        // Custom validation rule for snake case
+        Validator::extend('snake_case', function ($attribute, $value, $parameters, $validator) {
+            return preg_match('/^[a-z0-9]+(_[a-z0-9]+)*$/', $value);
+        });
+    
+        Validator::replacer('snake_case', function ($message, $attribute, $rule, $parameters) {
+            $customAttributes = [
+                // 'template_name' => 'Table Name',
+                'fields.*.name' => 'Field Name',
+            ];
+
+            return str_replace(':attribute', $customAttributes[$attribute] ?? $attribute, ':attribute must be in lowercase and words should be separated by underscores(Ex.template_name).');
+        });
+
+        // Custom validation messages
+        $messages = [
+            'fields.*.name.snake_case' => 'The :attribute must be in lowercase and words should be separated by underscores(Ex.first_name)',
+        ];
+
+        
+
+        // Validate the request inputs
+        $validator = Validator::make($request->all(), [
+            'template_name' => 'required|string|max:255',
+            'fields' => 'required|array',
+            'fields.*.name' => 'required|string|max:255|snake_case',
+            'fields.*.type' => 'required|string|max:255',
+            'fields.*.character_length' => 'nullable|string',
+        ], $messages);
+
+        if ($validator->fails()) {
+            dd($validator);
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $templateName = $request->input('template_name');
+        $templateId = null;
+        if(isset($request->template_id)) {
+            $templateId = $request->template_id;
+        }
+        
+        $fields = $request->input('fields');
+
+        try {
+            // Service to create the table and insert data
+            $result = $this->productService->createTable($templateName, $templateId, $fields);
+
+            if ($result === 'Table already exists.') {
+                dd("Table already exists");
+                return redirect()->route('product-form-create')->with('error', $result);
+            }
+            Helper::storeLog("Product template created successfully", "Product Form", "Create Product Template");
+    
+            return redirect()->route('product-form-index')->with('success', 'Product template created successfully');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            return redirect()->route('product-form-create')->with('error', 'An error occurred while creating the table: ' . $e->getMessage());
+        }
     }
 
 
-    public function destroyForm($id)
+    public function destroyForm($templateId)
     {
-        InvoiceCustomForm::destroy($id);
-        return redirect()->route('invoice-custom-index')->with('success', 'Custom Invoice Deleted Successfully!');
+        DB::select("DELETE FROM product_templates WHERE template_id='{$templateId}'");
+        return redirect()->route('product-form-index')->with('success', 'Product Template Deleted Successfully!');
     }
 
     // searech for invoice

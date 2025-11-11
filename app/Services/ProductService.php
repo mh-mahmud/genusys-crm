@@ -210,22 +210,28 @@ class ProductService
 
     public function createTable($templateName, $templateId, $fields)
     {
-        // table already exists show this message
-        $data = ProductTemplate::where('template_name', $templateName)->first();
-        if ($data) {
-            return 'Table already exists.';
-        }
 
         // get template id
-        $temp = ProductTemplate::select(['id', 'template_id'])
-                ->orderBy('id', 'desc')
-                ->first();
-        if(empty($temp)) {
-            $templateId = 1001;
+        if($templateId===null) {
+            // table already exists show this message
+            $data = ProductTemplate::where('template_name', $templateName)->first();
+            if ($data) {
+                return 'Table already exists.';
+            }
+
+            $temp = ProductTemplate::max('template_id');
+            if(empty($temp)) {
+                $templateId = 1001;
+            }
+            else {
+                $templateId = $temp + 1;
+            }
         }
         else {
-            $templateId = $temp->template_id + 1;
+            // remove previous data
+            DB::select("DELETE FROM product_templates WHERE template_id='{$templateId}'");
         }
+
 
         //insert data in table
         $data = [];
