@@ -299,6 +299,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::delete('/product-feature/{id?}', [ProductController::class, 'destroy'])->name('product-feature-destroy')->middleware(['check-permission']);
 	Route::put('/product-feature-update/{id}', [ProductController::class, 'productFeatureUpdate'])->name('product-feature-update');
 	Route::post('product-features-show', [ProductController::class, 'product_features_show'])->name('product.features.show');
+	Route::post('/get-template-fields', [ProductController::class, 'getTemplateFields'])->name('get-template-fields');
+
 	
 
 	// product custom form

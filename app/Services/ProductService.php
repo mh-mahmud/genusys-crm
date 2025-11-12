@@ -48,6 +48,7 @@ class ProductService
             'product_cost.regex' => 'The product cost must have at most 11 digits before the decimal point and up to 2 digits after the decimal point.',
             'product_value.regex' => 'The product value must have at most 11 digits before the decimal point and up to 2 digits after the decimal point.',
         ]);
+        $cutom_data = json_encode($request->custom);
         $data = $request->all();
 
         //dd($data);
@@ -63,7 +64,7 @@ class ProductService
         } 
 
         try {
-            return  DB::transaction(function () use ($data, $fileNameToStore) {
+            return  DB::transaction(function () use ($data, $fileNameToStore, $cutom_data) {
                 $dataObj                        = new Product();
                 $dataObj->name                  = $data['name'];
                 $dataObj->product_type          = $data['product_type'];
@@ -72,6 +73,8 @@ class ProductService
                 $dataObj->product_code          = $data['product_code'];
                 $dataObj->description           = $data['description'];
                 $dataObj->status                = $data['status'];
+                $dataObj->product_template_id   = $data['template_name'];
+                $dataObj->custom_product_data   = $cutom_data;
                 $dataObj->img_path              = $fileNameToStore;
                 $dataObj->created_by            = Auth::id();
                 $dataObj->save();
@@ -85,6 +88,7 @@ class ProductService
                 ];
             });
         } catch (Exception $e) {
+            dd($e->getMessage());
             return (object)[
                 'status'             => 424,
                 'error'              => $e->getMessage()

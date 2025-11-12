@@ -223,3 +223,6 @@ CREATE TABLE IF NOT EXISTS `schedule_call` (
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 ALTER TABLE schedule_call ADD schedule_time DATETIME NULL DEFAULT NULL AFTER user_id;
+
+-- 11/12/2025
+ALTER TABLE `products` ADD `product_template_id` INT NULL DEFAULT NULL AFTER `status`, ADD `custom_product_data` JSON NULL DEFAULT NULL AFTER `product_template_id`;

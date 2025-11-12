@@ -30,12 +30,19 @@ class ProductController extends Controller {
     }
 
     public function productCreate()
-    {       
-        return view('products.create');
+    {
+        $templates = DB::select("
+            SELECT template_id, MAX(id) as id, MAX(template_name) as name
+            FROM product_templates
+            WHERE status = 1
+            GROUP BY template_id
+        ");
+
+        return view('products.create', compact('templates'));
     }
 
     public function productStore(Request $request)
-    { 
+    {
         $result = $this->productService->productStore($request);
         if($result->status == 201){
             Helper::storeLog("Product added successfully", "Product", "Create Product");
@@ -347,5 +354,70 @@ class ProductController extends Controller {
         $invoices = $this->invoiceCustomFormService->searchCustomInvoice($request);
         return view('invoice_custom.index', compact('invoices'));
     }
+
+    public function getTemplateFields(Request $request)
+    {
+        $templateId = $request->input('template_id');
+
+        $templates = ProductTemplate::where('template_id', $templateId)->get();
+        $str = "";
+
+        foreach($templates as $key=>$val) {
+            $field_name = str_replace("_", " ", ucfirst($val->field_name));
+            $raw_field_name = $val->field_name;
+            if($val->field_value == 'int') {
+                $str .= '<div class="col-md-6"><div class="fv-row mb-3"><label class="form-label fw-bolder text-dark">'.$field_name.'</label><input class="form-control form-control-sm form-control-solid" type="number" name="custom['.$raw_field_name.']" autocomplete="off" /></div></div>';
+            }
+            else if($val->field_value=='char' || $val->field_value=='varchar') {
+                $str .= '<div class="col-md-6"><div class="fv-row mb-3"><label class="form-label fw-bolder text-dark">'.$field_name.'</label><input class="form-control form-control-sm form-control-solid" type="text" name="custom['.$raw_field_name.']" autocomplete="off" /></div></div>';
+            }
+            else if($val->field_value=='date') {
+                $str .= '<div class="col-md-6"><div class="fv-row mb-3"><label class="form-label fw-bolder text-dark">'.$field_name.'</label><input class="form-control form-control-sm form-control-solid" type="date" name="custom['.$raw_field_name.']" autocomplete="off" /></div></div>';
+            }
+            else if($val->field_value=='text') {
+                $str .= '<div class="col-md-6"><div class="form-group"><label class="form-label fw-bolder text-dark" for="textarea">'.$field_name.'</label><textarea class="form-control form-control-sm  form-control-solid" name="custom['.$raw_field_name.']" rows="3"></textarea></div></div>';
+            }
+            else if($val->field_value=='boolean') {
+
+                if(!empty($val->character_length)) {
+                    $chr = explode(",", $val->character_length);
+                    $option = "<option value=''>-- select option --</option>";
+                    foreach($chr as $key=>$val) {
+                        $option .= '<option value="'.$val.'">'.$val.'</option>';
+                    }
+
+                    $str .= '<div class="col-md-6"><div class="fv-row mb-3"><label class="form-label fw-bolder text-dark">'.$field_name.'</label><select class=" form-control form-control-sm form-control-solid" name="custom['.$raw_field_name.']" aria-label="Default select example">'.$option.'</select></div></div>';
+                }
+
+            }
+            else if($val->field_value=='dropdown') {
+                if(!empty($val->character_length)) {
+                    $chr = explode(",", $val->character_length);
+                    $option = "<option value=''>-- select option --</option>";
+                    foreach($chr as $key=>$val) {
+                        $option .= '<option value="'.$val.'">'.$val.'</option>';
+                    }
+
+                    $str .= '<div class="col-md-6"><div class="fv-row mb-3"><label class="form-label fw-bolder text-dark">'.$field_name.'</label><select class=" form-control form-control-sm form-control-solid" name="custom['.$raw_field_name.']" aria-label="Default select example">'.$option.'</select></div></div>';
+                }
+
+            }
+        }
+        // dd($str);
+
+        // $str = json_encode($str);
+
+        if ($templates) {
+            // Suppose the HTML fields are stored in column `template_html`
+            return response()->json([
+                'html' => $str
+            ]);
+        } else {
+            return response()->json([
+                'html' => '<p style="color:red;">No fields found for this template.</p>'
+            ]);
+        }
+    }
+
 
 }

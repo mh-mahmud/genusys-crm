@@ -146,8 +146,39 @@ use Carbon\Carbon;
         </div>
     </div>
 
+    @if($product->custom_product_data)
+    <div class="row">
+        <div class="col-xxl-8 mx-auto">
+            <div class="card mt-4">
+                <div class="card-header bg-light bd-cyan">
+                    <div class="card-title">
+                        <h2>Product Custom Data</h2>
+                    </div>
+                </div>
+
+                <div class="card-body p-1">
+
+                    @php
+                        $string = json_decode($product->custom_product_data, true);
+                    @endphp
 
 
+                    <div class="g-p-feature-details-area mb-5">
+                        @foreach($string as $key=>$val)
+                        <div class="d-flex align-items-center gap-2 bg-light p-3 mb-1">
+                            <span class="fs-6 fw-bolder mb-1 text-gray-900 text-hover-primary w-lg-100px w-xxl-150px">{{ ucwords(str_replace("_", " ", $key)) }}</span>
+                            <span>{{ $val }}</span>
+                        </div>
+                        @endforeach
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    {{--
     <div class="row">
         <div class="col-xxl-8 mx-auto">
             <div class="card mt-4">
@@ -275,8 +306,11 @@ use Carbon\Carbon;
 
         </div>
     </div>
+    --}}
 
 
+
+    {{--
     <div class="row">
         <div class="col-xxl-8 mx-auto">
             <div class="card mt-4">
@@ -347,6 +381,7 @@ use Carbon\Carbon;
 
         </div>
     </div>
+    --}}
 
 
 

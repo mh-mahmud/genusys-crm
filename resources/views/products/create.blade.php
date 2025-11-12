@@ -62,7 +62,7 @@
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Name<span class="text-danger">*</span></label>
+                                                    <label class="form-label fw-bolder text-dark">Product Name<span class="text-danger">*</span></label>
                                                     <input class="form-control form-control-sm form-control-solid" type="text" name="name" autocomplete="off" value="{{ old('name') }}" />
                                                     @if ($errors->has('name'))
                                                         <span class="text-danger">{{ $errors->first('name') }}</span>
@@ -72,7 +72,7 @@
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Product Code<span class="text-danger">*</span></label>
+                                                    <label class="form-label fw-bolder text-dark">Product Code (sku)<span class="text-danger">*</span></label>
                                                     <input class="form-control form-control-sm form-control-solid" type="text" name="product_code" autocomplete="off" value="{{ old('product_code') }}" />
                                                     @if ($errors->has('product_code'))
                                                         <span class="text-danger">{{ $errors->first('product_code') }}</span>
@@ -100,22 +100,11 @@
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Cost</label>
+                                                    <label class="form-label fw-bolder text-dark">Purchase Rate</label>
                                                     <input class="form-control form-control-sm form-control-solid"
                                                            type="text" name="product_cost" autocomplete="off" value="{{ old('product_cost') }}" />
                                                     @if ($errors->has('product_cost'))
                                                         <span class="text-danger">{{ $errors->first('product_cost') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Sale Price</label>
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="text" name="sale_price" autocomplete="off" value="{{ old('sale_price') }}" />
-                                                    @if ($errors->has('sale_price'))
-                                                        <span class="text-danger">{{ $errors->first('sale_price') }}</span>
                                                     @endif
                                                 </div>
                                             </div>
@@ -155,11 +144,26 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Product Template</label>
+                                                    <select id="product-template" class=" form-control form-control-sm form-control-solid" name="template_name" aria-label="Default select example">
+                                                    <option value="">-- select custom fields --</option>
+                                                    @foreach ($templates as $key => $val)
+                                                        <option value="{{ $val->template_id }}" {{ old('template_name') === $val->name ? 'selected' : '' }}>{{ $val->name }}</option>
+                                                    @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" id="custom-fields">
+
+                                            </div>
+
                                         </div>
 
-                                      <div class="card-footer d-flex gap-2 justify-content-end align-items-center p-2">
-                                            <input type="reset" value="Reset" class="btn btn-light me-2">
-                                            <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
+                                        <div class="card-footer d-flex gap-2 justify-content-end align-items-center p-2">
+                                            <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Submit</button>
                                         </div>
 
                                     </form>
@@ -184,31 +188,42 @@
 
 
 @endsection
+@section('endScript')
+<script>
+    // $(document).ready(function() {
+    //     $("#product-template").on("change", function() {
+    //         var loka = $(this).val();
+    //         alert(loka);
+    //     });
+    // });
 
-{{-- <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const BASE_URL = @json(url('/'));
-            const tooltipElements = document.querySelectorAll('.help-tooltip');
-            tooltipElements.forEach(el => {
-                const tooltip = new bootstrap.Tooltip(el, {
-                    title: 'Loading...',    
-                    trigger: 'hover',
-                    html: true       
-                });
-                 el.addEventListener('mouseenter', function () {
-                     const routeName = el.dataset.route;
+$(document).ready(function() {
+    $('#product-template').on('change', function() {
+        var templateId = $(this).val();
+        var urldata = "{{route('get-template-fields')}}";
 
-                      if (!el.dataset.loaded) {
-                        fetch(`${BASE_URL}/get-help-content/${routeName}`)
-                        .then(res => res.json())   
-                        .then(data => {
-                            const content = data.description;
-                            el.setAttribute('data-bs-original-title', content);
-                            // tooltip.setContent({ '.tooltip-inner': content });
-                            el.dataset.loaded = 'true';
-                        });
-                    }
+        if (templateId) {
+            $.ajax({
+                url: urldata,   // route URL
+                type: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    template_id: templateId
+                },
+                success: function(response) {
+                    // Replace or append HTML
+                    $('#custom-fields').html(response.html);
+                },
+                error: function(xhr) {
+                    console.log('Error:', xhr.responseText);
+                }
             });
-        });
+        } else {
+            $('#custom-fields').empty();
+        }
     });
-    </script> --}}
+});
+
+
+</script>
+@endsection
