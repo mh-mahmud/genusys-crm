@@ -58,10 +58,11 @@
                                     <form class="g-form w-100" action="{{ route('product-update-pro', $product->id) }}"  method="POST" enctype="multipart/form-data">
                                          @csrf
                                          @method('PUT')
+                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Name<span class="text-danger">*</span></label>
+                                                    <label class="form-label fw-bolder text-dark">Product Name<span class="text-danger">*</span></label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
@@ -76,7 +77,7 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Code<span class="text-danger">*</span></label>
+                                                    <label class="form-label fw-bolder text-dark">Product Code<span class="text-danger">*</span></label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-sm form-control-solid"
@@ -91,7 +92,7 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <!--begin::Label-->
-                                                    <label class="form-label fw-bolder text-dark">Type<span class="text-danger">*</span></label>
+                                                    <label class="form-label fw-bolder text-dark">Product Type<span class="text-danger">*</span></label>
                                                     <select class="form-control form-control-sm form-control-solid" name="product_type">
                                                         <option value="">Select</option>
                                                         @foreach (config('constants.PRODUCT_TYPE') as $key => $type)
@@ -108,7 +109,7 @@
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Cost</label>
+                                                    <label class="form-label fw-bolder text-dark">Purchase Rate</label>
                                                     <input class="form-control form-control-sm form-control-solid"
                                                            type="text" name="product_cost" autocomplete="off" value="{{ $product->product_cost }}" />
                                                     @if ($errors->has('product_cost'))
@@ -119,7 +120,7 @@
 
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Value</label>
+                                                    <label class="form-label fw-bolder text-dark">Sale Price</label>
                                                     <input class="form-control form-control-sm form-control-solid"
                                                            type="text" name="product_value" autocomplete="off" value="{{ $product->product_value }}" />
                                                      @if ($errors->has('product_value'))
@@ -138,8 +139,7 @@
                                             <div class="col-md-6">
                                                 <div class="fv-row mb-3">
                                                     <label class="form-label fw-bolder text-dark">Image</label>
-                                                    <input class="form-control form-control-sm form-control-solid"
-                                                           type="file" name="img_path" autocomplete="off" />
+                                                    <input class="form-control form-control-sm form-control-solid" type="file" name="img_path" autocomplete="off" />
                                                 </div>
                                             </div>
 
@@ -153,11 +153,26 @@
                                                 </div>
                                             </div>
 
-                                      <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Product Template</label>
+                                                    <select id="product-template" class=" form-control form-control-sm form-control-solid" name="template_name" aria-label="Default select example">
+                                                    <option value="">-- select custom fields --</option>
+                                                    @foreach ($templates as $key => $val)
+                                                        <option value="{{ $val->template_id }}" {{ $product->product_template_id == $val->template_id ? 'selected' : '' }}>{{ $val->name }}</option>
+                                                    @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" id="custom-fields">
+                                                {!! $str !!}
+                                            </div>
+                                        </div>
+
+                                        <div class="card-footer d-flex justify-content-end py-6 px-9">
                                             <input type="reset" value="Reset" class="btn btn-light me-2">
-                                            <button type="submit" class="btn btn-primary"
-                                                    id="kt_account_profile_details_submit">Save Changes
-                                            </button>
+                                            <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
                                         </div>
 
                                     </form>
@@ -181,4 +196,37 @@
             <!--end::Content-->
 
 
+@endsection
+@section('endScript')
+<script>
+
+$(document).ready(function() {
+    $('#product-template').on('change', function() {
+        var templateId = $(this).val();
+        var urldata = "{{route('get-template-fields')}}";
+
+        if (templateId) {
+            $.ajax({
+                url: urldata,   // route URL
+                type: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    template_id: templateId
+                },
+                success: function(response) {
+                    // Replace or append HTML
+                    $('#custom-fields').html(response.html);
+                },
+                error: function(xhr) {
+                    console.log('Error:', xhr.responseText);
+                }
+            });
+        } else {
+            $('#custom-fields').empty();
+        }
+    });
+});
+
+
+</script>
 @endsection

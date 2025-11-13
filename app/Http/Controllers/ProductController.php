@@ -64,7 +64,71 @@ class ProductController extends Controller {
     public function productEdit($id)
     {
         $product = $this->productService->getProductById($id);
-        return view('products.edit', compact('product'));
+        $templates = DB::select("
+            SELECT template_id, MAX(id) as id, MAX(template_name) as name
+            FROM product_templates
+            WHERE status = 1
+            GROUP BY template_id
+        ");
+
+        $cus_data = !empty($product->custom_product_data) ? json_decode($product->custom_product_data, true) : [];
+        $template_mo = ProductTemplate::where('template_id', $product->product_template_id)->get();
+        $str = "";
+
+        foreach($template_mo as $key=>$val) {
+            $field_name = str_replace("_", " ", ucfirst($val->field_name));
+            $raw_field_name = $val->field_name;
+
+            $loka = null;
+            if(isset($cus_data[$val->field_name])) {
+                $loka = $cus_data[$val->field_name];
+            }
+
+            if($val->field_value == 'int') {
+                $str .= '<div class="col-md-6"><div class="fv-row mb-3"><label class="form-label fw-bolder text-dark">'.$field_name.'</label><input class="form-control form-control-sm form-control-solid" type="number" value="'.$loka.'" name="custom['.$raw_field_name.']" autocomplete="off" /></div></div>';
+            }
+            else if($val->field_value=='char' || $val->field_value=='varchar') {
+                $str .= '<div class="col-md-6"><div class="fv-row mb-3"><label class="form-label fw-bolder text-dark">'.$field_name.'</label><input class="form-control form-control-sm form-control-solid" type="text" value="'.$loka.'" name="custom['.$raw_field_name.']" autocomplete="off" /></div></div>';
+            }
+            else if($val->field_value=='date') {
+                $str .= '<div class="col-md-6"><div class="fv-row mb-3"><label class="form-label fw-bolder text-dark">'.$field_name.'</label><input class="form-control form-control-sm form-control-solid" type="date" value="'.$loka.'" name="custom['.$raw_field_name.']" autocomplete="off" /></div></div>';
+            }
+            else if($val->field_value=='text') {
+                $str .= '<div class="col-md-6"><div class="form-group"><label class="form-label fw-bolder text-dark" for="textarea">'.$field_name.'</label><textarea class="form-control form-control-sm  form-control-solid" name="custom['.$raw_field_name.']" rows="3">'.$loka.'</textarea></div></div>';
+            }
+            else if($val->field_value=='boolean') {
+
+                if(!empty($val->character_length)) {
+                    $chr = explode(",", $val->character_length);
+                    $option = "<option value=''>-- select option --</option>";
+
+                    foreach($chr as $key=>$val) {
+                        $selected = (!empty($loka) && $loka==$val) ? "selected" : null;
+                        $option .= '<option '.$selected.' value="'.$val.'">'.$val.'</option>';
+                    }
+
+                    $str .= '<div class="col-md-6"><div class="fv-row mb-3"><label class="form-label fw-bolder text-dark">'.$field_name.'</label><select class=" form-control form-control-sm form-control-solid" name="custom['.$raw_field_name.']" aria-label="Default select example">'.$option.'</select></div></div>';
+                }
+
+            }
+            else if($val->field_value=='dropdown') {
+
+                if(!empty($val->character_length)) {
+                    $chr = explode(",", $val->character_length);
+                    $option = "<option value=''>-- select option --</option>";
+
+                    foreach($chr as $key=>$val) {
+                        $selected = (!empty($loka) && $loka==$val) ? "selected" : null;
+                        $option .= '<option '.$selected.' value="'.$val.'">'.$val.'</option>';
+                    }
+
+                    $str .= '<div class="col-md-6"><div class="fv-row mb-3"><label class="form-label fw-bolder text-dark">'.$field_name.'</label><select class=" form-control form-control-sm form-control-solid" name="custom['.$raw_field_name.']" aria-label="Default select example">'.$option.'</select></div></div>';
+                }
+
+            }
+        }
+
+        return view('products.edit', compact('product', 'templates', 'str'));
     }
 
     public function productUpdate(Request $request, $id)
