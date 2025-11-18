@@ -132,7 +132,8 @@ class ProductController extends Controller {
     }
 
     public function productUpdate(Request $request, $id)
-    { 
+    {
+
         $result = $this->productService->productUpdate($request, $id);
         if($result->status == 208){
             Helper::storeLog("Product updated successfully", "Product", "Edit Product");
