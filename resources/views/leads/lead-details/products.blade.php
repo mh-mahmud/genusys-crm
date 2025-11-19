@@ -5,14 +5,16 @@
         <div class="card-body">
 
             <div class="d-flex justify-content-between align-items-center mb-1">
-                <strong class="fs-3">Product Specification</strong>
-                <!-- <a class="btn btn-success btn-sm" id="kt_activities_toggle_5"><i
-                        class="bi bi-plus-lg"></i>Add Specification</a> -->
+                <strong class="fs-3">Product Details</strong>
+                <a class="btn btn-success btn-sm" id="kt_activities_toggle_5"><i class="bi bi-plus-lg"></i>Add Product</a>
+
+                {{--
                 <a class="btn btn-success btn-sm" target="_blank"
                     href="{{ route('product-specification-create', $lead->id) }}">
                     <i class="bi bi-plus-lg"></i>
                     Add Specification
                 </a>
+                --}}
             </div>
 
             <div class="table-responsive">

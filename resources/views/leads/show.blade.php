@@ -379,7 +379,7 @@
                             </li>
                             @endif
 
-                            @if(in_array("meeting", $menu_access))
+                            {{--@if(in_array("meeting", $menu_access))--}}
                             <li class="nav-item">
                                 <a class="nav-link {{ session('active_tab') === 'g_lead_meeting_tab' ? 'active' : '' }}"
                                    data-bs-toggle="tab" href="#g_lead_meeting" data-tab="g_lead_meeting"
@@ -387,7 +387,7 @@
                                    data-bs-target="#g_lead_meeting" role="tab" aria-controls="g_lead_meeting"
                                    aria-selected="true">Meetings</a>
                             </li>
-                            @endif
+                            {{--@endif--}}
 
                             @if(in_array("proposal", $menu_access))
                             <li class="nav-item">
@@ -1129,6 +1129,230 @@
 
 
 
+    <!--begin::Product activities drawer-->
+    <div id="kt_activities_6" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities"
+         data-kt-drawer-activate="true" data-kt-drawer-overlay="true"
+         data-kt-drawer-width="{default:'300px', 'lg': '50%'}" data-kt-drawer-direction="end"
+         data-kt-drawer-toggle="#kt_activities_toggle_6" data-kt-drawer-close="#kt_activities_close">
+        <div class="card shadow-none rounded-0 w-100">
+            <!--begin::Header-->
+            <div class="card-header" id="kt_activities_header">
+                <h3 class="card-title fw-bolder text-dark">Add Product</h3>
+                <div class="card-toolbar">
+                    <button type="button" class="btn btn-sm btn-icon btn-active-light-primary me-n5"
+                            id="kt_activities_close">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                      transform="rotate(-45 6 17.3137)" fill="black"/>
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                      fill="black"/>
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </button>
+                </div>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body position-relative" id="kt_activities_body">
+                <!--begin::Content-->
+                <div id="kt_activities_scroll" class="position-relative scroll-y me-n5 pe-5" data-kt-scroll="false"
+                     data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_activities_body"
+                     data-kt-scroll-dependencies="#kt_activities_header, #kt_activities_footer"
+                     data-kt-scroll-offset="5px">
+                    <!--begin::Timeline items-->
+                    <!-- <div class="timeline"> -->
+
+                    <!--begin::Tables Widget 9-->
+                    <div class="card mb-5 mb-xl-8">
+                        <!--begin::Header-->
+
+                        <!--end::Header-->
+                        <div style="border:1px solid #ddd;padding:20px">
+                            <div class="row">
+                                <div class="col-md-12 mx-auto">
+
+                                    <form class="g-form w-100" action="{{ route('meeting-store') }}"
+                                          enctype="multipart/form-data" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="lead_id" value="{{ $lead->id }}">
+                                        <input type="hidden" name="form_lead_panel" value="1">
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Select Lead</label>
+                                                    <select class=" form-control form-control-sm form-control-solid"
+                                                            name="recipients" aria-label="Default select example">
+                                                        <option value="{{$lead->id}}">
+                                                            @if($lead->first_name || $lead->last_name || $lead->email)
+                                                                {{ trim(($lead->first_name ?? '') . ' ' . ($lead->last_name ?? '') .
+                                                                ($lead->email ? ' <' . $lead->email . '>' : '')) }}
+                                                            @endif
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Meeting
+                                                        Subject</label>
+                                                    <input class="form-control form-control-sm form-control-solid"
+                                                           required type="text" name="meeting_subject"
+                                                           value="{{ old('meeting_subject') }}" autocomplete="off"/>
+                                                    @if ($errors->has('meeting_subject'))
+                                                        <span
+                                                            class="text-danger">{{ $errors->first('meeting_subject') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Meeting Date</label>
+                                                    <input type="text"
+                                                           class="form-control form-control-sm form-control-solid flatpickr"
+                                                           required name="meeting_date"
+                                                           value="{{ old('meeting_date') }}"/>
+                                                    @if ($errors->has('meeting_date'))
+                                                        <span
+                                                            class="text-danger">{{ $errors->first('meeting_date') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label fw-bolder text-dark" for="textarea">Meeting
+                                                        Description</label>
+                                                    <textarea class="form-control form-control-sm form-control-solid"
+                                                              name="meeting_description"
+                                                              rows="2">{{ old('meeting_description') }}</textarea>
+                                                    @if ($errors->has('meeting_description'))
+                                                        <span
+                                                            class="text-danger">{{ $errors->first('meeting_description') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Meeting Link</label>
+                                                    <input class="form-control form-control-sm form-control-solid"
+                                                           type="url" name="meeting_link"
+                                                           value="{{ old('meeting_link') }}" autocomplete="off"/>
+                                                    @if ($errors->has('meeting_link'))
+                                                        <span
+                                                            class="text-danger">{{ $errors->first('meeting_link') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Duration</label>
+                                                    <input class="form-control form-control-sm form-control-solid"
+                                                           type="text" name="duration" value="{{ old('duration') }}"
+                                                           autocomplete="off"/>
+                                                    @if ($errors->has('duration'))
+                                                        <span
+                                                            class="text-danger">{{ $errors->first('duration') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Attachments</label>
+                                                    <input type="file"
+                                                           class="form-control form-control-sm form-control-solid"
+                                                           name="attachments"/>
+                                                    @if ($errors->has('attachments'))
+                                                        <span
+                                                            class="text-danger">{{ $errors->first('attachments') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Status</label>
+                                                    <select class=" form-control form-control-sm form-control-solid"
+                                                            name="status"
+                                                            aria-label="Default select example">
+
+                                                        <option
+                                                            value="1" {{ old('status', '1') == '1' ? 'selected' : '' }}>
+                                                            Active
+                                                        </option>
+                                                        <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>
+                                                            Inactive
+                                                        </option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <div class="fv-row mt-10 form-check form-check-custom form-check-sm">
+                                                    <input class="form-check-input form-check-sm" type="checkbox"
+                                                           name="send_email" id="sendEmail"
+                                                           value="1" {{ old('send_email') ? 'checked' : '' }}>
+                                                    <label class="form-check-label fw-bolder text-dark" for="sendEmail">
+                                                        Send Email
+                                                    </label>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <div class="fv-row mt-10 form-check form-check-custom form-check-sm">
+                                                    <input class="form-check-input" type="checkbox" name="send_sms"
+                                                           id="sendSMS"
+                                                           value="1" {{ old('send_sms') ? 'checked' : '' }}>
+                                                    <label class="form-check-label fw-bolder text-dark" for="sendSMS">
+                                                        Send SMS
+                                                    </label>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <!--End Row-->
+                                        <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                            <button type="submit" class="btn btn-primary"
+                                                    id="">Save Changes
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--end::Tables Widget 9-->
+
+                    <!-- </div> -->
+                    <!--end::Timeline items-->
+                </div>
+                <!--end::Content-->
+            </div>
+            <!--end::Body-->
+            <!--begin::Footer-->
+
+            <!--end::Footer-->
+        </div>
+    </div>
+    <!--end::Product activities drawer-->
+
+
+
     <!--begin::Proposal drawer-->
     <div id="kt_activities_4" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities"
          data-kt-drawer-activate="true" data-kt-drawer-overlay="true"
@@ -1630,7 +1854,7 @@
     </div>
     <!--end::Proposal drawer-->
 
-    <!--begin::Proposal drawer-->
+    <!--Begin::Product drawer-->
     <div id="kt_activities_5" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities"
          data-kt-drawer-activate="true" data-kt-drawer-overlay="true"
          data-kt-drawer-width="{default:'300px', 'lg': '70%'}" data-kt-drawer-direction="end"
@@ -1681,347 +1905,102 @@
                                         @csrf
                                         <input type="hidden" name="form_ps_panel" value="1">
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="fv-row mb-5">
-                                                    <label class="form-label fw-bolder text-dark">Customer<span
-                                                            class="text-danger">*</span>
-
-                                                    </label>
-
-                                                    <select name="customer_id"
-                                                            class="form-control form-control-sm form-control-solid"
-                                                            required aria-label="Default select example">
-                                                        @if (!empty($lead_customer))
-                                                            <option
-                                                                value="{{ $lead_customer->id }}">{{ $lead_customer->first_name . " " . $lead_customer->last_name }}</option>
-                                                        @else
-                                                            <option value="" disabled selected>No customer assigned
-                                                            </option>
-                                                        @endif
-                                                    </select>
-                                                    @if ($errors->has('customer_id'))
-                                                        <span
-                                                            class="text-danger">{{ $errors->first('customer_id') }}</span>
-                                                    @endif
-
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">Product</label>
-                                                <select id="product-select"
-                                                        class="form-control form-control-sm form-control-solid"
-                                                        name="product_id[]"
-                                                        multiple="multiple"
-                                                        data-allow-clear="true"
-                                                        data-kt-select2="select2">
-                                                    @foreach ($products as $product)
-                                                        <option value="{{ $product->id }}"
-                                                            {{ is_array(old('product_id')) && in_array($product->id, old('product_id')) ? 'selected' : '' }}>
-                                                            {{ $product->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                @if ($errors->has('product_id'))
-                                                    <div class="text-danger">{{ $errors->first('product_id') }}</div>
-                                                @endif
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">Work Order Number</label>
-                                                <input class="form-control form-control-sm form-control-solid"
-                                                       type="text" name="work_order_number"
-                                                       value="{{ old('work_order_number') }}"/>
-                                                @if ($errors->has('work_order_number'))
-                                                    <div
-                                                        class="text-danger">{{ $errors->first('work_order_number') }}</div>
-                                                @endif
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">Work Order File</label>
-                                                <input class="form-control form-control-sm form-control-solid"
-                                                       type="file" name="work_order_file"/>
-                                                @if ($errors->has('work_order_file'))
-                                                    <div
-                                                        class="text-danger">{{ $errors->first('work_order_file') }}</div>
-                                                @endif
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">Work Order Value</label>
-                                                <input class="form-control form-control-sm form-control-solid"
-                                                       type="number" name="work_order_value"
-                                                       value="{{ old('work_order_value') }}"/>
-                                                @if ($errors->has('work_order_value'))
-                                                    <div
-                                                        class="text-danger">{{ $errors->first('work_order_value') }}</div>
-                                                @endif
-                                            </div>
 
 
-                                            <!-- new fields -->
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">Advance Amount</label>
-                                                <input class="form-control form-control-sm form-control-solid"
-                                                       type="text" name="advance_amount"
-                                                       value="{{ old('advance_amount') }}"/>
-                                                @if ($errors->has('advance_amount'))
-                                                    <div
-                                                        class="text-danger">{{ $errors->first('advance_amount') }}</div>
-                                                @endif
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">Total Installment</label>
-                                                <input class="form-control form-control-sm form-control-solid"
-                                                       type="text" name="total_installment"
-                                                       value="{{ old('total_installment') }}"/>
-                                                @if ($errors->has('total_installment'))
-                                                    <div
-                                                        class="text-danger">{{ $errors->first('total_installment') }}</div>
-                                                @endif
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">Per Month
-                                                    Installment</label>
-                                                <input class="form-control form-control-sm form-control-solid"
-                                                       type="text" name="per_month_installment"
-                                                       value="{{ old('per_month_installment') }}"/>
-                                                @if ($errors->has('per_month_installment'))
-                                                    <div
-                                                        class="text-danger">{{ $errors->first('per_month_installment') }}</div>
-                                                @endif
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">Payment Date Cycle</label>
-                                                <input class="form-control form-control-sm form-control-solid flatpickr"
-                                                       type="text" id="common_dob" name="payment_date_cycle"
-                                                       value="{{ old('payment_date_cycle') }}"/>
-                                                @if ($errors->has('payment_date_cycle'))
-                                                    <div
-                                                        class="text-danger">{{ $errors->first('payment_date_cycle') }}</div>
-                                                @endif
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">Remaining Month</label>
-                                                <input class="form-control form-control-sm form-control-solid"
-                                                       type="text" name="remaining_month"
-                                                       value="{{ old('remaining_month') }}"/>
-                                                @if ($errors->has('remaining_month'))
-                                                    <div
-                                                        class="text-danger">{{ $errors->first('remaining_month') }}</div>
-                                                @endif
-                                            </div>
-
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">Due Balance</label>
-                                                <input class="form-control form-control-sm form-control-solid"
-                                                       type="number" name="due_balance"
-                                                       value="{{ old('due_balance') }}"/>
-                                                @if ($errors->has('due_balance'))
-                                                    <div class="text-danger">{{ $errors->first('due_balance') }}</div>
-                                                @endif
-                                            </div>
-                                            <!-- end new fields -->
-
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">Purchase Order
-                                                    Value</label>
-                                                <input class="form-control form-control-sm form-control-solid"
-                                                       type="number" name="purchase_order_value"
-                                                       value="{{ old('purchase_order_value') }}"/>
-                                                @if ($errors->has('purchase_order_value'))
-                                                    <div
-                                                        class="text-danger">{{ $errors->first('purchase_order_value') }}</div>
-                                                @endif
-                                            </div>
-
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">Purchase Order
-                                                    File</label>
-                                                <input class="form-control form-control-sm form-control-solid"
-                                                       type="file" name="purchase_order_file"/>
-                                                @if ($errors->has('purchase_order_file'))
-                                                    <div
-                                                        class="text-danger">{{ $errors->first('purchase_order_file') }}</div>
-                                                @endif
-                                            </div>
-
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">AMC Start Date</label>
-                                                <input class="form-control form-control-sm form-control-solid flatpickr"
-                                                       type="text" id="common_dob" name="amc_start_date"
-                                                       value="{{ old('amc_start_date') }}"/>
-                                                @if ($errors->has('amc_start_date'))
-                                                    <div
-                                                        class="text-danger">{{ $errors->first('amc_start_date') }}</div>
-                                                @endif
-                                            </div>
-
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">AMC Renewal Date</label>
-                                                <input class="form-control form-control-sm form-control-solid flatpickr"
-                                                       type="text" id="common_dob" name="amc_renewal_date"
-                                                       value="{{ old('amc_renewal_date') }}"/>
-                                                @if ($errors->has('amc_renewal_date'))
-                                                    <div
-                                                        class="text-danger">{{ $errors->first('amc_renewal_date') }}</div>
-                                                @endif
-                                            </div>
-
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">AMC Rate (%)</label>
-                                                <input class="form-control form-control-sm form-control-solid"
-                                                       type="number" name="amc_rate" value="{{ old('amc_rate') }}"
-                                                       step="0.01"/>
-                                                @if ($errors->has('amc_rate'))
-                                                    <div class="text-danger">{{ $errors->first('amc_rate') }}</div>
-                                                @endif
-                                            </div>
-
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">Rental Amount</label>
-                                                <input class="form-control form-control-sm form-control-solid"
-                                                       type="number" name="rental_amount"
-                                                       value="{{ old('rental_amount') }}"/>
-                                                @if ($errors->has('rental_amount'))
-                                                    <div class="text-danger">{{ $errors->first('rental_amount') }}</div>
-                                                @endif
-                                            </div>
-
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">AMC Effective
-                                                    Amount</label>
-                                                <input class="form-control form-control-sm form-control-solid"
-                                                       type="number" name="amc_effective_amount"
-                                                       value="{{ old('amc_effective_amount') }}"/>
-                                                @if ($errors->has('amc_effective_amount'))
-                                                    <div
-                                                        class="text-danger">{{ $errors->first('amc_effective_amount') }}</div>
-                                                @endif
-                                            </div>
-
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">AMC Agreement
-                                                    Documents</label>
-                                                <input class="form-control form-control-sm form-control-solid"
-                                                       type="file" name="amc_agreement_documents"/>
-                                                @if ($errors->has('amc_agreement_documents'))
-                                                    <div
-                                                        class="text-danger">{{ $errors->first('amc_agreement_documents') }}</div>
-                                                @endif
-                                            </div>
-
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <div class="fv-row mb-3">
-                                                    <label class="form-label fw-bolder text-dark">Service Type</label>
-                                                    <select class=" form-control form-control-sm form-control-solid"
-                                                            name="service_type"
-                                                            aria-label="Default select example">
-                                                        <option value="">Select Service Type</option>
-                                                        <option
-                                                            value="Yearly" {{ old('service_type') == 'Yearly' ? 'selected' : '' }}>
-                                                            Yearly
-                                                        </option>
-                                                        <option
-                                                            value="Half-Yearly" {{ old('service_type') == 'Half-Yearly ' ? 'selected' : '' }}>
-                                                            Half-Yearly
-                                                        </option>
-                                                        <option
-                                                            value="Quarterly" {{ old('service_type') == 'Quarterly' ? 'selected' : '' }}>
-                                                            Quarterly
-                                                        </option>
-                                                        <option
-                                                            value="Monthly" {{ old('service_type') == 'Monthly ' ? 'selected' : '' }}>
-                                                            Monthly
-                                                        </option>
+                                                    <label class="form-label fw-bolder text-dark">Product Name<span class="text-danger">*</span></label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="name" autocomplete="off" value="{{ old('name') }}" />
+                                                    @if ($errors->has('name'))
+                                                        <span class="text-danger">{{ $errors->first('name') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
 
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Product Code (sku)<span class="text-danger">*</span></label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="text" name="product_code" autocomplete="off" value="{{ old('product_code') }}" />
+                                                    @if ($errors->has('product_code'))
+                                                        <span class="text-danger">{{ $errors->first('product_code') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Product Type<span class="text-danger">*</span></label>
+                                                    <select class="form-control form-control-sm form-control-solid"
+                                                            id="assigned_to" name="product_type" aria-label="Default select example">
+                                                        <option value='' {{ old('product_type', '') === '' ? 'selected' : '' }}>Select</option>
+                                                        @foreach (config('constants.PRODUCT_TYPE') as $key => $type)
+                                                            <option value="{{ $key }}" {{ old('product_type') === (string)$key ? 'selected' : '' }}>
+                                                                {{ $type }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @if ($errors->has('product_type'))
+                                                        <span class="text-danger">{{ $errors->first('product_type') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Purchase Rate</label>
+                                                    <input class="form-control form-control-sm form-control-solid"
+                                                           type="text" name="product_cost" autocomplete="off" value="{{ old('product_cost') }}" />
+                                                    @if ($errors->has('product_cost'))
+                                                        <span class="text-danger">{{ $errors->first('product_cost') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Sale Price</label>
+                                                    <input class="form-control form-control-sm form-control-solid"
+                                                           type="text" name="product_value" autocomplete="off" value="{{ old('product_value') }}" />
+                                                    @if ($errors->has('product_value'))
+                                                        <span class="text-danger">{{ $errors->first('product_value') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label fw-bolder text-dark" for="textarea">Description</label>
+                                                    <textarea class="form-control form-control-sm  form-control-solid" name="description" rows="3">{{ old('description') }}</textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Image</label>
+                                                    <input class="form-control form-control-sm form-control-solid" type="file" name="img_path" autocomplete="off" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Status</label>
+                                                    <select class=" form-control form-control-sm form-control-solid" name="status" aria-label="Default select example">
+                                                        <option value="1" selected>Active</option>
+                                                        <option value="0">Inactive</option>
                                                     </select>
                                                 </div>
                                             </div>
 
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">Software Value</label>
-                                                <textarea class="form-control form-control-sm form-control-solid"
-                                                          name="software_value"
-                                                          rows="3">{{ old('software_value') }}</textarea>
-                                                @if ($errors->has('software_value'))
-                                                    <div
-                                                        class="text-danger">{{ $errors->first('software_value') }}</div>
-                                                @endif
-                                            </div>
-
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">Hardware Value</label>
-                                                <textarea class="form-control form-control-sm form-control-solid"
-                                                          name="hardware_value"
-                                                          rows="3">{{ old('hardware_value') }}</textarea>
-                                                @if ($errors->has('hardware_value'))
-                                                    <div
-                                                        class="text-danger">{{ $errors->first('hardware_value') }}</div>
-                                                @endif
-                                            </div>
-
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">Implementation
-                                                    Cost</label>
-                                                <textarea class="form-control form-control-sm form-control-solid"
-                                                          name="implementation_value"
-                                                          rows="3">{{ old('implementation_value') }}</textarea>
-                                                @if ($errors->has('implementation_value'))
-                                                    <div
-                                                        class="text-danger">{{ $errors->first('implementation_value') }}</div>
-                                                @endif
-                                            </div>
-
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">Invoice Mushak
-                                                    File</label>
-                                                <input class="form-control form-control-sm form-control-solid"
-                                                       type="file" name="invoice_mushak_file"/>
-                                                @if ($errors->has('invoice_mushak_file'))
-                                                    <div
-                                                        class="text-danger">{{ $errors->first('invoice_mushak_file') }}</div>
-                                                @endif
-                                            </div>
-
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">Tax Exemption
-                                                    Certificate</label>
-                                                <input class="form-control form-control-sm form-control-solid"
-                                                       type="file" name="tax_exemption_certificate"/>
-                                                @if ($errors->has('tax_exemption_certificate'))
-                                                    <div
-                                                        class="text-danger">{{ $errors->first('tax_exemption_certificate') }}</div>
-                                                @endif
-                                            </div>
-
-
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-bolder text-dark">Note</label>
-                                                <textarea class="form-control form-control-sm form-control-solid"
-                                                          name="note" rows="3">{{ old('note') }}</textarea>
-                                                @if ($errors->has('note'))
-                                                    <div class="text-danger">{{ $errors->first('note') }}</div>
-                                                @endif
+                                            <div class="col-md-6">
+                                                <div class="fv-row mb-3">
+                                                    <label class="form-label fw-bolder text-dark">Product Template</label>
+                                                    <select id="product-template" class=" form-control form-control-sm form-control-solid" name="template_name" aria-label="Default select example">
+                                                    <option value="">-- select custom fields --</option>
+                                                    @foreach ($templates as $key => $val)
+                                                        <option value="{{ $val->template_id }}" {{ old('template_name') === $val->name ? 'selected' : '' }}>{{ $val->name }}</option>
+                                                    @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
 
 
@@ -2050,7 +2029,7 @@
             <!--end::Footer-->
         </div>
     </div>
-    <!--end::Proposal drawer-->
+    <!--End::Product drawer-->
 
 @endsection
 
